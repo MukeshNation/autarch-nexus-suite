@@ -22,6 +22,9 @@ import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppFilesRouteImport } from './routes/app.files'
+import { Route as AppProjectsRouteImport } from './routes/app.projects'
+import { Route as AppTasksRouteImport } from './routes/app.tasks'
 import { Route as AppModulesIndexRouteImport } from './routes/app.modules.index'
 import { Route as AppModulesSlugRouteImport } from './routes/app.modules.$slug'
 
@@ -90,6 +93,21 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppFilesRoute = AppFilesRouteImport.update({
+  id: '/files',
+  path: '/files',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProjectsRoute = AppProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTasksRoute = AppTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppModulesIndexRoute = AppModulesIndexRouteImport.update({
   id: '/modules/',
   path: '/modules/',
@@ -114,6 +132,9 @@ export interface FileRoutesByFullPath {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/files': typeof AppFilesRoute
+  '/app/projects': typeof AppProjectsRoute
+  '/app/tasks': typeof AppTasksRoute
   '/app/': typeof AppIndexRoute
   '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules/': typeof AppModulesIndexRoute
@@ -130,6 +151,9 @@ export interface FileRoutesByTo {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/files': typeof AppFilesRoute
+  '/app/projects': typeof AppProjectsRoute
+  '/app/tasks': typeof AppTasksRoute
   '/app': typeof AppIndexRoute
   '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules': typeof AppModulesIndexRoute
@@ -148,6 +172,9 @@ export interface FileRoutesById {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/files': typeof AppFilesRoute
+  '/app/projects': typeof AppProjectsRoute
+  '/app/tasks': typeof AppTasksRoute
   '/app/': typeof AppIndexRoute
   '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules/': typeof AppModulesIndexRoute
@@ -167,6 +194,9 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/app/files'
+    | '/app/projects'
+    | '/app/tasks'
     | '/app/'
     | '/app/modules/$slug'
     | '/app/modules/'
@@ -183,6 +213,9 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/app/files'
+    | '/app/projects'
+    | '/app/tasks'
     | '/app'
     | '/app/modules/$slug'
     | '/app/modules'
@@ -200,6 +233,9 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/app/files'
+    | '/app/projects'
+    | '/app/tasks'
     | '/app/'
     | '/app/modules/$slug'
     | '/app/modules/'
@@ -313,6 +349,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/files': {
+      id: '/app/files'
+      path: '/files'
+      fullPath: '/app/files'
+      preLoaderRoute: typeof AppFilesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/projects': {
+      id: '/app/projects'
+      path: '/projects'
+      fullPath: '/app/projects'
+      preLoaderRoute: typeof AppProjectsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/tasks': {
+      id: '/app/tasks'
+      path: '/tasks'
+      fullPath: '/app/tasks'
+      preLoaderRoute: typeof AppTasksRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/modules/': {
       id: '/app/modules/'
       path: '/modules'
@@ -331,12 +388,18 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppFilesRoute: typeof AppFilesRoute
+  AppProjectsRoute: typeof AppProjectsRoute
+  AppTasksRoute: typeof AppTasksRoute
   AppIndexRoute: typeof AppIndexRoute
   AppModulesSlugRoute: typeof AppModulesSlugRoute
   AppModulesIndexRoute: typeof AppModulesIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppFilesRoute: AppFilesRoute,
+  AppProjectsRoute: AppProjectsRoute,
+  AppTasksRoute: AppTasksRoute,
   AppIndexRoute: AppIndexRoute,
   AppModulesSlugRoute: AppModulesSlugRoute,
   AppModulesIndexRoute: AppModulesIndexRoute,
