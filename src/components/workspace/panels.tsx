@@ -76,7 +76,7 @@ const Bars = ({ n = 40, seed = 3 }: { n?: number; seed?: number }) => (
 );
 
 /** Renders one specialized panel body based on its declared kind. */
-export function ModulePanel({ panel, request }: { panel: Panel; request?: string }) {
+export function ModulePanel({ panel, request }: { panel: Panel; request?: string | undefined }) {
   const { kind, title, note, items } = panel;
 
   switch (kind) {

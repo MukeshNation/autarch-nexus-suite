@@ -91,8 +91,8 @@ export const MODULE_GROUPS: { id: ModuleGroupId; name: string; blurb: string }[]
 const P = (kind: PanelKind, title: string, note?: string, items?: string[]): Panel => ({
   kind,
   title,
-  note,
-  items,
+  ...(note === undefined ? {} : { note }),
+  ...(items === undefined ? {} : { items }),
 });
 
 export const MODULES: AutarchModule[] = [

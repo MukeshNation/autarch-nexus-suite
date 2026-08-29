@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MODULES } from "@/lib/modules";
 import { DEMO_JOBS } from "@/lib/demo-data";
-import { Logo } from "@/components/autarch/logo";
+import { AutarchWordmark } from "@/components/autarch/logo";
 import { StatusBadge } from "@/components/autarch/status-badge";
 
 export const Route = createFileRoute("/admin")({
@@ -19,7 +19,7 @@ function AdminPage() {
   return (
     <div className="min-h-svh bg-background">
       <header className="flex items-center gap-3 border-b border-border px-5 py-3">
-        <Logo />
+        <AutarchWordmark />
         <span className="label-mono">Admin</span>
         <Link to="/app" className="label-mono ml-auto hover:text-foreground">
           Back to workspace

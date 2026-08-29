@@ -8,9 +8,8 @@ import { DEMO_PROJECTS } from "@/lib/demo-data";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/app/modules/$slug")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    q: typeof search.q === "string" ? search.q : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { q?: string } =>
+    typeof search['q'] === "string" ? { q: search['q'] } : {},
   loader: ({ params }) => {
     const mod = getModule(params.slug);
     if (!mod) throw notFound();
