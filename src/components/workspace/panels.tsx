@@ -29,10 +29,11 @@ export function PanelFrame({
   actions,
 }: {
   title: string;
-  note?: string;
+  note?: string | undefined;
   children: ReactNode;
-  className?: string;
-  actions?: ReactNode;
+  className?: string | undefined;
+  actions?: ReactNode | undefined;
+
 }) {
   return (
     <section className={cn("panel flex flex-col overflow-hidden", className)}>
