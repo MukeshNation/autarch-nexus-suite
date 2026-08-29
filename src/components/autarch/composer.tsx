@@ -41,12 +41,14 @@ export function Composer({
 
   const submit = () => {
     const slug = target ?? "assistant";
+    const q = value.trim();
     navigate({
       to: "/app/modules/$slug",
       params: { slug },
-      search: { q: value.trim() || undefined },
+      search: q ? { q } : {},
     });
   };
+
 
   return (
     <div className={cn("panel shadow-studio", className)}>
