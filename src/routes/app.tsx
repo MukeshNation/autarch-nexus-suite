@@ -61,6 +61,8 @@ function AppLayout() {
             <span className="hidden text-[0.62rem] sm:inline">⌘K</span>
           </button>
           <DemoDataBadge className="hidden lg:inline-flex" />
+          <ThemeToggle className="size-8" />
+
           <Button asChild variant="ghost" size="sm" className="font-mono text-[0.7rem]">
             <Link to="/">Exit</Link>
           </Button>
