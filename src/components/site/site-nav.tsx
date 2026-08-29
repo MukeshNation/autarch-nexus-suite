@@ -6,6 +6,7 @@ import { MODULE_GROUPS, modulesByGroup } from "@/lib/modules";
 import { StatusBadge } from "@/components/autarch/status-badge";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/autarch/theme-toggle";
 
 const NAV = [
   { label: "Product", to: "/product" },
@@ -18,8 +19,8 @@ const NAV = [
 
 function MegaMenu() {
   return (
-    <div className="absolute top-full left-0 hidden w-full pt-3 group-hover:block group-focus-within:block">
-      <div className="panel mx-auto grid w-full max-w-6xl gap-6 p-6 shadow-lift md:grid-cols-3 lg:grid-cols-5">
+    <div className="invisible fixed top-16 right-0 left-0 z-50 px-5 pt-3 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 sm:px-8">
+      <div className="panel mx-auto grid w-full max-w-6xl gap-6 bg-popover p-6 shadow-lift md:grid-cols-3 lg:grid-cols-5">
         {MODULE_GROUPS.map((group) => (
           <div key={group.id}>
             <div className="label-mono">{group.name}</div>
@@ -91,6 +92,7 @@ export function SiteNav() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
+          <ThemeToggle />
           <Button asChild variant="ghost" size="sm" className="hidden font-mono text-xs sm:inline-flex">
             <Link to="/login">Sign in</Link>
           </Button>
