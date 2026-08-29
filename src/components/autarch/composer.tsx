@@ -41,12 +41,14 @@ export function Composer({
 
   const submit = () => {
     const slug = target ?? "assistant";
+    const q = value.trim();
     navigate({
       to: "/app/modules/$slug",
       params: { slug },
-      search: { q: value.trim() || undefined },
+      search: q ? { q } : {},
     });
   };
+
 
   return (
     <div className={cn("panel shadow-studio", className)}>
@@ -99,7 +101,7 @@ export function Composer({
         </Button>
 
         <Select value={capability} onValueChange={setCapability}>
-          <SelectTrigger size="sm" className="w-[13.5rem] font-mono text-xs">
+          <SelectTrigger className="w-[13.5rem] font-mono text-xs">
             <SelectValue placeholder="Capability" />
           </SelectTrigger>
           <SelectContent className="max-h-72">
@@ -114,7 +116,7 @@ export function Composer({
 
         {showProject && (
           <Select value={project} onValueChange={setProject}>
-            <SelectTrigger size="sm" className="w-[11.5rem] font-mono text-xs">
+            <SelectTrigger className="w-[11.5rem] font-mono text-xs">
               <FolderOpen className="size-3.5" />
               <SelectValue placeholder="Project" />
             </SelectTrigger>
