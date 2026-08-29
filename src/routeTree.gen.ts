@@ -23,6 +23,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppModulesIndexRouteImport } from './routes/app.modules.index'
+import { Route as AppModulesSlugRouteImport } from './routes/app.modules.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -94,6 +95,11 @@ const AppModulesIndexRoute = AppModulesIndexRouteImport.update({
   path: '/modules/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppModulesSlugRoute = AppModulesSlugRouteImport.update({
+  id: '/modules/$slug',
+  path: '/modules/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/app/': typeof AppIndexRoute
+  '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules/': typeof AppModulesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/app': typeof AppIndexRoute
+  '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules': typeof AppModulesIndexRoute
 }
 export interface FileRoutesById {
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/app/': typeof AppIndexRoute
+  '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules/': typeof AppModulesIndexRoute
 }
 export interface FileRouteTypes {
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/solutions'
     | '/app/'
+    | '/app/modules/$slug'
     | '/app/modules/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/solutions'
     | '/app'
+    | '/app/modules/$slug'
     | '/app/modules'
   id:
     | '__root__'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/solutions'
     | '/app/'
+    | '/app/modules/$slug'
     | '/app/modules/'
   fileRoutesById: FileRoutesById
 }
@@ -308,16 +320,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppModulesIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/modules/$slug': {
+      id: '/app/modules/$slug'
+      path: '/modules/$slug'
+      fullPath: '/app/modules/$slug'
+      preLoaderRoute: typeof AppModulesSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
+  AppModulesSlugRoute: typeof AppModulesSlugRoute
   AppModulesIndexRoute: typeof AppModulesIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
+  AppModulesSlugRoute: AppModulesSlugRoute,
   AppModulesIndexRoute: AppModulesIndexRoute,
 }
 
