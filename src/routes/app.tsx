@@ -5,6 +5,7 @@ import { AutarchMark } from "@/components/autarch/logo";
 import { AppSidebarNav, DesktopSidebar } from "@/components/workspace/app-sidebar";
 import { CommandPalette } from "@/components/workspace/command-palette";
 import { DemoDataBadge } from "@/components/autarch/status-badge";
+import { ThemeToggle } from "@/components/autarch/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -61,6 +62,8 @@ function AppLayout() {
             <span className="hidden text-[0.62rem] sm:inline">⌘K</span>
           </button>
           <DemoDataBadge className="hidden lg:inline-flex" />
+          <ThemeToggle className="size-8" />
+
           <Button asChild variant="ghost" size="sm" className="font-mono text-[0.7rem]">
             <Link to="/">Exit</Link>
           </Button>
