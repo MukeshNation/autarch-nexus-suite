@@ -12,11 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CompanyRouteImport } from './routes/company'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ModulesRouteImport } from './routes/modules'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ProductRouteImport } from './routes/product'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 
 const IndexRoute = IndexRouteImport.update({
@@ -32,6 +34,11 @@ const CompanyRoute = CompanyRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ModulesRoute = ModulesRouteImport.update({
@@ -59,6 +66,11 @@ const SecurityRoute = SecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
   path: '/solutions',
@@ -69,22 +81,26 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/pricing': typeof PricingRoute
   '/product': typeof ProductRoute
   '/resources': typeof ResourcesRoute
   '/security': typeof SecurityRoute
+  '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/pricing': typeof PricingRoute
   '/product': typeof ProductRoute
   '/resources': typeof ResourcesRoute
   '/security': typeof SecurityRoute
+  '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
 }
 export interface FileRoutesById {
@@ -92,11 +108,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/pricing': typeof PricingRoute
   '/product': typeof ProductRoute
   '/resources': typeof ResourcesRoute
   '/security': typeof SecurityRoute
+  '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
 }
 export interface FileRouteTypes {
@@ -105,33 +123,39 @@ export interface FileRouteTypes {
     | '/'
     | '/company'
     | '/contact'
+    | '/login'
     | '/modules'
     | '/pricing'
     | '/product'
     | '/resources'
     | '/security'
+    | '/signup'
     | '/solutions'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/company'
     | '/contact'
+    | '/login'
     | '/modules'
     | '/pricing'
     | '/product'
     | '/resources'
     | '/security'
+    | '/signup'
     | '/solutions'
   id:
     | '__root__'
     | '/'
     | '/company'
     | '/contact'
+    | '/login'
     | '/modules'
     | '/pricing'
     | '/product'
     | '/resources'
     | '/security'
+    | '/signup'
     | '/solutions'
   fileRoutesById: FileRoutesById
 }
@@ -139,11 +163,13 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CompanyRoute: typeof CompanyRoute
   ContactRoute: typeof ContactRoute
+  LoginRoute: typeof LoginRoute
   ModulesRoute: typeof ModulesRoute
   PricingRoute: typeof PricingRoute
   ProductRoute: typeof ProductRoute
   ResourcesRoute: typeof ResourcesRoute
   SecurityRoute: typeof SecurityRoute
+  SignupRoute: typeof SignupRoute
   SolutionsRoute: typeof SolutionsRoute
 }
 
@@ -168,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/modules': {
@@ -205,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/solutions': {
       id: '/solutions'
       path: '/solutions'
@@ -219,11 +259,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CompanyRoute: CompanyRoute,
   ContactRoute: ContactRoute,
+  LoginRoute: LoginRoute,
   ModulesRoute: ModulesRoute,
   PricingRoute: PricingRoute,
   ProductRoute: ProductRoute,
   ResourcesRoute: ResourcesRoute,
   SecurityRoute: SecurityRoute,
+  SignupRoute: SignupRoute,
   SolutionsRoute: SolutionsRoute,
 }
 export const routeTree = rootRouteImport
