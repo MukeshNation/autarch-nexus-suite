@@ -22,9 +22,13 @@ import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAutomationsRouteImport } from './routes/app.automations'
 import { Route as AppFilesRouteImport } from './routes/app.files'
+import { Route as AppHistoryRouteImport } from './routes/app.history'
+import { Route as AppIntegrationsRouteImport } from './routes/app.integrations'
 import { Route as AppProjectsRouteImport } from './routes/app.projects'
 import { Route as AppTasksRouteImport } from './routes/app.tasks'
+import { Route as AppUsageRouteImport } from './routes/app.usage'
 import { Route as AppModulesIndexRouteImport } from './routes/app.modules.index'
 import { Route as AppModulesSlugRouteImport } from './routes/app.modules.$slug'
 
@@ -93,9 +97,24 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAutomationsRoute = AppAutomationsRouteImport.update({
+  id: '/automations',
+  path: '/automations',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppFilesRoute = AppFilesRouteImport.update({
   id: '/files',
   path: '/files',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHistoryRoute = AppHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIntegrationsRoute = AppIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
   getParentRoute: () => AppRoute,
 } as any)
 const AppProjectsRoute = AppProjectsRouteImport.update({
@@ -106,6 +125,11 @@ const AppProjectsRoute = AppProjectsRouteImport.update({
 const AppTasksRoute = AppTasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppUsageRoute = AppUsageRouteImport.update({
+  id: '/usage',
+  path: '/usage',
   getParentRoute: () => AppRoute,
 } as any)
 const AppModulesIndexRoute = AppModulesIndexRouteImport.update({
@@ -132,9 +156,13 @@ export interface FileRoutesByFullPath {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/automations': typeof AppAutomationsRoute
   '/app/files': typeof AppFilesRoute
+  '/app/history': typeof AppHistoryRoute
+  '/app/integrations': typeof AppIntegrationsRoute
   '/app/projects': typeof AppProjectsRoute
   '/app/tasks': typeof AppTasksRoute
+  '/app/usage': typeof AppUsageRoute
   '/app/': typeof AppIndexRoute
   '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules/': typeof AppModulesIndexRoute
@@ -151,9 +179,13 @@ export interface FileRoutesByTo {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/automations': typeof AppAutomationsRoute
   '/app/files': typeof AppFilesRoute
+  '/app/history': typeof AppHistoryRoute
+  '/app/integrations': typeof AppIntegrationsRoute
   '/app/projects': typeof AppProjectsRoute
   '/app/tasks': typeof AppTasksRoute
+  '/app/usage': typeof AppUsageRoute
   '/app': typeof AppIndexRoute
   '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules': typeof AppModulesIndexRoute
@@ -172,9 +204,13 @@ export interface FileRoutesById {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/automations': typeof AppAutomationsRoute
   '/app/files': typeof AppFilesRoute
+  '/app/history': typeof AppHistoryRoute
+  '/app/integrations': typeof AppIntegrationsRoute
   '/app/projects': typeof AppProjectsRoute
   '/app/tasks': typeof AppTasksRoute
+  '/app/usage': typeof AppUsageRoute
   '/app/': typeof AppIndexRoute
   '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules/': typeof AppModulesIndexRoute
@@ -194,9 +230,13 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/app/automations'
     | '/app/files'
+    | '/app/history'
+    | '/app/integrations'
     | '/app/projects'
     | '/app/tasks'
+    | '/app/usage'
     | '/app/'
     | '/app/modules/$slug'
     | '/app/modules/'
@@ -213,9 +253,13 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/app/automations'
     | '/app/files'
+    | '/app/history'
+    | '/app/integrations'
     | '/app/projects'
     | '/app/tasks'
+    | '/app/usage'
     | '/app'
     | '/app/modules/$slug'
     | '/app/modules'
@@ -233,9 +277,13 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/app/automations'
     | '/app/files'
+    | '/app/history'
+    | '/app/integrations'
     | '/app/projects'
     | '/app/tasks'
+    | '/app/usage'
     | '/app/'
     | '/app/modules/$slug'
     | '/app/modules/'
@@ -349,11 +397,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/automations': {
+      id: '/app/automations'
+      path: '/automations'
+      fullPath: '/app/automations'
+      preLoaderRoute: typeof AppAutomationsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/files': {
       id: '/app/files'
       path: '/files'
       fullPath: '/app/files'
       preLoaderRoute: typeof AppFilesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/history': {
+      id: '/app/history'
+      path: '/history'
+      fullPath: '/app/history'
+      preLoaderRoute: typeof AppHistoryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/integrations': {
+      id: '/app/integrations'
+      path: '/integrations'
+      fullPath: '/app/integrations'
+      preLoaderRoute: typeof AppIntegrationsRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/projects': {
@@ -368,6 +437,13 @@ declare module '@tanstack/react-router' {
       path: '/tasks'
       fullPath: '/app/tasks'
       preLoaderRoute: typeof AppTasksRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/usage': {
+      id: '/app/usage'
+      path: '/usage'
+      fullPath: '/app/usage'
+      preLoaderRoute: typeof AppUsageRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/modules/': {
@@ -388,18 +464,26 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAutomationsRoute: typeof AppAutomationsRoute
   AppFilesRoute: typeof AppFilesRoute
+  AppHistoryRoute: typeof AppHistoryRoute
+  AppIntegrationsRoute: typeof AppIntegrationsRoute
   AppProjectsRoute: typeof AppProjectsRoute
   AppTasksRoute: typeof AppTasksRoute
+  AppUsageRoute: typeof AppUsageRoute
   AppIndexRoute: typeof AppIndexRoute
   AppModulesSlugRoute: typeof AppModulesSlugRoute
   AppModulesIndexRoute: typeof AppModulesIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAutomationsRoute: AppAutomationsRoute,
   AppFilesRoute: AppFilesRoute,
+  AppHistoryRoute: AppHistoryRoute,
+  AppIntegrationsRoute: AppIntegrationsRoute,
   AppProjectsRoute: AppProjectsRoute,
   AppTasksRoute: AppTasksRoute,
+  AppUsageRoute: AppUsageRoute,
   AppIndexRoute: AppIndexRoute,
   AppModulesSlugRoute: AppModulesSlugRoute,
   AppModulesIndexRoute: AppModulesIndexRoute,
