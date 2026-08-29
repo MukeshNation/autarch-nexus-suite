@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as CompanyRouteImport } from './routes/company'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -23,10 +24,13 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAutomationsRouteImport } from './routes/app.automations'
+import { Route as AppBillingRouteImport } from './routes/app.billing'
 import { Route as AppFilesRouteImport } from './routes/app.files'
 import { Route as AppHistoryRouteImport } from './routes/app.history'
 import { Route as AppIntegrationsRouteImport } from './routes/app.integrations'
+import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
 import { Route as AppProjectsRouteImport } from './routes/app.projects'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppTasksRouteImport } from './routes/app.tasks'
 import { Route as AppUsageRouteImport } from './routes/app.usage'
 import { Route as AppModulesIndexRouteImport } from './routes/app.modules.index'
@@ -35,6 +39,11 @@ import { Route as AppModulesSlugRouteImport } from './routes/app.modules.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppRoute = AppRouteImport.update({
@@ -102,6 +111,11 @@ const AppAutomationsRoute = AppAutomationsRouteImport.update({
   path: '/automations',
   getParentRoute: () => AppRoute,
 } as any)
+const AppBillingRoute = AppBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppFilesRoute = AppFilesRouteImport.update({
   id: '/files',
   path: '/files',
@@ -117,9 +131,19 @@ const AppIntegrationsRoute = AppIntegrationsRouteImport.update({
   path: '/integrations',
   getParentRoute: () => AppRoute,
 } as any)
+const AppNotificationsRoute = AppNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppProjectsRoute = AppProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
 const AppTasksRoute = AppTasksRouteImport.update({
@@ -145,6 +169,7 @@ const AppModulesSlugRoute = AppModulesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/app': typeof AppRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
@@ -157,10 +182,13 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/app/automations': typeof AppAutomationsRoute
+  '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
   '/app/history': typeof AppHistoryRoute
   '/app/integrations': typeof AppIntegrationsRoute
+  '/app/notifications': typeof AppNotificationsRoute
   '/app/projects': typeof AppProjectsRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/tasks': typeof AppTasksRoute
   '/app/usage': typeof AppUsageRoute
   '/app/': typeof AppIndexRoute
@@ -169,6 +197,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
@@ -180,10 +209,13 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/app/automations': typeof AppAutomationsRoute
+  '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
   '/app/history': typeof AppHistoryRoute
   '/app/integrations': typeof AppIntegrationsRoute
+  '/app/notifications': typeof AppNotificationsRoute
   '/app/projects': typeof AppProjectsRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/tasks': typeof AppTasksRoute
   '/app/usage': typeof AppUsageRoute
   '/app': typeof AppIndexRoute
@@ -193,6 +225,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/app': typeof AppRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
@@ -205,10 +238,13 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/app/automations': typeof AppAutomationsRoute
+  '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
   '/app/history': typeof AppHistoryRoute
   '/app/integrations': typeof AppIntegrationsRoute
+  '/app/notifications': typeof AppNotificationsRoute
   '/app/projects': typeof AppProjectsRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/tasks': typeof AppTasksRoute
   '/app/usage': typeof AppUsageRoute
   '/app/': typeof AppIndexRoute
@@ -219,6 +255,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/app'
     | '/company'
     | '/contact'
@@ -231,10 +268,13 @@ export interface FileRouteTypes {
     | '/signup'
     | '/solutions'
     | '/app/automations'
+    | '/app/billing'
     | '/app/files'
     | '/app/history'
     | '/app/integrations'
+    | '/app/notifications'
     | '/app/projects'
+    | '/app/settings'
     | '/app/tasks'
     | '/app/usage'
     | '/app/'
@@ -243,6 +283,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/company'
     | '/contact'
     | '/login'
@@ -254,10 +295,13 @@ export interface FileRouteTypes {
     | '/signup'
     | '/solutions'
     | '/app/automations'
+    | '/app/billing'
     | '/app/files'
     | '/app/history'
     | '/app/integrations'
+    | '/app/notifications'
     | '/app/projects'
+    | '/app/settings'
     | '/app/tasks'
     | '/app/usage'
     | '/app'
@@ -266,6 +310,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/app'
     | '/company'
     | '/contact'
@@ -278,10 +323,13 @@ export interface FileRouteTypes {
     | '/signup'
     | '/solutions'
     | '/app/automations'
+    | '/app/billing'
     | '/app/files'
     | '/app/history'
     | '/app/integrations'
+    | '/app/notifications'
     | '/app/projects'
+    | '/app/settings'
     | '/app/tasks'
     | '/app/usage'
     | '/app/'
@@ -291,6 +339,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   AppRoute: typeof AppRouteWithChildren
   CompanyRoute: typeof CompanyRoute
   ContactRoute: typeof ContactRoute
@@ -311,6 +360,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app': {
@@ -404,6 +460,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAutomationsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/billing': {
+      id: '/app/billing'
+      path: '/billing'
+      fullPath: '/app/billing'
+      preLoaderRoute: typeof AppBillingRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/files': {
       id: '/app/files'
       path: '/files'
@@ -425,11 +488,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIntegrationsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/notifications': {
+      id: '/app/notifications'
+      path: '/notifications'
+      fullPath: '/app/notifications'
+      preLoaderRoute: typeof AppNotificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/projects': {
       id: '/app/projects'
       path: '/projects'
       fullPath: '/app/projects'
       preLoaderRoute: typeof AppProjectsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/tasks': {
@@ -465,10 +542,13 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppAutomationsRoute: typeof AppAutomationsRoute
+  AppBillingRoute: typeof AppBillingRoute
   AppFilesRoute: typeof AppFilesRoute
   AppHistoryRoute: typeof AppHistoryRoute
   AppIntegrationsRoute: typeof AppIntegrationsRoute
+  AppNotificationsRoute: typeof AppNotificationsRoute
   AppProjectsRoute: typeof AppProjectsRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   AppTasksRoute: typeof AppTasksRoute
   AppUsageRoute: typeof AppUsageRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -478,10 +558,13 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAutomationsRoute: AppAutomationsRoute,
+  AppBillingRoute: AppBillingRoute,
   AppFilesRoute: AppFilesRoute,
   AppHistoryRoute: AppHistoryRoute,
   AppIntegrationsRoute: AppIntegrationsRoute,
+  AppNotificationsRoute: AppNotificationsRoute,
   AppProjectsRoute: AppProjectsRoute,
+  AppSettingsRoute: AppSettingsRoute,
   AppTasksRoute: AppTasksRoute,
   AppUsageRoute: AppUsageRoute,
   AppIndexRoute: AppIndexRoute,
@@ -493,6 +576,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   AppRoute: AppRouteWithChildren,
   CompanyRoute: CompanyRoute,
   ContactRoute: ContactRoute,
