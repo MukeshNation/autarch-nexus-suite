@@ -21,6 +21,8 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppModulesIndexRouteImport } from './routes/app.modules.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -82,10 +84,20 @@ const SolutionsRoute = SolutionsRouteImport.update({
   path: '/solutions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppModulesIndexRoute = AppModulesIndexRouteImport.update({
+  id: '/modules/',
+  path: '/modules/',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
@@ -96,10 +108,11 @@ export interface FileRoutesByFullPath {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/': typeof AppIndexRoute
+  '/app/modules/': typeof AppModulesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
@@ -110,11 +123,13 @@ export interface FileRoutesByTo {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app': typeof AppIndexRoute
+  '/app/modules': typeof AppModulesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
@@ -125,6 +140,8 @@ export interface FileRoutesById {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/': typeof AppIndexRoute
+  '/app/modules/': typeof AppModulesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,10 +158,11 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/app/'
+    | '/app/modules/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/app'
     | '/company'
     | '/contact'
     | '/login'
@@ -155,6 +173,8 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/app'
+    | '/app/modules'
   id:
     | '__root__'
     | '/'
@@ -169,11 +189,13 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/app/'
+    | '/app/modules/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AppRoute: typeof AppRoute
+  AppRoute: typeof AppRouteWithChildren
   CompanyRoute: typeof CompanyRoute
   ContactRoute: typeof ContactRoute
   LoginRoute: typeof LoginRoute
@@ -272,12 +294,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/modules/': {
+      id: '/app/modules/'
+      path: '/modules'
+      fullPath: '/app/modules/'
+      preLoaderRoute: typeof AppModulesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+  AppModulesIndexRoute: typeof AppModulesIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+  AppModulesIndexRoute: AppModulesIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AppRoute: AppRoute,
+  AppRoute: AppRouteWithChildren,
   CompanyRoute: CompanyRoute,
   ContactRoute: ContactRoute,
   LoginRoute: LoginRoute,
