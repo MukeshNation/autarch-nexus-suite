@@ -1,13 +1,66 @@
-import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { AutarchWordmark } from "@/components/autarch/logo";
 import { HeroDiagram } from "@/components/autarch/hero-diagram";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable/index";
 
-/** Shared sign-in / sign-up surface. Real auth arrives in Phase 2. */
+/** Sign-in / sign-up surface backed by real accounts. */
 export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
   const isLogin = mode === "login";
+  const navigate = useNavigate();
+  const [busy, setBusy] = useState(false);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setBusy(true);
+    try {
+      if (isLogin) {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        toast.success("Signed in");
+        await navigate({ to: "/app" });
+      } else {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/app`,
+            data: { full_name: name, phone },
+          },
+        });
+        if (error) throw error;
+        toast.success("Workspace created. Check your inbox if confirmation is required.");
+        await navigate({ to: "/app" });
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Authentication failed");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function onGoogle() {
+    setBusy(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    if (result.error) {
+      setBusy(false);
+      toast.error(result.error.message ?? "Google sign-in failed");
+      return;
+    }
+    if (result.redirected) return;
+    await navigate({ to: "/app" });
+  }
 
   return (
     <div className="relative grid min-h-screen lg:grid-cols-2">
@@ -25,40 +78,80 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
               : "One workspace, 23 capabilities, one project system underneath."}
           </p>
 
-          <form
-            className="mt-8 space-y-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
+          <form className="mt-8 space-y-4" onSubmit={onSubmit}>
             {!isLogin && (
-              <div>
-                <Label htmlFor="auth-name" className="label-mono">
-                  Full name
-                </Label>
-                <Input id="auth-name" className="mt-1.5 font-mono text-xs" placeholder="Your name" />
-              </div>
+              <>
+                <div>
+                  <Label htmlFor="auth-name" className="label-mono">
+                    Full name
+                  </Label>
+                  <Input
+                    id="auth-name"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="mt-1.5 font-mono text-xs"
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="auth-phone" className="label-mono">
+                    Phone number
+                  </Label>
+                  <Input
+                    id="auth-phone"
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="mt-1.5 font-mono text-xs"
+                    placeholder="+91 90000 00000"
+                  />
+                </div>
+              </>
             )}
             <div>
               <Label htmlFor="auth-email" className="label-mono">
                 Work email
               </Label>
-              <Input id="auth-email" type="email" className="mt-1.5 font-mono text-xs" placeholder="you@company.com" />
+              <Input
+                id="auth-email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-1.5 font-mono text-xs"
+                placeholder="you@company.com"
+              />
             </div>
             <div>
               <Label htmlFor="auth-password" className="label-mono">
                 Password
               </Label>
-              <Input id="auth-password" type="password" className="mt-1.5 font-mono text-xs" placeholder="••••••••" />
+              <Input
+                id="auth-password"
+                type="password"
+                required
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-1.5 font-mono text-xs"
+                placeholder="••••••••"
+              />
             </div>
-            <Button type="submit" className="w-full font-mono text-xs">
-              {isLogin ? "Sign in" : "Create workspace"}
+            <Button type="submit" disabled={busy} className="w-full font-mono text-xs">
+              {busy ? "Working…" : isLogin ? "Sign in" : "Create workspace"}
             </Button>
           </form>
 
-          <p className="mt-4 font-mono text-[0.65rem] text-muted-foreground">
-            Authentication is connected in Phase 2. Until then you can explore the workspace directly.
-          </p>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={busy}
+            onClick={onGoogle}
+            className="mt-3 w-full font-mono text-xs"
+          >
+            Continue with Google
+          </Button>
 
           <div className="mt-6 flex items-center justify-between text-xs">
             <Link to={isLogin ? "/signup" : "/login"} className="underline underline-offset-4">
