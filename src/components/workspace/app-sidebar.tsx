@@ -14,10 +14,12 @@ import {
   CreditCard,
   Bell,
   Settings,
+  ShieldCheck,
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react";
 import { AutarchMark } from "@/components/autarch/logo";
+import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
 export const SIDEBAR_ITEMS = [
@@ -45,6 +47,10 @@ export function AppSidebarNav({
   onNavigate?: () => void;
   onSearch: () => void;
 }) {
+  const { isAdmin } = useAuth();
+  const items = isAdmin
+    ? [...SIDEBAR_ITEMS, { label: "Admin", to: "/admin" as const, icon: ShieldCheck }]
+    : SIDEBAR_ITEMS;
   return (
     <nav className="flex-1 overflow-y-auto px-2 py-3">
       <button
@@ -64,7 +70,7 @@ export function AppSidebarNav({
         )}
       </button>
       <ul className="space-y-0.5">
-        {SIDEBAR_ITEMS.map((item) => (
+        {items.map((item) => (
           <li key={item.label}>
             <Link
               to={item.to}
