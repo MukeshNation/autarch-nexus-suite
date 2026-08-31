@@ -47,6 +47,10 @@ export function AppSidebarNav({
   onNavigate?: () => void;
   onSearch: () => void;
 }) {
+  const { isAdmin } = useAuth();
+  const items = isAdmin
+    ? [...SIDEBAR_ITEMS, { label: "Admin", to: "/admin" as const, icon: ShieldCheck }]
+    : SIDEBAR_ITEMS;
   return (
     <nav className="flex-1 overflow-y-auto px-2 py-3">
       <button
@@ -66,7 +70,7 @@ export function AppSidebarNav({
         )}
       </button>
       <ul className="space-y-0.5">
-        {SIDEBAR_ITEMS.map((item) => (
+        {items.map((item) => (
           <li key={item.label}>
             <Link
               to={item.to}
@@ -98,6 +102,10 @@ export function DesktopSidebar({
   setCollapsed: (v: boolean) => void;
   onSearch: () => void;
 }) {
+  const { isAdmin } = useAuth();
+  const items = isAdmin
+    ? [...SIDEBAR_ITEMS, { label: "Admin", to: "/admin" as const, icon: ShieldCheck }]
+    : SIDEBAR_ITEMS;
   return (
     <aside
       className={cn(
