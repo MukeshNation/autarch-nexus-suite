@@ -14,10 +14,12 @@ import {
   CreditCard,
   Bell,
   Settings,
+  ShieldCheck,
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react";
 import { AutarchMark } from "@/components/autarch/logo";
+import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
 export const SIDEBAR_ITEMS = [
