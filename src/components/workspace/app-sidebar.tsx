@@ -102,10 +102,6 @@ export function DesktopSidebar({
   setCollapsed: (v: boolean) => void;
   onSearch: () => void;
 }) {
-  const { isAdmin } = useAuth();
-  const items = isAdmin
-    ? [...SIDEBAR_ITEMS, { label: "Admin", to: "/admin" as const, icon: ShieldCheck }]
-    : SIDEBAR_ITEMS;
   return (
     <aside
       className={cn(
