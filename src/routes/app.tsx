@@ -74,9 +74,12 @@ function AppLayout() {
           <DemoDataBadge className="hidden lg:inline-flex" />
           <ThemeToggle className="size-8" />
 
+          <UserMenu />
+
           <Button asChild variant="ghost" size="sm" className="font-mono text-[0.7rem]">
             <Link to="/">Exit</Link>
           </Button>
+
         </header>
 
         <main className="min-w-0 flex-1">
