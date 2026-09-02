@@ -14,6 +14,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as CompanyRouteImport } from './routes/company'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ModulesRouteImport } from './routes/modules'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -59,6 +60,11 @@ const CompanyRoute = CompanyRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -173,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/pricing': typeof PricingRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/pricing': typeof PricingRoute
@@ -229,6 +237,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/pricing': typeof PricingRoute
@@ -259,6 +268,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/company'
     | '/contact'
+    | '/forgot-password'
     | '/login'
     | '/modules'
     | '/pricing'
@@ -286,6 +296,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/company'
     | '/contact'
+    | '/forgot-password'
     | '/login'
     | '/modules'
     | '/pricing'
@@ -314,6 +325,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/company'
     | '/contact'
+    | '/forgot-password'
     | '/login'
     | '/modules'
     | '/pricing'
@@ -343,6 +355,7 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   CompanyRoute: typeof CompanyRoute
   ContactRoute: typeof ContactRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   ModulesRoute: typeof ModulesRoute
   PricingRoute: typeof PricingRoute
@@ -388,6 +401,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -580,6 +600,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   CompanyRoute: CompanyRoute,
   ContactRoute: ContactRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   ModulesRoute: ModulesRoute,
   PricingRoute: PricingRoute,
