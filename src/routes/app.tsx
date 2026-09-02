@@ -1,20 +1,30 @@
 import { useState } from "react";
-import { createFileRoute, Outlet, Link } from "@tanstack/react-router";
+import { createFileRoute, Outlet, Link, redirect } from "@tanstack/react-router";
 import { Menu, Search } from "lucide-react";
 import { AutarchMark } from "@/components/autarch/logo";
 import { AppSidebarNav, DesktopSidebar } from "@/components/workspace/app-sidebar";
 import { CommandPalette } from "@/components/workspace/command-palette";
+import { UserMenu } from "@/components/workspace/user-menu";
 import { DemoDataBadge } from "@/components/autarch/status-badge";
 import { ThemeToggle } from "@/components/autarch/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/app")({
+  // Session lives in browser storage, so the gate runs client-side only.
+  ssr: false,
+  beforeLoad: async () => {
+    const { data, error } = await supabase.auth.getUser();
+    if (error || !data.user) throw redirect({ to: "/login" });
+    return { user: data.user };
+  },
   head: () => ({
     meta: [{ name: "robots", content: "noindex" }],
   }),
   component: AppLayout,
 });
+
 
 function AppLayout() {
   const [collapsed, setCollapsed] = useState(false);
