@@ -312,3 +312,29 @@
 @utility pulse-dot {
   animation: autarch-pulse-dot 1.8s ease-in-out infinite;
 }
+
+/* Preference-driven display modes (Settings → Preferences). */
+:root[data-density="compact"] {
+  --radius: 0.375rem;
+}
+
+:root[data-density="compact"] .panel {
+  padding: 0.85rem;
+}
+
+:root[data-density="compact"] main {
+  --autarch-density-scale: 0.9;
+}
+
+:root[data-motion="reduced"] *,
+:root[data-motion="reduced"] *::before,
+:root[data-motion="reduced"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+:root[data-kbd-hints="off"] .kbd-hint {
+  display: none;
+}
