@@ -10,11 +10,19 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/use-auth";
+import { usePreferences, type PreferenceKey } from "@/hooks/use-preferences";
+import { deleteMyAccount, exportMyData } from "@/lib/account.functions";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/app/settings")({
   component: SettingsPage,
 });
+
+const PREFERENCE_ROWS: Array<[PreferenceKey, string, string]> = [
+  ["density", "Compact density", "Tighten spacing across the workspace."],
+  ["motion", "Reduced motion", "Disable ambient and stroke animations."],
+  ["kbdHints", "Keyboard-first", "Show shortcut hints in every panel."],
+];
 
 function formatBytes(bytes: number) {
   if (!bytes) return "0 MB";
