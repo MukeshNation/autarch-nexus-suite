@@ -204,34 +204,52 @@ function SettingsPage() {
 
 
         <TabsContent value="preferences" className="panel mt-4 space-y-4 p-5">
-          {[
-            ["Compact density", "Tighten spacing across the workspace."],
-            ["Reduced motion", "Disable ambient and stroke animations."],
-            ["Keyboard-first", "Show shortcut hints in every panel."],
-          ].map(([title, detail]) => (
-            <div key={title} className="flex items-start gap-3">
+          {PREFERENCE_ROWS.map(([key, title, detail]) => (
+            <div key={key} className="flex items-start gap-3">
               <div className="min-w-0 flex-1">
                 <span className="block text-xs">{title}</span>
                 <span className="block text-[0.7rem] text-muted-foreground">{detail}</span>
               </div>
-              <Switch />
+              <Switch
+                checked={prefs[key]}
+                onCheckedChange={(checked) => setPreference(key, checked)}
+                aria-label={title}
+              />
             </div>
           ))}
+          <p className="font-mono text-[0.62rem] text-muted-foreground">
+            Saved on this device and applied instantly across the workspace.
+          </p>
         </TabsContent>
 
         <TabsContent value="privacy" className="panel mt-4 space-y-4 p-5 text-xs text-muted-foreground">
           <p>
-            Your files and generations belong to you. Autarch does not train on your content. You can export or delete
-            your workspace data at any time once storage is connected.
+            Your files and generations belong to you. Autarch does not train on your content. Export a full copy of your
+            workspace data, or delete your account and everything attached to it.
           </p>
-          <div className="flex gap-2">
-            <Button size="sm" variant="outline" className="font-mono text-[0.7rem]" disabled>
-              Export data
+          <div className="flex flex-wrap gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              className="font-mono text-[0.7rem]"
+              disabled={exporting || !user}
+              onClick={() => void onExport()}
+            >
+              {exporting ? "Preparing…" : "Export data"}
             </Button>
-            <Button size="sm" variant="outline" className="font-mono text-[0.7rem]" disabled>
-              Delete account
+            <Button
+              size="sm"
+              variant="outline"
+              className="font-mono text-[0.7rem] text-destructive"
+              disabled={deleting || !user}
+              onClick={() => void onDeleteAccount()}
+            >
+              {deleting ? "Deleting…" : "Delete account"}
             </Button>
           </div>
+          <p className="font-mono text-[0.62rem]">
+            Deletion is permanent: profile, workspaces, projects, tasks, files and AI history are removed.
+          </p>
         </TabsContent>
       </Tabs>
     </WorkspacePage>
