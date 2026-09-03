@@ -19,16 +19,16 @@ const EXPORT_TABLES = [
 export const exportMyData = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const payload: Record<string, unknown> = {
-      exported_at: new Date().toISOString(),
-      user_id: context.userId,
+    const payload: Record<string, string> = {
+      exported_at: JSON.stringify(new Date().toISOString()),
+      user_id: JSON.stringify(context.userId),
     };
     for (const table of EXPORT_TABLES) {
       // RLS scopes every read to the signed-in user.
       const { data, error } = await context.supabase.from(table).select("*");
-      payload[table] = error ? { error: error.message } : (data ?? []);
+      payload[table] = JSON.stringify(error ? { error: error.message } : (data ?? []));
     }
-    return payload;
+    return { json: `{${Object.entries(payload).map(([k, v]) => `${JSON.stringify(k)}:${v}`).join(",")}}` };
   });
 
 export const deleteMyAccount = createServerFn({ method: "POST" })

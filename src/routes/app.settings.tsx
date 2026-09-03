@@ -47,7 +47,7 @@ function SettingsPage() {
     setExporting(true);
     try {
       const data = await exportMyData();
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const blob = new Blob([JSON.stringify(JSON.parse(data.json), null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
