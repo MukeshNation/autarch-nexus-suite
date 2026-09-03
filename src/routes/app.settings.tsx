@@ -39,6 +39,44 @@ function SettingsPage() {
   const [phone, setPhone] = useState("");
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const { prefs, setPreference } = usePreferences();
+
+  async function onExport() {
+    setExporting(true);
+    try {
+      const data = await exportMyData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `autarch-data-${new Date().toISOString().slice(0, 10)}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+      toast.success("Export downloaded");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Export failed");
+    }
+    setExporting(false);
+  }
+
+  async function onDeleteAccount() {
+    if (!window.confirm("Permanently delete your Autarch account and all of its data?")) return;
+    setDeleting(true);
+    try {
+      await deleteMyAccount();
+      await queryClient.cancelQueries();
+      queryClient.clear();
+      await signOut();
+      toast.success("Account deleted");
+      await navigate({ to: "/", replace: true });
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Deletion failed");
+    }
+    setDeleting(false);
+  }
+
 
   useEffect(() => {
     setDisplayName(profile?.display_name ?? profile?.full_name ?? "");
