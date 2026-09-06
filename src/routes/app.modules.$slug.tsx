@@ -72,9 +72,12 @@ function ModuleWorkspace() {
           ))}
         </div>
         <div className="space-y-4">
-          {mod.layout.main.map((panel) => (
-            <ModulePanel key={panel.title} panel={panel} request={q} />
-          ))}
+          {isAiTextModule(mod.slug) && <ModuleRunner slug={mod.slug} moduleId={mod.id} initialPrompt={q} />}
+          {mod.layout.main
+            .filter((panel) => !(isAiTextModule(mod.slug) && panel.kind === "prompt"))
+            .map((panel) => (
+              <ModulePanel key={panel.title} panel={panel} request={q} />
+            ))}
         </div>
         <div className="space-y-4">
           {mod.layout.right.map((panel) => (
