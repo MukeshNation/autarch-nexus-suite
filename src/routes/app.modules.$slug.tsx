@@ -2,6 +2,8 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Download, FolderPlus, Info, Share2 } from "lucide-react";
 import { WorkspacePage } from "@/components/workspace/page";
 import { ModulePanel } from "@/components/workspace/panels";
+import { ModuleRunner } from "@/components/workspace/module-runner";
+import { isAiTextModule } from "@/lib/ai-capabilities";
 import { StatusBadge } from "@/components/autarch/status-badge";
 import { getModule, MODULES } from "@/lib/modules";
 import { DEMO_PROJECTS } from "@/lib/demo-data";
