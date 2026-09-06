@@ -2,6 +2,8 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Download, FolderPlus, Info, Share2 } from "lucide-react";
 import { WorkspacePage } from "@/components/workspace/page";
 import { ModulePanel } from "@/components/workspace/panels";
+import { ModuleRunner } from "@/components/workspace/module-runner";
+import { isAiTextModule } from "@/lib/ai-capabilities";
 import { StatusBadge } from "@/components/autarch/status-badge";
 import { getModule, MODULES } from "@/lib/modules";
 import { DEMO_PROJECTS } from "@/lib/demo-data";
@@ -72,9 +74,12 @@ function ModuleWorkspace() {
           ))}
         </div>
         <div className="space-y-4">
-          {mod.layout.main.map((panel) => (
-            <ModulePanel key={panel.title} panel={panel} request={q} />
-          ))}
+          {isAiTextModule(mod.slug) && <ModuleRunner slug={mod.slug} moduleId={mod.id} initialPrompt={q} />}
+          {mod.layout.main
+            .filter((panel) => !(isAiTextModule(mod.slug) && panel.kind === "prompt"))
+            .map((panel) => (
+              <ModulePanel key={panel.title} panel={panel} request={q} />
+            ))}
         </div>
         <div className="space-y-4">
           {mod.layout.right.map((panel) => (
