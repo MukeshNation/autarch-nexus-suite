@@ -48,17 +48,23 @@ export const runModule = createServerFn({ method: "POST" })
       throw new Error("Too many requests. Please wait a moment and try again.");
     }
 
-    // Entitlement / credits.
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("credit_balance")
-      .eq("id", userId)
-      .maybeSingle();
-    if (profileError) throw new Error("Could not read your account balance.");
-    const balance = profile?.credit_balance ?? 0;
-    if (balance < CREDITS_PER_RUN) {
-      throw new Error("You are out of credits. Add credits to keep generating.");
+    // Entitlement / credits — reserved atomically so concurrent runs cannot overspend.
+    const rpc = supabase.rpc as unknown as (
+      fn: string,
+      args: Record<string, unknown>,
+    ) => Promise<{ data: number | null; error: { message: string } | null }>;
+    const { data: reservedBalance, error: reserveError } = await rpc("spend_credits", {
+      _amount: CREDITS_PER_RUN,
+      _reference: data.slug,
+    });
+    if (reserveError) {
+      if (/insufficient credits/i.test(reserveError.message)) {
+        throw new Error("You are out of credits. Add credits to keep generating.");
+      }
+      throw new Error("Could not reserve credits for this run.");
     }
+    const newBalance = reservedBalance ?? 0;
+
 
     const { data: job } = await supabase
       .from("ai_jobs")
