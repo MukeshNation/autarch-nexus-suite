@@ -48,17 +48,23 @@ export const runModule = createServerFn({ method: "POST" })
       throw new Error("Too many requests. Please wait a moment and try again.");
     }
 
-    // Entitlement / credits.
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("credit_balance")
-      .eq("id", userId)
-      .maybeSingle();
-    if (profileError) throw new Error("Could not read your account balance.");
-    const balance = profile?.credit_balance ?? 0;
-    if (balance < CREDITS_PER_RUN) {
-      throw new Error("You are out of credits. Add credits to keep generating.");
+    // Entitlement / credits — reserved atomically so concurrent runs cannot overspend.
+    const rpc = supabase.rpc as unknown as (
+      fn: string,
+      args: Record<string, unknown>,
+    ) => Promise<{ data: number | null; error: { message: string } | null }>;
+    const { data: reservedBalance, error: reserveError } = await rpc("spend_credits", {
+      _amount: CREDITS_PER_RUN,
+      _reference: data.slug,
+    });
+    if (reserveError) {
+      if (/insufficient credits/i.test(reserveError.message)) {
+        throw new Error("You are out of credits. Add credits to keep generating.");
+      }
+      throw new Error("Could not reserve credits for this run.");
     }
+    const newBalance = reservedBalance ?? 0;
+
 
     const { data: job } = await supabase
       .from("ai_jobs")
@@ -111,6 +117,8 @@ export const runModule = createServerFn({ method: "POST" })
       text = payload.choices?.[0]?.message?.content?.trim() ?? "";
       if (!text) throw new Error("The AI service returned an empty response.");
     } catch (error) {
+      // Failed run: give the reserved credits back.
+      await rpc("refund_credits", { _amount: CREDITS_PER_RUN, _reference: data.slug });
       if (jobId) {
         await supabase
           .from("ai_jobs")
@@ -127,18 +135,10 @@ export const runModule = createServerFn({ method: "POST" })
 
     const latencyMs = Date.now() - started;
 
-    // Finalise: privileged writes (ledger + usage are append-only for users).
+    // Finalise: usage records are append-only for users, so write them with the service role.
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const newBalance = balance - CREDITS_PER_RUN;
 
-    await supabaseAdmin.from("profiles").update({ credit_balance: newBalance }).eq("id", userId);
-    await supabaseAdmin.from("credit_ledger").insert({
-      user_id: userId,
-      transaction_type: "module_run",
-      amount: -CREDITS_PER_RUN,
-      balance_after: newBalance,
-      reference_id: data.slug,
-    });
+
     await supabaseAdmin.from("usage_events").insert({
       user_id: userId,
       module_id: data.moduleId,
