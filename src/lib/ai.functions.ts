@@ -139,13 +139,6 @@ export const runModule = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
 
-    await supabaseAdmin.from("credit_ledger").insert({
-      user_id: userId,
-      transaction_type: "module_run",
-      amount: -CREDITS_PER_RUN,
-      balance_after: newBalance,
-      reference_id: data.slug,
-    });
     await supabaseAdmin.from("usage_events").insert({
       user_id: userId,
       module_id: data.moduleId,
