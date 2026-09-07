@@ -769,6 +769,14 @@ export type Database = {
         Args: { _user_id: string; _workspace_id: string }
         Returns: boolean
       }
+      refund_credits: {
+        Args: { _amount: number; _reference: string }
+        Returns: number
+      }
+      spend_credits: {
+        Args: { _amount: number; _reference: string }
+        Returns: number
+      }
     }
     Enums: {
       app_role: "admin" | "user" | "director"
