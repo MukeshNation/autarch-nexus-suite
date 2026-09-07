@@ -117,6 +117,8 @@ export const runModule = createServerFn({ method: "POST" })
       text = payload.choices?.[0]?.message?.content?.trim() ?? "";
       if (!text) throw new Error("The AI service returned an empty response.");
     } catch (error) {
+      // Failed run: give the reserved credits back.
+      await rpc("refund_credits", { _amount: CREDITS_PER_RUN, _reference: data.slug });
       if (jobId) {
         await supabase
           .from("ai_jobs")
@@ -133,11 +135,10 @@ export const runModule = createServerFn({ method: "POST" })
 
     const latencyMs = Date.now() - started;
 
-    // Finalise: privileged writes (ledger + usage are append-only for users).
+    // Finalise: usage records are append-only for users, so write them with the service role.
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const newBalance = balance - CREDITS_PER_RUN;
 
-    await supabaseAdmin.from("profiles").update({ credit_balance: newBalance }).eq("id", userId);
+
     await supabaseAdmin.from("credit_ledger").insert({
       user_id: userId,
       transaction_type: "module_run",
