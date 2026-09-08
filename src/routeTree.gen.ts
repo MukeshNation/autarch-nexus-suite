@@ -24,8 +24,8 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SolutionsRouteImport } from './routes/solutions'
-import { Route as AdminModulesRouteImport } from './routes/admin.modules'
-import { Route as AdminProvidersRouteImport } from './routes/admin.providers'
+import { Route as AdminModulesRouteImport } from './routes/admin_.modules'
+import { Route as AdminProvidersRouteImport } from './routes/admin_.providers'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAutomationsRouteImport } from './routes/app.automations'
 import { Route as AppBillingRouteImport } from './routes/app.billing'
@@ -116,14 +116,14 @@ const SolutionsRoute = SolutionsRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminModulesRoute = AdminModulesRouteImport.update({
-  id: '/modules',
-  path: '/modules',
-  getParentRoute: () => AdminRoute,
+  id: '/admin_/modules',
+  path: '/admin/modules',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminProvidersRoute = AdminProvidersRouteImport.update({
-  id: '/providers',
-  path: '/providers',
-  getParentRoute: () => AdminRoute,
+  id: '/admin_/providers',
+  path: '/admin/providers',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
@@ -193,7 +193,7 @@ const AppModulesSlugRoute = AppModulesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
+  '/admin': typeof AdminRoute
   '/app': typeof AppRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
@@ -225,7 +225,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
+  '/admin': typeof AdminRoute
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
   '/forgot-password': typeof ForgotPasswordRoute
@@ -257,7 +257,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
+  '/admin': typeof AdminRoute
   '/app': typeof AppRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
@@ -271,8 +271,8 @@ export interface FileRoutesById {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
-  '/admin/modules': typeof AdminModulesRoute
-  '/admin/providers': typeof AdminProvidersRoute
+  '/admin_/modules': typeof AdminModulesRoute
+  '/admin_/providers': typeof AdminProvidersRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
@@ -368,8 +368,8 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
-    | '/admin/modules'
-    | '/admin/providers'
+    | '/admin_/modules'
+    | '/admin_/providers'
     | '/app/automations'
     | '/app/billing'
     | '/app/files'
@@ -387,7 +387,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRouteWithChildren
+  AdminRoute: typeof AdminRoute
   AppRoute: typeof AppRouteWithChildren
   CompanyRoute: typeof CompanyRoute
   ContactRoute: typeof ContactRoute
@@ -401,6 +401,8 @@ export interface RootRouteChildren {
   SecurityRoute: typeof SecurityRoute
   SignupRoute: typeof SignupRoute
   SolutionsRoute: typeof SolutionsRoute
+  AdminModulesRoute: typeof AdminModulesRoute
+  AdminProvidersRoute: typeof AdminProvidersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -510,19 +512,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/modules': {
-      id: '/admin/modules'
-      path: '/modules'
+    '/admin_/modules': {
+      id: '/admin_/modules'
+      path: '/admin/modules'
       fullPath: '/admin/modules'
       preLoaderRoute: typeof AdminModulesRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/providers': {
-      id: '/admin/providers'
-      path: '/providers'
+    '/admin_/providers': {
+      id: '/admin_/providers'
+      path: '/admin/providers'
       fullPath: '/admin/providers'
       preLoaderRoute: typeof AdminProvidersRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof rootRouteImport
     }
     '/app/': {
       id: '/app/'
@@ -618,18 +620,6 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AdminRouteChildren {
-  AdminModulesRoute: typeof AdminModulesRoute
-  AdminProvidersRoute: typeof AdminProvidersRoute
-}
-
-const AdminRouteChildren: AdminRouteChildren = {
-  AdminModulesRoute: AdminModulesRoute,
-  AdminProvidersRoute: AdminProvidersRoute,
-}
-
-const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
-
 interface AppRouteChildren {
   AppAutomationsRoute: typeof AppAutomationsRoute
   AppBillingRoute: typeof AppBillingRoute
@@ -666,7 +656,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRouteWithChildren,
+  AdminRoute: AdminRoute,
   AppRoute: AppRouteWithChildren,
   CompanyRoute: CompanyRoute,
   ContactRoute: ContactRoute,
@@ -680,6 +670,8 @@ const rootRouteChildren: RootRouteChildren = {
   SecurityRoute: SecurityRoute,
   SignupRoute: SignupRoute,
   SolutionsRoute: SolutionsRoute,
+  AdminModulesRoute: AdminModulesRoute,
+  AdminProvidersRoute: AdminProvidersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
