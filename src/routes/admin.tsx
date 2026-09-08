@@ -433,7 +433,138 @@ function AdminConsole() {
       </Tabs>
     </Shell>
   );
+
+const PLAN_PRICE: Record<string, number> = { free: 0, starter: 19, pro: 49 };
+
+function PlatformPanel() {
+  const overviewFn = useServerFn(getAdminOverview);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["admin-overview"],
+    queryFn: () => overviewFn({} as never),
+    refetchInterval: 30_000,
+  });
+
+  if (isLoading) {
+    return <p className="panel p-4 font-mono text-[0.7rem] text-muted-foreground">Loading live platform data…</p>;
+  }
+  if (error || !data) {
+    return <p className="panel p-4 font-mono text-[0.7rem] text-muted-foreground">Could not load platform data.</p>;
+  }
+
+  const paidSubs = Object.entries(data.subscriptions.byPlan).filter(([plan]) => plan !== "free");
+  const mrr = paidSubs.reduce((sum, [plan, count]) => sum + (PLAN_PRICE[plan] ?? 0) * count, 0);
+  const paymentsLive = data.payments.status === "live";
+
+  return (
+    <div className="space-y-3">
+      <section className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        <Stat label="Active now" value={data.users.activeNow} live />
+        <Stat label="Active subscriptions" value={data.subscriptions.active} />
+        <Stat label="AI runs (total)" value={data.ai.total} />
+        <Stat label="Failed runs" value={data.ai.failed} />
+      </section>
+
+      <div className="grid gap-3 lg:grid-cols-2">
+        <section className="panel p-4">
+          <span className="label-mono">Revenue</span>
+          <p className="mt-1 text-2xl font-semibold tracking-tight">${mrr.toLocaleString()}/mo</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {paymentsLive
+              ? "Recurring value of active paid plans at configured prices."
+              : "Contracted value of active paid plans at configured prices. No money has been collected — the payment provider is not live yet."}
+          </p>
+          <ul className="mt-3 space-y-1 font-mono text-[0.68rem] text-muted-foreground">
+            {paidSubs.length === 0 && <li>No paid subscriptions yet.</li>}
+            {paidSubs.map(([plan, count]) => (
+              <li key={plan} className="flex justify-between">
+                <span>
+                  {plan} × {count}
+                </span>
+                <span>${((PLAN_PRICE[plan] ?? 0) * count).toLocaleString()}</span>
+              </li>
+            ))}
+            <li className="flex justify-between border-t border-border pt-1">
+              <span>payments · {data.payments.provider}</span>
+              <span>
+                {data.payments.status.replace(/_/g, " ")} · {data.payments.environment}
+              </span>
+            </li>
+          </ul>
+        </section>
+
+        <section className="panel p-4">
+          <span className="label-mono">AI providers</span>
+          <p className="mt-1 text-2xl font-semibold tracking-tight">
+            {data.providers.connected}/{data.providers.total || 0}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            connected and tested · {data.providers.enabled} enabled for routing
+          </p>
+          <ul className="mt-3 space-y-1 font-mono text-[0.68rem] text-muted-foreground">
+            <li className="flex justify-between">
+              <span>average run latency</span>
+              <span>{data.ai.avgLatencyMs ? `${(data.ai.avgLatencyMs / 1000).toFixed(1)}s` : "—"}</span>
+            </li>
+            <li className="flex justify-between">
+              <span>running now</span>
+              <span>{data.ai.running}</span>
+            </li>
+            <li className="flex justify-between">
+              <span>emergency stop</span>
+              <span>{data.flags["ai_emergency_stop"] ? "ON" : "off"}</span>
+            </li>
+          </ul>
+          <Button asChild size="sm" variant="outline" className="mt-3 h-8 font-mono text-[0.68rem]">
+            <Link to="/admin/providers">Manage providers</Link>
+          </Button>
+        </section>
+
+        <section className="panel p-4">
+          <span className="label-mono">Modules</span>
+          <ul className="mt-3 space-y-1 font-mono text-[0.68rem] text-muted-foreground">
+            {Object.entries(data.modules).length === 0 && <li>No module states saved yet.</li>}
+            {Object.entries(data.modules).map(([status, count]) => (
+              <li key={status} className="flex justify-between">
+                <span>{status.replace(/_/g, " ")}</span>
+                <span>{count}</span>
+              </li>
+            ))}
+          </ul>
+          <Button asChild size="sm" variant="outline" className="mt-3 h-8 font-mono text-[0.68rem]">
+            <Link to="/admin/modules">Control modules</Link>
+          </Button>
+        </section>
+
+        <section className="panel p-4">
+          <span className="label-mono">Credits & storage</span>
+          <ul className="mt-3 space-y-1 font-mono text-[0.68rem] text-muted-foreground">
+            <li className="flex justify-between">
+              <span>granted</span>
+              <span>{data.credits.allocated.toLocaleString()}</span>
+            </li>
+            <li className="flex justify-between">
+              <span>consumed</span>
+              <span>{data.credits.consumed.toLocaleString()}</span>
+            </li>
+            <li className="flex justify-between">
+              <span>refunded</span>
+              <span>{data.credits.refunded.toLocaleString()}</span>
+            </li>
+            <li className="flex justify-between">
+              <span>files stored</span>
+              <span>{(data.storageBytes / 1024 / 1024).toFixed(1)} MB</span>
+            </li>
+            <li className="flex justify-between">
+              <span>new users this month</span>
+              <span>{data.users.newThisMonth}</span>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  );
 }
+
 
 function Stat({ label, value, live = false }: { label: string; value: number; live?: boolean }) {
   return (
