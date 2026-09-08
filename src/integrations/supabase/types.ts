@@ -211,6 +211,98 @@ export type Database = {
           },
         ]
       }
+      ai_provider_secrets: {
+        Row: {
+          api_key: string
+          provider_id: string
+          updated_at: string
+        }
+        Insert: {
+          api_key: string
+          provider_id: string
+          updated_at?: string
+        }
+        Update: {
+          api_key?: string
+          provider_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_provider_secrets_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: true
+            referencedRelation: "ai_providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_providers: {
+        Row: {
+          adapter: string
+          base_url: string | null
+          capabilities: string[]
+          category: string
+          cost_note: string | null
+          created_at: string
+          enabled: boolean
+          has_secret: boolean
+          id: string
+          last_test_at: string | null
+          last_test_status: string | null
+          max_retries: number
+          model: string | null
+          name: string
+          notes: string | null
+          priority: number
+          rate_note: string | null
+          timeout_ms: number
+          updated_at: string
+        }
+        Insert: {
+          adapter?: string
+          base_url?: string | null
+          capabilities?: string[]
+          category?: string
+          cost_note?: string | null
+          created_at?: string
+          enabled?: boolean
+          has_secret?: boolean
+          id?: string
+          last_test_at?: string | null
+          last_test_status?: string | null
+          max_retries?: number
+          model?: string | null
+          name: string
+          notes?: string | null
+          priority?: number
+          rate_note?: string | null
+          timeout_ms?: number
+          updated_at?: string
+        }
+        Update: {
+          adapter?: string
+          base_url?: string | null
+          capabilities?: string[]
+          category?: string
+          cost_note?: string | null
+          created_at?: string
+          enabled?: boolean
+          has_secret?: boolean
+          id?: string
+          last_test_at?: string | null
+          last_test_status?: string | null
+          max_retries?: number
+          model?: string | null
+          name?: string
+          notes?: string | null
+          priority?: number
+          rate_note?: string | null
+          timeout_ms?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           action: string
@@ -279,6 +371,42 @@ export type Database = {
           },
         ]
       }
+      capability_routes: {
+        Row: {
+          capability: string
+          fallback_provider_id: string | null
+          primary_provider_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          capability: string
+          fallback_provider_id?: string | null
+          primary_provider_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          capability?: string
+          fallback_provider_id?: string | null
+          primary_provider_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "capability_routes_fallback_provider_id_fkey"
+            columns: ["fallback_provider_id"]
+            isOneToOne: false
+            referencedRelation: "ai_providers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "capability_routes_primary_provider_id_fkey"
+            columns: ["primary_provider_id"]
+            isOneToOne: false
+            referencedRelation: "ai_providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       connected_accounts: {
         Row: {
           connection_status: string
@@ -333,6 +461,54 @@ export type Database = {
           reference_id?: string | null
           transaction_type?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      module_settings: {
+        Row: {
+          badge: string | null
+          coming_soon_message: string | null
+          concurrency_limit: number | null
+          credits_per_run: number
+          daily_limit: number | null
+          launch_date: string | null
+          maintenance_message: string | null
+          min_plan: string
+          monthly_limit: number | null
+          slug: string
+          status: string
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          badge?: string | null
+          coming_soon_message?: string | null
+          concurrency_limit?: number | null
+          credits_per_run?: number
+          daily_limit?: number | null
+          launch_date?: string | null
+          maintenance_message?: string | null
+          min_plan?: string
+          monthly_limit?: number | null
+          slug: string
+          status?: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          badge?: string | null
+          coming_soon_message?: string | null
+          concurrency_limit?: number | null
+          credits_per_run?: number
+          daily_limit?: number | null
+          launch_date?: string | null
+          maintenance_message?: string | null
+          min_plan?: string
+          monthly_limit?: number | null
+          slug?: string
+          status?: string
+          updated_at?: string
+          visible?: boolean
         }
         Relationships: []
       }
@@ -410,6 +586,84 @@ export type Database = {
           starts_at?: string
           target_plan?: string
           title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      payment_provider_config: {
+        Row: {
+          enabled: boolean
+          environment: string
+          key_id: string | null
+          last_error: string | null
+          last_event_at: string | null
+          provider: string
+          status: string
+          updated_at: string
+          webhook_configured: boolean
+        }
+        Insert: {
+          enabled?: boolean
+          environment?: string
+          key_id?: string | null
+          last_error?: string | null
+          last_event_at?: string | null
+          provider: string
+          status?: string
+          updated_at?: string
+          webhook_configured?: boolean
+        }
+        Update: {
+          enabled?: boolean
+          environment?: string
+          key_id?: string | null
+          last_error?: string | null
+          last_event_at?: string | null
+          provider?: string
+          status?: string
+          updated_at?: string
+          webhook_configured?: boolean
+        }
+        Relationships: []
+      }
+      payment_provider_secrets: {
+        Row: {
+          api_secret: string | null
+          provider: string
+          updated_at: string
+          webhook_secret: string | null
+        }
+        Insert: {
+          api_secret?: string | null
+          provider: string
+          updated_at?: string
+          webhook_secret?: string | null
+        }
+        Update: {
+          api_secret?: string | null
+          provider?: string
+          updated_at?: string
+          webhook_secret?: string | null
+        }
+        Relationships: []
+      }
+      platform_flags: {
+        Row: {
+          enabled: boolean
+          key: string
+          note: string | null
+          updated_at: string
+        }
+        Insert: {
+          enabled?: boolean
+          key: string
+          note?: string | null
+          updated_at?: string
+        }
+        Update: {
+          enabled?: boolean
+          key?: string
+          note?: string | null
           updated_at?: string
         }
         Relationships: []

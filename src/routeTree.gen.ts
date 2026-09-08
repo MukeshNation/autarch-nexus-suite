@@ -24,6 +24,9 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as AdminModulesRouteImport } from './routes/admin_.modules'
+import { Route as AdminPaymentsRouteImport } from './routes/admin_.payments'
+import { Route as AdminProvidersRouteImport } from './routes/admin_.providers'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAutomationsRouteImport } from './routes/app.automations'
 import { Route as AppBillingRouteImport } from './routes/app.billing'
@@ -113,6 +116,21 @@ const SolutionsRoute = SolutionsRouteImport.update({
   path: '/solutions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminModulesRoute = AdminModulesRouteImport.update({
+  id: '/admin_/modules',
+  path: '/admin/modules',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/admin_/payments',
+  path: '/admin/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProvidersRoute = AdminProvidersRouteImport.update({
+  id: '/admin_/providers',
+  path: '/admin/providers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -195,6 +213,9 @@ export interface FileRoutesByFullPath {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/admin/modules': typeof AdminModulesRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/providers': typeof AdminProvidersRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
@@ -224,6 +245,9 @@ export interface FileRoutesByTo {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/admin/modules': typeof AdminModulesRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/providers': typeof AdminProvidersRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
@@ -255,6 +279,9 @@ export interface FileRoutesById {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/admin_/modules': typeof AdminModulesRoute
+  '/admin_/payments': typeof AdminPaymentsRoute
+  '/admin_/providers': typeof AdminProvidersRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
@@ -287,6 +314,9 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/admin/modules'
+    | '/admin/payments'
+    | '/admin/providers'
     | '/app/automations'
     | '/app/billing'
     | '/app/files'
@@ -316,6 +346,9 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/admin/modules'
+    | '/admin/payments'
+    | '/admin/providers'
     | '/app/automations'
     | '/app/billing'
     | '/app/files'
@@ -346,6 +379,9 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/admin_/modules'
+    | '/admin_/payments'
+    | '/admin_/providers'
     | '/app/automations'
     | '/app/billing'
     | '/app/files'
@@ -377,6 +413,9 @@ export interface RootRouteChildren {
   SecurityRoute: typeof SecurityRoute
   SignupRoute: typeof SignupRoute
   SolutionsRoute: typeof SolutionsRoute
+  AdminModulesRoute: typeof AdminModulesRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
+  AdminProvidersRoute: typeof AdminProvidersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -484,6 +523,27 @@ declare module '@tanstack/react-router' {
       path: '/solutions'
       fullPath: '/solutions'
       preLoaderRoute: typeof SolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin_/modules': {
+      id: '/admin_/modules'
+      path: '/admin/modules'
+      fullPath: '/admin/modules'
+      preLoaderRoute: typeof AdminModulesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin_/payments': {
+      id: '/admin_/payments'
+      path: '/admin/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin_/providers': {
+      id: '/admin_/providers'
+      path: '/admin/providers'
+      fullPath: '/admin/providers'
+      preLoaderRoute: typeof AdminProvidersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -630,6 +690,9 @@ const rootRouteChildren: RootRouteChildren = {
   SecurityRoute: SecurityRoute,
   SignupRoute: SignupRoute,
   SolutionsRoute: SolutionsRoute,
+  AdminModulesRoute: AdminModulesRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
+  AdminProvidersRoute: AdminProvidersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
