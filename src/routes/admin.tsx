@@ -264,13 +264,19 @@ function AdminConsole() {
         <Stat label="Free granted" value={stats.free} />
       </section>
 
-      <Tabs defaultValue="users">
+      <Tabs defaultValue="platform">
         <TabsList className="font-mono text-[0.7rem]">
+          <TabsTrigger value="platform">Platform</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
           <TabsTrigger value="live">Live activity</TabsTrigger>
           <TabsTrigger value="offers">Offers</TabsTrigger>
           <TabsTrigger value="plans">Plans</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="platform" className="mt-3">
+          <PlatformPanel />
+        </TabsContent>
+
 
         <TabsContent value="users" className="mt-3 space-y-3">
           <Input
