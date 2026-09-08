@@ -32,7 +32,7 @@ export function ModuleRunner({
   });
 
   return (
-    <PanelFrame title="Run" note="Live · uses 1 credit per run">
+    <PanelFrame title="Run" note="Routed through the central Autarch AI gateway">
       <Textarea
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
@@ -63,8 +63,11 @@ export function ModuleRunner({
               <Copy className="size-3.5" /> Copy
             </Button>
             <span className="label-mono">
-              {result.model} · {(result.latencyMs / 1000).toFixed(1)}s · {result.balance} credits left
+              {result.provider} · {result.model} · {(result.latencyMs / 1000).toFixed(1)}s ·{" "}
+              {result.creditsUsed} credit{result.creditsUsed === 1 ? "" : "s"} · {result.balance} left
+              {result.usedFallback ? " · fallback provider" : ""}
             </span>
+
           </>
         )}
       </div>
