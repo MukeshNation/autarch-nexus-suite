@@ -24,6 +24,8 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as AdminModulesRouteImport } from './routes/admin.modules'
+import { Route as AdminProvidersRouteImport } from './routes/admin.providers'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAutomationsRouteImport } from './routes/app.automations'
 import { Route as AppBillingRouteImport } from './routes/app.billing'
@@ -113,6 +115,16 @@ const SolutionsRoute = SolutionsRouteImport.update({
   path: '/solutions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminModulesRoute = AdminModulesRouteImport.update({
+  id: '/modules',
+  path: '/modules',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProvidersRoute = AdminProvidersRouteImport.update({
+  id: '/providers',
+  path: '/providers',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -181,7 +193,7 @@ const AppModulesSlugRoute = AppModulesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/app': typeof AppRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
@@ -195,6 +207,8 @@ export interface FileRoutesByFullPath {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/admin/modules': typeof AdminModulesRoute
+  '/admin/providers': typeof AdminProvidersRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
@@ -211,7 +225,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
   '/forgot-password': typeof ForgotPasswordRoute
@@ -224,6 +238,8 @@ export interface FileRoutesByTo {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/admin/modules': typeof AdminModulesRoute
+  '/admin/providers': typeof AdminProvidersRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
@@ -241,7 +257,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/app': typeof AppRouteWithChildren
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
@@ -255,6 +271,8 @@ export interface FileRoutesById {
   '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/admin/modules': typeof AdminModulesRoute
+  '/admin/providers': typeof AdminProvidersRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
@@ -287,6 +305,8 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/admin/modules'
+    | '/admin/providers'
     | '/app/automations'
     | '/app/billing'
     | '/app/files'
@@ -316,6 +336,8 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/admin/modules'
+    | '/admin/providers'
     | '/app/automations'
     | '/app/billing'
     | '/app/files'
@@ -346,6 +368,8 @@ export interface FileRouteTypes {
     | '/security'
     | '/signup'
     | '/solutions'
+    | '/admin/modules'
+    | '/admin/providers'
     | '/app/automations'
     | '/app/billing'
     | '/app/files'
@@ -363,7 +387,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
   CompanyRoute: typeof CompanyRoute
   ContactRoute: typeof ContactRoute
@@ -486,6 +510,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/modules': {
+      id: '/admin/modules'
+      path: '/modules'
+      fullPath: '/admin/modules'
+      preLoaderRoute: typeof AdminModulesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/providers': {
+      id: '/admin/providers'
+      path: '/providers'
+      fullPath: '/admin/providers'
+      preLoaderRoute: typeof AdminProvidersRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/app/': {
       id: '/app/'
       path: '/'
@@ -580,6 +618,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminModulesRoute: typeof AdminModulesRoute
+  AdminProvidersRoute: typeof AdminProvidersRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminModulesRoute: AdminModulesRoute,
+  AdminProvidersRoute: AdminProvidersRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 interface AppRouteChildren {
   AppAutomationsRoute: typeof AppAutomationsRoute
   AppBillingRoute: typeof AppBillingRoute
@@ -616,7 +666,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
+  AdminRoute: AdminRouteWithChildren,
   AppRoute: AppRouteWithChildren,
   CompanyRoute: CompanyRoute,
   ContactRoute: ContactRoute,

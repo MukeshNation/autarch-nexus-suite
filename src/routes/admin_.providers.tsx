@@ -9,10 +9,9 @@ import { ADAPTERS, CAPABILITIES, IMPLEMENTED_ADAPTERS, MODULE_MANIFEST } from "@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export const Route = createFileRoute("/admin/providers")({
+export const Route = createFileRoute("/admin_/providers")({
   ssr: false,
   head: () => ({
     meta: [
@@ -309,4 +308,3 @@ function ProvidersPage() {
   );
 }
 
-export const unusedSwitch = Switch;
