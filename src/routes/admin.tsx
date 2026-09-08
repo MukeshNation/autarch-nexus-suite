@@ -433,6 +433,8 @@ function AdminConsole() {
       </Tabs>
     </Shell>
   );
+}
+
 
 const PLAN_PRICE: Record<string, number> = { free: 0, starter: 19, pro: 49 };
 
