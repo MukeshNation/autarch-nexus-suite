@@ -127,16 +127,16 @@ function Shell({ children }: { children: React.ReactNode }) {
       <header className="flex items-center gap-3 border-b border-border px-5 py-3">
         <AutarchWordmark />
         <span className="label-mono">Admin</span>
-        <div className="ml-auto flex flex-wrap items-center gap-3">
-          <Link to="/admin/providers" className="label-mono hover:text-foreground">
-            AI providers
-          </Link>
-          <Link to="/admin/modules" className="label-mono hover:text-foreground">
-            Modules
-          </Link>
-          <Link to="/admin/payments" className="label-mono hover:text-foreground">
-            Payments
-          </Link>
+        <div className="ml-auto flex flex-wrap items-center gap-2">
+          <Button asChild size="sm" variant="outline" className="h-8 font-mono text-[0.68rem]">
+            <Link to="/admin/providers">AI providers</Link>
+          </Button>
+          <Button asChild size="sm" variant="outline" className="h-8 font-mono text-[0.68rem]">
+            <Link to="/admin/modules">Modules</Link>
+          </Button>
+          <Button asChild size="sm" variant="outline" className="h-8 font-mono text-[0.68rem]">
+            <Link to="/admin/payments">Payments</Link>
+          </Button>
           <ThemeToggle className="size-8" />
           <Link to="/app" className="label-mono hover:text-foreground">
             Workspace
