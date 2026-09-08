@@ -42,7 +42,7 @@ function ModuleControlPage() {
   const [selected, setSelected] = useState<string[]>([]);
 
   useEffect(() => {
-    void sync({ data: {} }).then(() => qc.invalidateQueries({ queryKey: ["module-settings"] }));
+    void sync({} as never).then(() => qc.invalidateQueries({ queryKey: ["module-settings"] }));
   }, [qc, sync]);
 
   const { data: rows } = useQuery({
@@ -55,7 +55,7 @@ function ModuleControlPage() {
 
   const { data: providerData } = useQuery({
     queryKey: ["admin-providers"],
-    queryFn: () => loadProviders({ data: {} }),
+    queryFn: () => loadProviders({} as never),
   });
 
   const settings = useMemo(() => new Map((rows ?? []).map((r) => [r.slug, r])), [rows]);

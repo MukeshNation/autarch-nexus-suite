@@ -38,7 +38,7 @@ function PaymentsPage() {
   const flag = useServerFn(setPlatformFlag);
   const overviewFn = useServerFn(getAdminOverview);
 
-  const { data: overview } = useQuery({ queryKey: ["admin-overview"], queryFn: () => overviewFn({ data: {} }) });
+  const { data: overview } = useQuery({ queryKey: ["admin-overview"], queryFn: () => overviewFn({} as never) });
 
   const [form, setForm] = useState({
     environment: "sandbox",

@@ -33,7 +33,7 @@ function ProvidersPage() {
   const test = useServerFn(testProvider);
   const route = useServerFn(setCapabilityRoute);
 
-  const { data, isLoading, error } = useQuery({ queryKey: ["admin-providers"], queryFn: () => load({ data: {} }) });
+  const { data, isLoading, error } = useQuery({ queryKey: ["admin-providers"], queryFn: () => load({} as never) });
 
   const [form, setForm] = useState({
     name: "",
