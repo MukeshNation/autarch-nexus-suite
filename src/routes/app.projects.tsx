@@ -65,7 +65,7 @@ function ProjectsPage() {
             <p className="panel p-4 text-xs text-destructive">Could not load your projects. Please refresh.</p>
           )}
           {projects.data?.length === 0 && (
-            <p className="panel border-dashed p-8 text-center font-mono text-xs text-muted-foreground">
+            <p className="panel border-dashed p-8 text-center text-xs text-muted-foreground">
               No projects yet. Create your first project on the right.
             </p>
           )}
@@ -100,13 +100,13 @@ function ProjectsPage() {
                 {p.description && <p className="mt-1.5 text-xs text-muted-foreground">{p.description}</p>}
                 <div className="mt-3 flex items-center gap-3">
                   <Progress value={progress} className="h-1 flex-1" />
-                  <span className="font-mono text-[0.65rem] text-muted-foreground">
+                  <span className="text-[0.65rem] text-muted-foreground">
                     {p.priority} · {s.files} files · {s.done}/{s.total} tasks
                   </span>
                 </div>
 
                 <Tabs defaultValue="overview" className="mt-4">
-                  <TabsList className="font-mono text-[0.65rem]">
+                  <TabsList className="text-[0.65rem]">
                     {["overview", "tasks", "files", "status"].map((t) => (
                       <TabsTrigger key={t} value={t} className="text-[0.65rem] capitalize">
                         {t}
@@ -127,7 +127,7 @@ function ProjectsPage() {
                     </ul>
                   </TabsContent>
                   <TabsContent value="files" className="pt-3">
-                    <ul className="space-y-1 font-mono text-[0.68rem] text-muted-foreground">
+                    <ul className="space-y-1 text-[0.68rem] text-muted-foreground">
                       {projectFiles.map((f) => (
                         <li key={f.id}>{f.file_name}</li>
                       ))}
@@ -141,7 +141,7 @@ function ProjectsPage() {
                           key={status}
                           size="sm"
                           variant={p.status === status ? "default" : "outline"}
-                          className="font-mono text-[0.65rem] capitalize"
+                          className="text-[0.65rem] capitalize"
                           onClick={() =>
                             updateProject.mutate(
                               { id: p.id, patch: { status } },
@@ -196,7 +196,7 @@ function ProjectsPage() {
                 id="p-name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="mt-1.5 font-mono text-xs"
+                className="mt-1.5 text-xs"
                 placeholder="Atlas Relaunch"
               />
             </div>
@@ -209,7 +209,7 @@ function ProjectsPage() {
                 rows={3}
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
-                className="mt-1.5 font-mono text-xs"
+                className="mt-1.5 text-xs"
                 placeholder="What is this project for?"
               />
             </div>
@@ -222,7 +222,7 @@ function ProjectsPage() {
                   id="p-priority"
                   value={form.priority}
                   onChange={(e) => setForm({ ...form, priority: e.target.value })}
-                  className="mt-1.5 font-mono text-xs"
+                  className="mt-1.5 text-xs"
                   placeholder="high"
                 />
               </div>
@@ -234,7 +234,7 @@ function ProjectsPage() {
                   id="p-category"
                   value={form.category}
                   onChange={(e) => setForm({ ...form, category: e.target.value })}
-                  className="mt-1.5 font-mono text-xs"
+                  className="mt-1.5 text-xs"
                   placeholder="Marketing"
                 />
               </div>
@@ -248,10 +248,10 @@ function ProjectsPage() {
                 type="date"
                 value={form.deadline}
                 onChange={(e) => setForm({ ...form, deadline: e.target.value })}
-                className="mt-1.5 font-mono text-xs"
+                className="mt-1.5 text-xs"
               />
             </div>
-            <Button type="submit" disabled={createProject.isPending} className="w-full font-mono text-xs">
+            <Button type="submit" disabled={createProject.isPending} className="w-full text-xs">
               {createProject.isPending ? "Creating…" : "Create project"}
             </Button>
           </div>

@@ -54,7 +54,7 @@ function SolutionsPage() {
 
               <div className="mt-5 flex flex-wrap gap-2">
                 {ind.modules.map((slug) => (
-                  <Button key={slug} asChild size="sm" variant="outline" className="font-mono text-xs">
+                  <Button key={slug} asChild size="sm" variant="outline" className="text-xs">
                     <Link to="/app/modules/$slug" params={{ slug }}>
                       Open {slug}
                     </Link>

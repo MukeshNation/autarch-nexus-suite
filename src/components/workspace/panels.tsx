@@ -51,7 +51,7 @@ function EmptyState({ icon, label, hint }: { icon: ReactNode; label: string; hin
   return (
     <div className="flex h-full min-h-32 flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border px-4 py-8 text-center">
       <span className="text-muted-foreground">{icon}</span>
-      <span className="font-mono text-xs">{label}</span>
+      <span className="text-xs">{label}</span>
       {hint && <span className="max-w-56 text-[0.7rem] leading-snug text-muted-foreground">{hint}</span>}
     </div>
   );
@@ -84,15 +84,15 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
       return (
         <PanelFrame title={title} note={note}>
           <div className="rounded-md border border-border bg-secondary/40 p-3">
-            <p className="min-h-16 font-mono text-xs leading-relaxed whitespace-pre-wrap">
+            <p className="min-h-16 text-xs leading-relaxed whitespace-pre-wrap">
               {request || <span className="text-muted-foreground">Describe the task…</span>}
             </p>
           </div>
           <div className="mt-2 flex gap-2">
-            <Button size="sm" className="font-mono text-xs">
+            <Button size="sm" className="text-xs">
               Run
             </Button>
-            <Button size="sm" variant="outline" className="font-mono text-xs">
+            <Button size="sm" variant="outline" className="text-xs">
               Save to project
             </Button>
           </div>
@@ -111,7 +111,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
                     <span
                       key={opt}
                       className={cn(
-                        "cursor-default rounded-full border px-2.5 py-1 font-mono text-[0.68rem]",
+                        "cursor-default rounded-full border px-2.5 py-1 text-[0.68rem]",
                         i === j
                           ? "border-border-strong bg-secondary text-foreground"
                           : "border-border text-muted-foreground",
@@ -154,15 +154,15 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
       return (
         <PanelFrame title={title} note={note}>
           <div className="space-y-3">
-            <div className="ml-auto max-w-[85%] rounded-md rounded-br-none border border-border bg-secondary px-3 py-2 font-mono text-xs">
+            <div className="ml-auto max-w-[85%] rounded-md rounded-br-none border border-border bg-secondary px-3 py-2 text-xs">
               {request || "What should I look at first?"}
             </div>
             <div className="max-w-[90%] rounded-md rounded-bl-none border border-border px-3 py-2 text-xs leading-relaxed text-muted-foreground">
               Responses appear here once an AI provider is connected in a later phase.
             </div>
             <div className="flex items-center gap-2 rounded-md border border-border px-3 py-2">
-              <span className="flex-1 font-mono text-[0.7rem] text-muted-foreground">Message Autarch…</span>
-              <Button size="sm" variant="outline" className="font-mono text-[0.7rem]">
+              <span className="flex-1 text-[0.7rem] text-muted-foreground">Message Autarch…</span>
+              <Button size="sm" variant="outline" className="text-[0.7rem]">
                 Send
               </Button>
             </div>
@@ -173,7 +173,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
     case "filetree":
       return (
         <PanelFrame title={title} note={note}>
-          <ul className="font-mono text-xs">
+          <ul className="text-xs">
             {["src/", "  routes/", "    index.tsx", "    pricing.tsx", "  components/", "    hero.tsx", "  styles.css", "package.json"].map(
               (f) => (
                 <li key={f} className="flex items-center gap-1.5 rounded px-1 py-1 hover:bg-secondary">
@@ -201,7 +201,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
                 <span
                   key={t}
                   className={cn(
-                    "rounded-t border border-border px-2 py-0.5 font-mono text-[0.65rem]",
+                    "rounded-t border border-border px-2 py-0.5 text-[0.65rem]",
                     i === 0 ? "bg-secondary" : "text-muted-foreground",
                   )}
                 >
@@ -211,7 +211,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
             </div>
           }
         >
-          <pre className="overflow-x-auto rounded-md border border-border bg-secondary/40 p-3 font-mono text-[0.72rem] leading-relaxed text-muted-foreground">
+          <pre className="overflow-x-auto rounded-md border border-border bg-secondary/40 p-3 text-[0.72rem] leading-relaxed text-muted-foreground">
             {`export function Hero() {
   return (
     <section className="hero">
@@ -226,7 +226,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
     case "terminal":
       return (
         <PanelFrame title={title} note={note} actions={<TerminalIcon className="size-3.5 text-muted-foreground" />}>
-          <pre className="rounded-md border border-border bg-secondary/40 p-3 font-mono text-[0.72rem] leading-relaxed text-muted-foreground">
+          <pre className="rounded-md border border-border bg-secondary/40 p-3 text-[0.72rem] leading-relaxed text-muted-foreground">
             {`$ autarch build
 › resolving plan…
 › writing 14 files
@@ -238,7 +238,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
     case "diff":
       return (
         <PanelFrame title={title} note={note}>
-          <div className="overflow-hidden rounded-md border border-border font-mono text-[0.72rem]">
+          <div className="overflow-hidden rounded-md border border-border text-[0.72rem]">
             {[
               { t: "+", l: 'import { Composer } from "./composer";', c: "bg-sage/25" },
               { t: " ", l: "export function Page() {", c: "" },
@@ -275,7 +275,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
               </div>
             ))}
           </div>
-          <p className="mt-2 font-mono text-[0.68rem] text-muted-foreground">
+          <p className="mt-2 text-[0.68rem] text-muted-foreground">
             Generation surface. Output appears here once the image provider is connected.
           </p>
         </PanelFrame>
@@ -288,7 +288,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="space-y-1">
                 <Skeleton className="aspect-square w-full rounded-md" />
-                <span className="block font-mono text-[0.62rem] text-muted-foreground">v{i + 1}</span>
+                <span className="block text-[0.62rem] text-muted-foreground">v{i + 1}</span>
               </div>
             ))}
           </div>
@@ -312,7 +312,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
             <div className="h-1 flex-1 rounded-full bg-border">
               <div className="h-1 w-1/3 rounded-full bg-foreground" />
             </div>
-            <span className="font-mono text-[0.68rem] text-muted-foreground">00:38 / 01:54</span>
+            <span className="text-[0.68rem] text-muted-foreground">00:38 / 01:54</span>
           </div>
         </PanelFrame>
       );
@@ -323,7 +323,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
           <div className="space-y-2">
             {["Video", "Audio", "Captions", "Inserts"].map((track, i) => (
               <div key={track} className="flex items-center gap-2">
-                <span className="w-16 font-mono text-[0.62rem] text-muted-foreground">{track}</span>
+                <span className="w-16 text-[0.62rem] text-muted-foreground">{track}</span>
                 <div className="relative h-6 flex-1 rounded border border-border bg-secondary/40">
                   <span
                     className="absolute top-0.5 bottom-0.5 rounded bg-border-strong/70"
@@ -342,7 +342,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
           <ol className="space-y-2">
             {(items ?? ["Plan", "Generate", "Review", "Deliver"]).map((step, i) => (
               <li key={step} className="flex items-start gap-2 rounded-md border border-border px-2.5 py-2">
-                <span className="mt-0.5 font-mono text-[0.62rem] text-muted-foreground">
+                <span className="mt-0.5 text-[0.62rem] text-muted-foreground">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="flex-1 text-xs">{step}</span>
@@ -363,21 +363,21 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
             ].map((j) => (
               <div key={j.l}>
                 <div className="mb-1 flex items-center gap-2">
-                  <span className="font-mono text-[0.7rem]">{j.l}</span>
+                  <span className="text-[0.7rem]">{j.l}</span>
                   <span className="label-mono ml-auto">{j.s}</span>
                 </div>
                 <Progress value={j.p} className="h-1" />
               </div>
             ))}
             <div className="flex gap-2 pt-1">
-              <Button size="sm" variant="outline" className="font-mono text-[0.7rem]">
+              <Button size="sm" variant="outline" className="text-[0.7rem]">
                 Retry
               </Button>
-              <Button size="sm" variant="ghost" className="font-mono text-[0.7rem]">
+              <Button size="sm" variant="ghost" className="text-[0.7rem]">
                 Cancel
               </Button>
             </div>
-            <p className="font-mono text-[0.65rem] text-muted-foreground">
+            <p className="text-[0.65rem] text-muted-foreground">
               States: Queued · Processing · Completed · Failed · Cancelled
             </p>
           </div>
@@ -388,7 +388,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
       return (
         <PanelFrame title={title} note={note}>
           <div className="overflow-x-auto">
-            <table className="w-full font-mono text-[0.7rem]">
+            <table className="w-full text-[0.7rem]">
               <thead>
                 <tr className="border-b border-border text-left text-muted-foreground">
                   {["Period", "Revenue", "Cost", "Margin"].map((h) => (
@@ -409,7 +409,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
                 ))}
               </tbody>
             </table>
-            <p className="mt-2 font-mono text-[0.62rem] text-muted-foreground">Illustrative rows — demo data.</p>
+            <p className="mt-2 text-[0.62rem] text-muted-foreground">Illustrative rows — demo data.</p>
           </div>
         </PanelFrame>
       );
@@ -438,7 +438,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
                 <div
                   key={i}
                   className={cn(
-                    "flex aspect-video items-center justify-center rounded border font-mono text-[0.6rem]",
+                    "flex aspect-video items-center justify-center rounded border text-[0.6rem]",
                     i === 0 ? "border-border-strong bg-secondary" : "border-border text-muted-foreground",
                   )}
                 >
@@ -462,7 +462,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
     case "outline":
       return (
         <PanelFrame title={title} note={note}>
-          <ol className="space-y-1.5 font-mono text-[0.72rem]">
+          <ol className="space-y-1.5 text-[0.72rem]">
             {["01 Context", "02 Problem", "03 Approach", "04 Evidence", "05 Outcome", "06 Next steps"].map((s) => (
               <li key={s} className="flex items-center gap-2 rounded px-1.5 py-1 hover:bg-secondary">
                 <ChevronRight className="size-3 text-muted-foreground" />
@@ -487,7 +487,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
               </li>
             ))}
           </ul>
-          <p className="mt-2 font-mono text-[0.62rem] text-muted-foreground">
+          <p className="mt-2 text-[0.62rem] text-muted-foreground">
             Connect an authorized account to populate this list.
           </p>
         </PanelFrame>
@@ -505,7 +505,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
             ].map(([k, v]) => (
               <div key={k} className="flex justify-between border-b border-border pb-1.5 last:border-0">
                 <dt className="label-mono">{k}</dt>
-                <dd className="font-mono text-[0.72rem]">{v}</dd>
+                <dd className="text-[0.72rem]">{v}</dd>
               </div>
             ))}
           </dl>
@@ -574,7 +574,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
               </li>
             ))}
           </ul>
-          <p className="mt-2 font-mono text-[0.62rem] text-muted-foreground">Example findings — demo data.</p>
+          <p className="mt-2 text-[0.62rem] text-muted-foreground">Example findings — demo data.</p>
         </PanelFrame>
       );
 
@@ -587,10 +587,10 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
               <Skeleton key={i} className={cn("h-2.5", i % 3 === 2 ? "w-3/4" : "w-full")} />
             ))}
             <div className="flex gap-2 pt-2">
-              <Button size="sm" variant="outline" className="font-mono text-[0.7rem]">
+              <Button size="sm" variant="outline" className="text-[0.7rem]">
                 Save to project
               </Button>
-              <Button size="sm" variant="ghost" className="font-mono text-[0.7rem]">
+              <Button size="sm" variant="ghost" className="text-[0.7rem]">
                 Export
               </Button>
             </div>
@@ -617,7 +617,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
       return (
         <PanelFrame title={title} note={note}>
           <div className="space-y-2">
-            <p className="font-mono text-xs">Question 1 of 10</p>
+            <p className="text-xs">Question 1 of 10</p>
             {["Option A", "Option B", "Option C", "Option D"].map((o) => (
               <label key={o} className="flex cursor-default items-center gap-2 rounded-md border border-border px-3 py-2 text-xs">
                 <span className="size-3 rounded-full border border-border-strong" />
@@ -631,7 +631,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
     case "captions":
       return (
         <PanelFrame title={title} note={note}>
-          <ul className="space-y-1.5 font-mono text-[0.7rem]">
+          <ul className="space-y-1.5 text-[0.7rem]">
             {["00:00 – 00:04", "00:04 – 00:09", "00:09 – 00:14"].map((t) => (
               <li key={t} className="rounded-md border border-border px-2.5 py-2">
                 <div className="label-mono">{t}</div>
@@ -652,13 +652,13 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
             ].map(([k, v]) => (
               <div key={k} className="rounded-md border border-border px-3 py-2">
                 <div className="label-mono">{k}</div>
-                <div className="mt-1 font-mono text-xs">{v}</div>
+                <div className="mt-1 text-xs">{v}</div>
               </div>
             ))}
           </div>
           <div className="mt-3 flex flex-wrap gap-1.5">
             {["ES", "FR", "DE", "PT", "JA", "HI", "AR"].map((l) => (
-              <span key={l} className="rounded-full border border-border px-2 py-0.5 font-mono text-[0.65rem]">
+              <span key={l} className="rounded-full border border-border px-2 py-0.5 text-[0.65rem]">
                 {l}
               </span>
             ))}
@@ -703,7 +703,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
               <div
                 key={i}
                 className={cn(
-                  "flex aspect-square items-center justify-center rounded border font-mono text-[0.6rem]",
+                  "flex aspect-square items-center justify-center rounded border text-[0.6rem]",
                   [3, 8, 12, 19, 24].includes(i)
                     ? "border-border-strong bg-secondary"
                     : "border-border text-muted-foreground",
@@ -723,15 +723,15 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
             {["Send message", "Publish post", "Run external action"].map((a) => (
               <div key={a} className="flex items-center gap-2 rounded-md border border-border px-2.5 py-2 text-xs">
                 <span className="flex-1">{a}</span>
-                <Button size="sm" variant="outline" className="h-7 font-mono text-[0.65rem]">
+                <Button size="sm" variant="outline" className="h-7 text-[0.65rem]">
                   Approve
                 </Button>
-                <Button size="sm" variant="ghost" className="h-7 font-mono text-[0.65rem]">
+                <Button size="sm" variant="ghost" className="h-7 text-[0.65rem]">
                   Reject
                 </Button>
               </div>
             ))}
-            <p className="font-mono text-[0.62rem] text-muted-foreground">
+            <p className="text-[0.62rem] text-muted-foreground">
               Nothing leaves the workspace without an explicit approval.
             </p>
           </div>
@@ -744,7 +744,7 @@ export function ModulePanel({ panel, request }: { panel: Panel; request?: string
           <div className="rounded-md border border-border px-3 py-3 text-xs">
             <div className="label-mono mb-1.5">Human handoff</div>
             <p className="text-muted-foreground">Hand this conversation to a teammate with full context attached.</p>
-            <Button size="sm" variant="outline" className="mt-2 font-mono text-[0.7rem]">
+            <Button size="sm" variant="outline" className="mt-2 text-[0.7rem]">
               Assign to teammate
             </Button>
           </div>

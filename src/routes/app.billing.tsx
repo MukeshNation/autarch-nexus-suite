@@ -26,7 +26,7 @@ function BillingPage() {
     >
       <section className="panel p-4">
         <span className="label-mono">Current account</span>
-        <div className="mt-3 grid gap-3 sm:grid-cols-3 font-mono text-[0.7rem]">
+        <div className="mt-3 grid gap-3 sm:grid-cols-3 text-[0.7rem]">
           <div>
             <span className="text-muted-foreground">Plan</span>
             <div className="mt-1 text-sm capitalize">{currentPlan}</div>
@@ -41,7 +41,7 @@ function BillingPage() {
           </div>
         </div>
         {subscription?.current_period_end && (
-          <p className="mt-3 font-mono text-[0.68rem] text-muted-foreground">
+          <p className="mt-3 text-[0.68rem] text-muted-foreground">
             Current period ends {new Date(subscription.current_period_end).toLocaleDateString()}
             {subscription.granted_free ? " · granted free by an administrator" : ""}
           </p>
@@ -58,11 +58,11 @@ function BillingPage() {
                 {active && <span className="label-mono ml-auto">Your plan</span>}
               </div>
               <div className="mt-2 flex items-baseline gap-1">
-                <span className="font-mono text-3xl">{p.price}</span>
-                <span className="font-mono text-[0.68rem] text-muted-foreground">/month</span>
+                <span className="text-3xl">{p.price}</span>
+                <span className="text-[0.68rem] text-muted-foreground">/month</span>
               </div>
               <p className="mt-2 text-xs text-muted-foreground">{p.note}</p>
-              <Button variant="outline" className="mt-4 w-full font-mono text-xs" disabled>
+              <Button variant="outline" className="mt-4 w-full text-xs" disabled>
                 {active ? "Active" : "Requires paid service"}
               </Button>
             </article>
@@ -79,7 +79,7 @@ function BillingPage() {
         ) : (
           <ul className="mt-3 divide-y divide-border">
             {(ledger.data ?? []).slice(0, 12).map((entry) => (
-              <li key={entry.id} className="flex items-center gap-3 py-2 font-mono text-[0.68rem]">
+              <li key={entry.id} className="flex items-center gap-3 py-2 text-[0.68rem]">
                 <span className="text-muted-foreground">{new Date(entry.created_at).toLocaleDateString()}</span>
                 <span className="flex-1">{entry.transaction_type.replace(/_/g, " ")}</span>
                 <span>{entry.amount > 0 ? `+${entry.amount}` : entry.amount}</span>
@@ -87,7 +87,7 @@ function BillingPage() {
             ))}
           </ul>
         )}
-        <p className="mt-3 font-mono text-[0.68rem] text-muted-foreground">
+        <p className="mt-3 text-[0.68rem] text-muted-foreground">
           Invoices and top-ups will appear here once a payment provider is connected. Autarch never stores card
           details.
         </p>

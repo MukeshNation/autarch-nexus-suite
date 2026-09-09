@@ -34,10 +34,10 @@ function ModuleWorkspace() {
       actions={
         <>
           <StatusBadge status={mod.status} />
-          <Button size="sm" variant="outline" className="gap-1.5 font-mono text-[0.7rem]">
+          <Button size="sm" variant="outline" className="gap-1.5 text-[0.7rem]">
             <FolderPlus className="size-3.5" /> Save to project
           </Button>
-          <Button size="sm" variant="ghost" className="gap-1.5 font-mono text-[0.7rem]">
+          <Button size="sm" variant="ghost" className="gap-1.5 text-[0.7rem]">
             <Download className="size-3.5" /> Export
           </Button>
         </>
@@ -45,7 +45,7 @@ function ModuleWorkspace() {
     >
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-border py-2.5">
         <span className="label-mono">{mod.id}</span>
-        <span className="font-mono text-[0.7rem] text-muted-foreground">{mod.tagline}</span>
+        <span className="text-[0.7rem] text-muted-foreground">{mod.tagline}</span>
         <span className="label-mono ml-auto">
           Project: {DEMO_PROJECTS[0]!.name}
         </span>
@@ -58,7 +58,7 @@ function ModuleWorkspace() {
         </p>
       )}
 
-      <div className="mt-5 flex flex-wrap items-center gap-1.5 font-mono text-[0.65rem] text-muted-foreground">
+      <div className="mt-5 flex flex-wrap items-center gap-1.5 text-[0.65rem] text-muted-foreground">
         {mod.workflow.map((step, i) => (
           <span key={step} className="flex items-center gap-1.5">
             <span className="rounded-full border border-border px-2 py-0.5">{step}</span>

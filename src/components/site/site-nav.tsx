@@ -34,7 +34,7 @@ function MegaMenu() {
                     className="group/i block rounded-md px-2 py-1.5 transition-colors hover:bg-secondary"
                   >
                     <span className="flex items-baseline gap-1.5">
-                      <span className="font-mono text-[0.65rem] text-muted-foreground">{m.id}</span>
+                      <span className="text-[0.65rem] text-muted-foreground">{m.id}</span>
                       <span className="text-[0.8rem] leading-snug">{m.name}</span>
                     </span>
                     <StatusBadge status={m.status} className="mt-1" />
@@ -45,7 +45,7 @@ function MegaMenu() {
           </div>
         ))}
         <div className="lg:col-span-5 lg:border-t lg:border-border lg:pt-4">
-          <Link to="/modules" className="font-mono text-xs underline underline-offset-4">
+          <Link to="/modules" className="text-xs underline underline-offset-4">
             View all 23 capabilities →
           </Link>
         </div>
@@ -67,14 +67,14 @@ export function SiteNav() {
         <nav className="hidden items-center gap-1 lg:flex">
           <Link
             to="/product"
-            className="rounded-md px-3 py-2 font-mono text-xs tracking-wide transition-colors hover:bg-secondary"
+            className="rounded-full px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           >
             Product
           </Link>
           <div className="group relative">
             <Link
               to="/modules"
-              className="flex items-center gap-1 rounded-md px-3 py-2 font-mono text-xs tracking-wide transition-colors hover:bg-secondary"
+              className="flex items-center gap-1 rounded-full px-3.5 py-2 text-sm transition-colors hover:bg-secondary"
             >
               AI Modules <ChevronDown className="size-3" />
             </Link>
@@ -84,7 +84,7 @@ export function SiteNav() {
             <Link
               key={item.to}
               to={item.to}
-              className="rounded-md px-3 py-2 font-mono text-xs tracking-wide transition-colors hover:bg-secondary"
+              className="rounded-full px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
             >
               {item.label}
             </Link>
@@ -93,10 +93,10 @@ export function SiteNav() {
 
         <div className="ml-auto flex items-center gap-2">
           <ThemeToggle />
-          <Button asChild variant="ghost" size="sm" className="hidden font-mono text-xs sm:inline-flex">
+          <Button asChild variant="ghost" size="sm" className="hidden rounded-full text-sm sm:inline-flex">
             <Link to="/login">Sign in</Link>
           </Button>
-          <Button asChild size="sm" className="font-mono text-xs">
+          <Button asChild size="sm" className="rounded-full px-4 text-sm">
             <Link to="/signup">Get started</Link>
           </Button>
 
@@ -118,7 +118,7 @@ export function SiteNav() {
                         <Link
                           to={item.to}
                           onClick={() => setOpen(false)}
-                          className="block rounded-md px-2 py-2 font-mono text-sm hover:bg-secondary"
+                          className="block rounded-md px-2 py-2 text-sm hover:bg-secondary"
                         >
                           {item.label}
                         </Link>
@@ -131,7 +131,7 @@ export function SiteNav() {
                   <Link
                     to="/app"
                     onClick={() => setOpen(false)}
-                    className="block rounded-md px-2 py-2 font-mono text-sm hover:bg-secondary"
+                    className="block rounded-md px-2 py-2 text-sm hover:bg-secondary"
                   >
                     Open command center
                   </Link>

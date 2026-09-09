@@ -46,7 +46,7 @@ function AppLayout() {
             <SheetContent side="left" className="w-64 p-0">
               <div className="flex h-14 items-center gap-2 border-b border-border px-4">
                 <AutarchMark className="size-5" />
-                <span className="font-mono text-[0.7rem] tracking-[0.2em] uppercase">Autarch</span>
+                <span className="text-[0.7rem] tracking-[0.2em] uppercase">Autarch</span>
               </div>
               <AppSidebarNav
                 onNavigate={() => setDrawerOpen(false)}
@@ -58,14 +58,14 @@ function AppLayout() {
             </SheetContent>
           </Sheet>
 
-          <Link to="/app" className="font-mono text-[0.7rem] tracking-[0.2em] uppercase md:hidden">
+          <Link to="/app" className="text-[0.7rem] tracking-[0.2em] uppercase md:hidden">
             Autarch
           </Link>
 
           <button
             type="button"
             onClick={() => setPaletteOpen(true)}
-            className="ml-auto flex items-center gap-2 rounded-md border border-border px-2.5 py-1.5 font-mono text-[0.7rem] text-muted-foreground hover:bg-secondary"
+            className="ml-auto flex items-center gap-2 rounded-md border border-border px-2.5 py-1.5 text-[0.7rem] text-muted-foreground hover:bg-secondary"
           >
             <Search className="size-3.5" />
             <span className="hidden sm:inline">Search everything</span>
@@ -76,7 +76,7 @@ function AppLayout() {
 
           <UserMenu />
 
-          <Button asChild variant="ghost" size="sm" className="font-mono text-[0.7rem]">
+          <Button asChild variant="ghost" size="sm" className="text-[0.7rem]">
             <Link to="/">Exit</Link>
           </Button>
 

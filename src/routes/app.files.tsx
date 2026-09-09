@@ -64,7 +64,7 @@ function FilesPage() {
       <div className="grid gap-4 lg:grid-cols-[14rem_minmax(0,1fr)]">
         <aside className="panel h-fit p-3">
           <span className="label-mono">Upload into</span>
-          <ul className="mt-3 space-y-1 font-mono text-[0.7rem]">
+          <ul className="mt-3 space-y-1 text-[0.7rem]">
             <li>
               <button
                 onClick={() => setProjectId(null)}
@@ -106,7 +106,7 @@ function FilesPage() {
             ) : (
               <Upload className="size-5 text-muted-foreground" />
             )}
-            <span className="font-mono text-xs">
+            <span className="text-xs">
               {upload.isPending ? "Uploading…" : "Drag and drop files, or click to upload"}
             </span>
             <span className="max-w-sm text-[0.7rem] text-muted-foreground">
@@ -131,14 +131,14 @@ function FilesPage() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search files…"
-                className="h-7 border-0 px-0 font-mono text-xs shadow-none focus-visible:ring-0"
+                className="h-7 border-0 px-0 text-xs shadow-none focus-visible:ring-0"
               />
             </div>
 
             {isLoading ? (
-              <p className="px-3 py-6 text-center font-mono text-xs text-muted-foreground">Loading…</p>
+              <p className="px-3 py-6 text-center text-xs text-muted-foreground">Loading…</p>
             ) : visible.length === 0 ? (
-              <p className="px-3 py-6 text-center font-mono text-xs text-muted-foreground">
+              <p className="px-3 py-6 text-center text-xs text-muted-foreground">
                 {files.length === 0 ? "No files yet — upload your first one above." : "No files match that search."}
               </p>
             ) : (

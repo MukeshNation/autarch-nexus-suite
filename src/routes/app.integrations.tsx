@@ -21,13 +21,13 @@ function IntegrationsPage() {
               <span className="label-mono ml-auto">{i.status}</span>
             </div>
             <h2 className="mt-2 text-sm">{i.name}</h2>
-            <Button size="sm" variant="outline" className="mt-3 w-full font-mono text-[0.7rem]">
+            <Button size="sm" variant="outline" className="mt-3 w-full text-[0.7rem]">
               Connect
             </Button>
           </article>
         ))}
       </div>
-      <p className="mt-6 max-w-2xl font-mono text-[0.68rem] leading-relaxed text-muted-foreground">
+      <p className="mt-6 max-w-2xl text-[0.68rem] leading-relaxed text-muted-foreground">
         Statuses: Connected · Disconnected · Expired · Error. Autarch uses authorized provider APIs only and never asks
         for a password to a third-party service.
       </p>

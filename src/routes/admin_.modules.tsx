@@ -92,7 +92,7 @@ function ModuleControlPage() {
             key={s}
             size="sm"
             variant="outline"
-            className="font-mono text-[0.7rem]"
+            className="text-[0.7rem]"
             disabled={selected.length === 0 || apply.isPending}
             onClick={() => apply.mutate({ status: s })}
           >
@@ -102,7 +102,7 @@ function ModuleControlPage() {
         <Button
           size="sm"
           variant="ghost"
-          className="font-mono text-[0.7rem]"
+          className="text-[0.7rem]"
           disabled={selected.length === 0}
           onClick={() => apply.mutate({ visible: true })}
         >
@@ -111,7 +111,7 @@ function ModuleControlPage() {
         <Button
           size="sm"
           variant="ghost"
-          className="font-mono text-[0.7rem]"
+          className="text-[0.7rem]"
           disabled={selected.length === 0}
           onClick={() => apply.mutate({ visible: false })}
         >
@@ -121,7 +121,7 @@ function ModuleControlPage() {
 
       <section className="overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-left text-xs">
-          <thead className="font-mono text-[0.7rem] uppercase text-muted-foreground">
+          <thead className="text-[0.7rem] uppercase text-muted-foreground">
             <tr className="border-b border-border">
               <th className="p-3"></th>
               <th className="p-3">Module</th>
@@ -142,7 +142,7 @@ function ModuleControlPage() {
                     <Checkbox checked={selected.includes(m.slug)} onCheckedChange={() => toggle(m.slug)} />
                   </td>
                   <td className="p-3 font-medium">{m.name}</td>
-                  <td className="p-3 font-mono text-[0.7rem] text-muted-foreground">
+                  <td className="p-3 text-[0.7rem] text-muted-foreground">
                     {manifest?.required.join(", ")}
                   </td>
                   <td className="p-3">
@@ -155,7 +155,7 @@ function ModuleControlPage() {
                         });
                       }}
                     >
-                      <SelectTrigger className="h-8 w-40 font-mono text-[0.7rem]">
+                      <SelectTrigger className="h-8 w-40 text-[0.7rem]">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -167,9 +167,9 @@ function ModuleControlPage() {
                       </SelectContent>
                     </Select>
                   </td>
-                  <td className="p-3 font-mono text-[0.7rem]">{row?.visible === false ? "HIDDEN" : "VISIBLE"}</td>
-                  <td className="p-3 font-mono text-[0.7rem]">{row?.credits_per_run ?? manifest?.creditsPerRun}</td>
-                  <td className="p-3 font-mono text-[0.7rem] text-muted-foreground">{readiness(m.slug)}</td>
+                  <td className="p-3 text-[0.7rem]">{row?.visible === false ? "HIDDEN" : "VISIBLE"}</td>
+                  <td className="p-3 text-[0.7rem]">{row?.credits_per_run ?? manifest?.creditsPerRun}</td>
+                  <td className="p-3 text-[0.7rem] text-muted-foreground">{readiness(m.slug)}</td>
                 </tr>
               );
             })}

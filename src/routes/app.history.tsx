@@ -22,7 +22,7 @@ function HistoryPage() {
             {DEMO_JOBS.map((j) => (
               <li key={j.id}>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[0.68rem] text-muted-foreground">{j.id}</span>
+                  <span className="text-[0.68rem] text-muted-foreground">{j.id}</span>
                   <span className="flex-1 truncate text-xs">{j.label}</span>
                   <span className="label-mono">{j.state}</span>
                 </div>
@@ -30,7 +30,7 @@ function HistoryPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-4 font-mono text-[0.62rem] text-muted-foreground">
+          <p className="mt-4 text-[0.62rem] text-muted-foreground">
             States: Queued · Processing · Completed · Failed · Cancelled
           </p>
         </section>

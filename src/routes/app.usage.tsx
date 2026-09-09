@@ -27,9 +27,9 @@ function UsagePage() {
         <section className="panel p-4">
           <span className="label-mono">Consumption by capability</span>
           {events.isLoading ? (
-            <p className="mt-4 font-mono text-[0.7rem] text-muted-foreground">Loading your usage…</p>
+            <p className="mt-4 text-[0.7rem] text-muted-foreground">Loading your usage…</p>
           ) : lines.length === 0 ? (
-            <p className="mt-4 font-mono text-[0.7rem] text-muted-foreground">
+            <p className="mt-4 text-[0.7rem] text-muted-foreground">
               No usage recorded yet. Run a capability and it will appear here.
             </p>
           ) : (
@@ -38,7 +38,7 @@ function UsagePage() {
                 <li key={line.id}>
                   <div className="flex items-center gap-2 text-xs">
                     <span className="flex-1">{getModule(line.id)?.name ?? line.id}</span>
-                    <span className="font-mono text-[0.68rem] text-muted-foreground">{line.credits} cr</span>
+                    <span className="text-[0.68rem] text-muted-foreground">{line.credits} cr</span>
                   </div>
                   <Progress value={total ? (line.credits / total) * 100 : 0} className="mt-1.5 h-1" />
                 </li>
@@ -49,9 +49,9 @@ function UsagePage() {
 
         <section className="panel h-fit p-4">
           <span className="label-mono">Recorded so far</span>
-          <div className="mt-3 font-mono text-3xl">{total.toLocaleString()}</div>
-          <p className="mt-1 font-mono text-[0.68rem] text-muted-foreground">credits consumed</p>
-          <div className="mt-4 space-y-2 border-t border-border pt-3 font-mono text-[0.68rem] text-muted-foreground">
+          <div className="mt-3 text-3xl">{total.toLocaleString()}</div>
+          <p className="mt-1 text-[0.68rem] text-muted-foreground">credits consumed</p>
+          <div className="mt-4 space-y-2 border-t border-border pt-3 text-[0.68rem] text-muted-foreground">
             <div className="flex justify-between">
               <span>Plan</span>
               <span>{subscription?.plan ?? profile?.plan ?? "free"}</span>
@@ -71,13 +71,13 @@ function UsagePage() {
       <section className="panel mt-4 p-4">
         <span className="label-mono">Credit history</span>
         {ledger.isLoading ? (
-          <p className="mt-3 font-mono text-[0.7rem] text-muted-foreground">Loading…</p>
+          <p className="mt-3 text-[0.7rem] text-muted-foreground">Loading…</p>
         ) : (ledger.data ?? []).length === 0 ? (
-          <p className="mt-3 font-mono text-[0.7rem] text-muted-foreground">No credit movements yet.</p>
+          <p className="mt-3 text-[0.7rem] text-muted-foreground">No credit movements yet.</p>
         ) : (
           <ul className="mt-3 divide-y divide-border">
             {(ledger.data ?? []).map((entry) => (
-              <li key={entry.id} className="flex items-center gap-3 py-2 font-mono text-[0.68rem]">
+              <li key={entry.id} className="flex items-center gap-3 py-2 text-[0.68rem]">
                 <span className="text-muted-foreground">
                   {new Date(entry.created_at).toLocaleString()}
                 </span>

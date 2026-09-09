@@ -15,7 +15,7 @@ export function AutarchWordmark({ className }: { className?: string }) {
   return (
     <span className={cn("flex items-center gap-2", className)}>
       <AutarchMark />
-      <span className="font-mono text-[0.9rem] font-medium tracking-[0.22em] uppercase">Autarch AI</span>
+      <span className="text-[0.9rem] font-medium tracking-[0.22em] uppercase">Autarch AI</span>
     </span>
   );
 }

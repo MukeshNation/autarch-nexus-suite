@@ -83,8 +83,8 @@ function PaymentsPage() {
     >
       <section className="rounded-lg border border-border p-5">
         <div className="flex flex-wrap items-center gap-3">
-          <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Razorpay</h2>
-          <span className="rounded-md bg-secondary px-2 py-1 font-mono text-[0.7rem]">
+          <h2 className="text-xs uppercase tracking-wider text-muted-foreground">Razorpay</h2>
+          <span className="rounded-md bg-secondary px-2 py-1 text-[0.7rem]">
             {STATUS_COPY[overview?.payments.status ?? "not_configured"]}
           </span>
           <span className="label-mono">
@@ -135,7 +135,7 @@ function PaymentsPage() {
         </div>
 
         <Button
-          className="mt-4 font-mono text-xs"
+          className="mt-4 text-xs"
           disabled={submit.isPending || form.key_id.trim().length < 4}
           onClick={() => submit.mutate()}
         >
@@ -149,7 +149,7 @@ function PaymentsPage() {
       </section>
 
       <section className="rounded-lg border border-border p-5">
-        <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Emergency controls</h2>
+        <h2 className="text-xs uppercase tracking-wider text-muted-foreground">Emergency controls</h2>
         <div className="mt-4 space-y-4">
           {(
             [

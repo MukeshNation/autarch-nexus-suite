@@ -32,7 +32,7 @@ export function UserMenu({ className }: { className?: string }) {
 
   if (!user) {
     return (
-      <Button asChild size="sm" variant="outline" className="font-mono text-[0.7rem]">
+      <Button asChild size="sm" variant="outline" className="text-[0.7rem]">
         <a href="/login">Sign in</a>
       </Button>
     );
@@ -57,15 +57,15 @@ export function UserMenu({ className }: { className?: string }) {
         >
           <Avatar className="size-6">
             {avatarUrl ? <AvatarImage src={avatarUrl} alt="" /> : null}
-            <AvatarFallback className="font-mono text-[0.6rem]">
+            <AvatarFallback className="text-[0.6rem]">
               {initials(profile?.display_name ?? profile?.full_name, user.email)}
             </AvatarFallback>
           </Avatar>
-          <span className="hidden max-w-[8rem] truncate font-mono text-[0.68rem] sm:inline">{label}</span>
+          <span className="hidden max-w-[8rem] truncate text-[0.68rem] sm:inline">{label}</span>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="font-mono text-[0.68rem]">
+        <DropdownMenuLabel className="text-[0.68rem]">
           <span className="block truncate">{label}</span>
           <span className="block truncate text-[0.62rem] font-normal text-muted-foreground">{user.email}</span>
           <span className="mt-1 block text-[0.62rem] font-normal text-muted-foreground">
@@ -73,19 +73,19 @@ export function UserMenu({ className }: { className?: string }) {
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => void navigate({ to: "/app/settings" })} className="font-mono text-xs">
+        <DropdownMenuItem onSelect={() => void navigate({ to: "/app/settings" })} className="text-xs">
           <UserIcon className="size-3.5" /> Profile
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => void navigate({ to: "/app/billing" })} className="font-mono text-xs">
+        <DropdownMenuItem onSelect={() => void navigate({ to: "/app/billing" })} className="text-xs">
           <Settings className="size-3.5" /> Billing
         </DropdownMenuItem>
         {isAdmin && (
-          <DropdownMenuItem onSelect={() => void navigate({ to: "/admin" })} className="font-mono text-xs">
+          <DropdownMenuItem onSelect={() => void navigate({ to: "/admin" })} className="text-xs">
             <ShieldCheck className="size-3.5" /> Admin console
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => void handleSignOut()} className="font-mono text-xs">
+        <DropdownMenuItem onSelect={() => void handleSignOut()} className="text-xs">
           <LogOut className="size-3.5" /> Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>

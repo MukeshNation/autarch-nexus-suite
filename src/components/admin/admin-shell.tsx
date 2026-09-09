@@ -33,7 +33,7 @@ export function AdminShell({
               <Link
                 key={t.to}
                 to={t.to}
-                className="rounded-md px-2.5 py-1.5 font-mono text-[0.7rem] text-muted-foreground hover:bg-secondary hover:text-foreground [&.active]:bg-secondary [&.active]:text-foreground"
+                className="rounded-md px-2.5 py-1.5 text-[0.7rem] text-muted-foreground hover:bg-secondary hover:text-foreground [&.active]:bg-secondary [&.active]:text-foreground"
               >
                 {t.label}
               </Link>

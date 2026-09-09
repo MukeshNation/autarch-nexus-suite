@@ -70,8 +70,8 @@ function PricingPage() {
                 {plan.featured && <span className="label-mono ml-auto">Recommended</span>}
               </div>
               <div className="mt-4 flex items-baseline gap-1.5">
-                <span className="font-mono text-4xl tracking-tight">{plan.price}</span>
-                <span className="font-mono text-xs text-muted-foreground">/month</span>
+                <span className="text-4xl tracking-tight">{plan.price}</span>
+                <span className="text-xs text-muted-foreground">/month</span>
               </div>
               <p className="mt-3 text-sm text-muted-foreground">{plan.blurb}</p>
               <ul className="mt-6 space-y-2.5">
@@ -85,14 +85,14 @@ function PricingPage() {
               <Button
                 asChild
                 variant={plan.featured ? "default" : "outline"}
-                className="mt-6 w-full font-mono text-xs"
+                className="mt-6 w-full text-xs"
               >
                 <Link to="/signup">Choose {plan.name}</Link>
               </Button>
             </div>
           ))}
         </div>
-        <p className="mt-8 max-w-2xl font-mono text-[0.7rem] leading-relaxed text-muted-foreground">
+        <p className="mt-8 max-w-2xl text-[0.7rem] leading-relaxed text-muted-foreground">
           Autarch does not promise uncontrolled unlimited third-party compute. Capabilities that depend on a paid
           external service are labelled in the module directory, and checkout is handled by a hosted payment provider —
           card numbers and security codes are never stored by Autarch.

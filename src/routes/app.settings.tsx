@@ -139,7 +139,7 @@ function SettingsPage() {
   return (
     <WorkspacePage title="Settings" lead="Profile, workspace preferences, privacy and data controls.">
       <Tabs defaultValue="profile" className="max-w-2xl">
-        <TabsList className="font-mono text-xs">
+        <TabsList className="text-xs">
           <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="preferences">Preferences</TabsTrigger>
           <TabsTrigger value="privacy">Privacy</TabsTrigger>
@@ -149,7 +149,7 @@ function SettingsPage() {
           <div className="flex items-center gap-4">
             <Avatar className="size-14">
               {avatarUrl ? <AvatarImage src={avatarUrl} alt="" /> : null}
-              <AvatarFallback className="font-mono text-xs">
+              <AvatarFallback className="text-xs">
                 {(displayName || user?.email || "A").slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -158,7 +158,7 @@ function SettingsPage() {
                 type="button"
                 size="sm"
                 variant="outline"
-                className="font-mono text-[0.7rem]"
+                className="text-[0.7rem]"
                 disabled={uploading}
                 onClick={() => fileRef.current?.click()}
               >
@@ -171,7 +171,7 @@ function SettingsPage() {
                 className="hidden"
                 onChange={(e) => void onAvatarPicked(e)}
               />
-              <p className="mt-1 font-mono text-[0.62rem] text-muted-foreground">PNG or JPG, up to 5 MB.</p>
+              <p className="mt-1 text-[0.62rem] text-muted-foreground">PNG or JPG, up to 5 MB.</p>
             </div>
           </div>
 
@@ -182,7 +182,7 @@ function SettingsPage() {
               </Label>
               <Input
                 id="s-name"
-                className="mt-1.5 font-mono text-xs"
+                className="mt-1.5 text-xs"
                 placeholder="Your name"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
@@ -195,7 +195,7 @@ function SettingsPage() {
               <Input
                 id="s-phone"
                 type="tel"
-                className="mt-1.5 font-mono text-xs"
+                className="mt-1.5 text-xs"
                 placeholder="+91 90000 00000"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -209,11 +209,11 @@ function SettingsPage() {
                 id="s-email"
                 type="email"
                 readOnly
-                className="mt-1.5 font-mono text-xs text-muted-foreground"
+                className="mt-1.5 text-xs text-muted-foreground"
                 value={user?.email ?? ""}
               />
             </div>
-            <Button type="submit" className="font-mono text-xs" disabled={saving || profileLoading}>
+            <Button type="submit" className="text-xs" disabled={saving || profileLoading}>
               {saving ? "Saving…" : "Save profile"}
             </Button>
           </form>
@@ -221,17 +221,17 @@ function SettingsPage() {
           <div className="grid gap-2 border-t border-border pt-4 sm:grid-cols-3">
             <div>
               <span className="label-mono block">Plan</span>
-              <span className="font-mono text-xs">
+              <span className="text-xs">
                 {subscription?.plan ?? profile?.plan ?? "free"} · {subscription?.status ?? "active"}
               </span>
             </div>
             <div>
               <span className="label-mono block">Credits</span>
-              <span className="font-mono text-xs">{profile?.credit_balance ?? 0}</span>
+              <span className="text-xs">{profile?.credit_balance ?? 0}</span>
             </div>
             <div>
               <span className="label-mono block">Storage used</span>
-              <span className="font-mono text-xs">{formatBytes(profile?.storage_used_bytes ?? 0)}</span>
+              <span className="text-xs">{formatBytes(profile?.storage_used_bytes ?? 0)}</span>
             </div>
           </div>
 
@@ -240,7 +240,7 @@ function SettingsPage() {
               type="button"
               size="sm"
               variant="outline"
-              className="font-mono text-[0.7rem]"
+              className="text-[0.7rem]"
               onClick={() => void onSignOut()}
             >
               Sign out
@@ -263,7 +263,7 @@ function SettingsPage() {
               />
             </div>
           ))}
-          <p className="font-mono text-[0.62rem] text-muted-foreground">
+          <p className="text-[0.62rem] text-muted-foreground">
             Saved on this device and applied instantly across the workspace.
           </p>
         </TabsContent>
@@ -277,7 +277,7 @@ function SettingsPage() {
             <Button
               size="sm"
               variant="outline"
-              className="font-mono text-[0.7rem]"
+              className="text-[0.7rem]"
               disabled={exporting || !user}
               onClick={() => void onExport()}
             >
@@ -286,14 +286,14 @@ function SettingsPage() {
             <Button
               size="sm"
               variant="outline"
-              className="font-mono text-[0.7rem] text-destructive"
+              className="text-[0.7rem] text-destructive"
               disabled={deleting || !user}
               onClick={() => void onDeleteAccount()}
             >
               {deleting ? "Deleting…" : "Delete account"}
             </Button>
           </div>
-          <p className="font-mono text-[0.62rem]">
+          <p className="text-[0.62rem]">
             Deletion is permanent: profile, workspaces, projects, tasks, files and AI history are removed.
           </p>
         </TabsContent>
