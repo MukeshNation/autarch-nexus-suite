@@ -423,3 +423,52 @@
   border-radius: calc(var(--radius) + 10px);
   box-shadow: var(--shadow-lift);
 }
+
+/* ——— v2.2 night hero ——— */
+
+:root {
+  --hero-night-fg: oklch(0.98 0.01 260);
+  --hero-night-fg-muted: oklch(0.83 0.03 258);
+  --hero-night-line: oklch(1 0 0 / 0.14);
+}
+
+@utility hero-night {
+  position: relative;
+  background:
+    radial-gradient(70% 60% at 18% 8%, oklch(0.5 0.17 268 / 0.85) 0%, transparent 68%),
+    radial-gradient(60% 55% at 88% 0%, oklch(0.46 0.16 296 / 0.8) 0%, transparent 66%),
+    radial-gradient(80% 70% at 60% 105%, oklch(0.42 0.15 250 / 0.75) 0%, transparent 70%),
+    linear-gradient(170deg, oklch(0.19 0.05 268) 0%, oklch(0.14 0.04 272) 55%, oklch(0.11 0.03 265) 100%);
+  background-size: 170% 170%;
+  animation: autarch-aurora 26s ease-in-out infinite alternate;
+  color: var(--hero-night-fg);
+}
+
+@utility hero-glow {
+  background:
+    radial-gradient(38% 42% at 22% 22%, oklch(0.72 0.18 272 / 0.55) 0%, transparent 70%),
+    radial-gradient(34% 38% at 78% 18%, oklch(0.7 0.19 300 / 0.5) 0%, transparent 70%),
+    radial-gradient(46% 44% at 54% 92%, oklch(0.72 0.16 245 / 0.5) 0%, transparent 70%);
+  background-size: 200% 200%;
+  filter: blur(46px);
+  animation: autarch-aurora 20s ease-in-out infinite alternate;
+}
+
+@utility hero-fg {
+  color: var(--hero-night-fg);
+}
+
+@utility hero-fg-muted {
+  color: var(--hero-night-fg-muted);
+}
+
+@utility hero-hairline {
+  border-color: var(--hero-night-line);
+}
+
+@utility text-gradient-light {
+  background: linear-gradient(100deg, oklch(0.9 0.08 266), oklch(0.84 0.13 300), oklch(0.88 0.1 240));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
