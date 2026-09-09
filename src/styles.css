@@ -386,3 +386,40 @@
 :root[data-kbd-hints="off"] .kbd-hint {
   display: none;
 }
+
+/* ——— v2.1 expressive surfaces ——— */
+
+@utility hero-aurora {
+  background:
+    radial-gradient(42% 46% at 14% 12%, oklch(0.78 0.14 268 / 0.55) 0%, transparent 68%),
+    radial-gradient(40% 42% at 86% 4%, oklch(0.76 0.15 292 / 0.5) 0%, transparent 68%),
+    radial-gradient(52% 48% at 60% 96%, oklch(0.8 0.12 250 / 0.5) 0%, transparent 66%),
+    radial-gradient(34% 32% at 34% 74%, oklch(0.82 0.1 305 / 0.42) 0%, transparent 64%);
+  background-size: 190% 190%;
+  filter: blur(28px);
+  animation: autarch-aurora 24s ease-in-out infinite alternate;
+}
+
+@utility gradient-band {
+  background:
+    radial-gradient(60% 120% at 20% 0%, oklch(0.72 0.16 275) 0%, transparent 70%),
+    radial-gradient(60% 120% at 85% 100%, oklch(0.68 0.17 300) 0%, transparent 70%),
+    linear-gradient(120deg, oklch(0.55 0.16 272), oklch(0.46 0.13 288));
+  background-size: 160% 160%;
+  animation: autarch-aurora 22s ease-in-out infinite alternate;
+}
+
+@utility text-gradient {
+  background: linear-gradient(100deg, oklch(0.5 0.15 272), oklch(0.55 0.17 300), oklch(0.52 0.13 250));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility frame-glass {
+  background: color-mix(in oklab, var(--card) 82%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+  backdrop-filter: blur(14px);
+  border-radius: calc(var(--radius) + 10px);
+  box-shadow: var(--shadow-lift);
+}
