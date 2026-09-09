@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { SiteNav } from "./site-nav";
 import { SiteFooter } from "./site-footer";
 
-export function SiteShell({ children, ambient = false }: { children: ReactNode; ambient?: boolean }) {
+export function SiteShell({ children, ambient = true }: { children: ReactNode; ambient?: boolean }) {
   return (
     <div className="relative min-h-screen bg-background">
       {ambient && (
