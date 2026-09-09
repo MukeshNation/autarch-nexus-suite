@@ -1,22 +1,46 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Autarch symbol — a soft gradient tile with a geometric "A" aperture.
- * Swap the inner <path> later to drop in a custom brand symbol.
+ * Autarch symbol — original geometric monogram: an open "A" built from two
+ * rising strokes and a keystone bar, sitting inside a soft gradient tile.
+ * Fully original artwork (no third-party marks), safe to reuse anywhere.
  */
 export function AutarchMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 40 40" className={cn("h-8 w-8", className)} aria-hidden="true">
+    <svg viewBox="0 0 48 48" className={cn("h-8 w-8", className)} aria-hidden="true">
       <defs>
-        <linearGradient id="autarch-mark-g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#7C6CF6" />
-          <stop offset="55%" stopColor="#5B8DEF" />
-          <stop offset="100%" stopColor="#9B6BF2" />
+        <linearGradient id="autarch-tile" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#8B7CFF" />
+          <stop offset="48%" stopColor="#4F7DF3" />
+          <stop offset="100%" stopColor="#A855F7" />
+        </linearGradient>
+        <linearGradient id="autarch-stroke" x1="0.2" y1="0" x2="0.8" y2="1">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="100%" stopColor="#E5E9FF" />
         </linearGradient>
       </defs>
-      <rect width="40" height="40" rx="11" fill="url(#autarch-mark-g)" />
-      <path d="M12.5 28 20 11.5 27.5 28" fill="none" stroke="white" strokeWidth="2.2" strokeLinejoin="round" />
-      <path d="M16.4 22.6h7.2" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
+      <rect width="48" height="48" rx="13" fill="url(#autarch-tile)" />
+      {/* left rising stroke */}
+      <path
+        d="M13 35.5 24 10.5"
+        fill="none"
+        stroke="url(#autarch-stroke)"
+        strokeWidth="3.4"
+        strokeLinecap="round"
+      />
+      {/* right stroke, deliberately shorter — the open apex */}
+      <path
+        d="M35 35.5 27.4 18.4"
+        fill="none"
+        stroke="url(#autarch-stroke)"
+        strokeWidth="3.4"
+        strokeLinecap="round"
+        opacity="0.92"
+      />
+      {/* keystone bar */}
+      <path d="M18.4 27.6h13.2" stroke="url(#autarch-stroke)" strokeWidth="3.2" strokeLinecap="round" />
+      {/* apex node */}
+      <circle cx="25.7" cy="14.2" r="2.1" fill="#ffffff" opacity="0.95" />
     </svg>
   );
 }
