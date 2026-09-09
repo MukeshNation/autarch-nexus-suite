@@ -1,21 +1,33 @@
 import { cn } from "@/lib/utils";
 
+/**
+ * Autarch symbol — a soft gradient tile with a geometric "A" aperture.
+ * Swap the inner <path> later to drop in a custom brand symbol.
+ */
 export function AutarchMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={cn("h-6 w-6", className)} aria-hidden="true">
-      <rect x="1.5" y="1.5" width="29" height="29" rx="7" fill="none" stroke="currentColor" strokeWidth="1.25" />
-      <path d="M8 23 16 8l8 15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      <path d="M11.5 18h9" stroke="currentColor" strokeWidth="1.25" />
-      <circle cx="16" cy="8" r="1.6" fill="currentColor" />
+    <svg viewBox="0 0 40 40" className={cn("h-8 w-8", className)} aria-hidden="true">
+      <defs>
+        <linearGradient id="autarch-mark-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#7C6CF6" />
+          <stop offset="55%" stopColor="#5B8DEF" />
+          <stop offset="100%" stopColor="#9B6BF2" />
+        </linearGradient>
+      </defs>
+      <rect width="40" height="40" rx="11" fill="url(#autarch-mark-g)" />
+      <path d="M12.5 28 20 11.5 27.5 28" fill="none" stroke="white" strokeWidth="2.2" strokeLinejoin="round" />
+      <path d="M16.4 22.6h7.2" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
     </svg>
   );
 }
 
 export function AutarchWordmark({ className }: { className?: string }) {
   return (
-    <span className={cn("flex items-center gap-2", className)}>
-      <AutarchMark />
-      <span className="text-[0.9rem] font-medium tracking-[0.22em] uppercase">Autarch AI</span>
+    <span className={cn("flex items-center gap-2.5", className)}>
+      <AutarchMark className="h-7 w-7" />
+      <span className="text-[1.05rem] font-semibold tracking-[-0.02em]">
+        Autarch<span className="text-muted-foreground"> AI</span>
+      </span>
     </span>
   );
 }
