@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/site-shell";
 import { Section, SectionHeader } from "@/components/site/section";
 import { Composer } from "@/components/autarch/composer";
-import { HeroDiagram } from "@/components/autarch/hero-diagram";
 import { StatusBadge } from "@/components/autarch/status-badge";
 import { MODULE_GROUPS, modulesByGroup } from "@/lib/modules";
 import { INDUSTRIES } from "@/lib/industries";
@@ -11,7 +10,7 @@ import { Button } from "@/components/ui/button";
 
 const TITLE = "Autarch AI — Every industrial AI tool in one workspace";
 const DESC =
-  "Autarch AI unifies 23 AI capabilities — build, research, design, media, automation — inside one enterprise workspace with projects, files and an audit trail.";
+  "Autarch AI unifies 23 AI capabilities — build, research, design, media and business — inside one calm enterprise workspace with projects, files and an audit trail.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,74 +27,88 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <SiteShell ambient>
-      <section className="px-5 pt-16 pb-10 sm:px-8 sm:pt-24">
-        <div className="mx-auto w-full max-w-6xl">
+      {/* Hero */}
+      <section className="px-5 pt-24 pb-16 text-center sm:px-8 sm:pt-32">
+        <div className="mx-auto w-full max-w-3xl rise-in">
           <div className="label-mono mb-6">One workspace · 23 capabilities</div>
-          <h1 className="max-w-3xl text-3xl leading-[1.15] sm:text-5xl">
-            Every Industrial AI Tool.
-            <br />
-            One Supreme Enterprise Workspace.
-            <br />
-            Infinite Power.
-          </h1>
-          <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Ask once. Autarch selects the capability, you confirm, it executes, and the output lands in your project —
-            ready to continue in the next module.
+          <h1 className="text-4xl leading-[1.08] sm:text-6xl">Autarch AI</h1>
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+            Every industrial AI capability, in one calm enterprise workspace. Ask once — Autarch picks the right
+            capability, you confirm, and the result lands in your project.
           </p>
-
-          <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:items-start">
-            <Composer className="max-w-2xl" />
-            <HeroDiagram className="hidden h-64 w-full text-foreground/70 lg:block" />
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <Button asChild size="lg" className="rounded-full px-7">
+              <Link to="/signup">Get started</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="rounded-full px-7">
+              <Link to="/modules">Explore the 23 modules</Link>
+            </Button>
           </div>
+        </div>
+
+        <div className="mx-auto mt-16 w-full max-w-2xl text-left">
+          <Composer />
         </div>
       </section>
 
+      {/* Categories */}
       <Section>
         <SectionHeader
+          center
           index="Capabilities"
-          title="Twenty-three modules, grouped so nothing overwhelms you"
-          lead="Every capability has its own specialized workspace, and every workspace shares the same projects, files and history."
+          title="23 modules, five simple categories"
+          lead="Nothing to decode. Pick a category, open a module, and every workspace shares the same projects, files and history."
         />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {MODULE_GROUPS.map((group) => (
-            <div key={group.id} className="panel hover-lift p-5">
-              <div className="label-mono">{group.name}</div>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{group.blurb}</p>
-              <ul className="mt-4 space-y-2">
-                {modulesByGroup(group.id).map((m) => (
-                  <li key={m.slug}>
+
+        <div className="mt-16 space-y-16">
+          {MODULE_GROUPS.map((group) => {
+            const mods = modulesByGroup(group.id);
+            return (
+              <div key={group.id} className="grid gap-8 md:grid-cols-[16rem_minmax(0,1fr)]">
+                <div className="md:pt-1">
+                  <h3 className="text-xl">{group.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{group.blurb}</p>
+                  <div className="label-mono mt-4">{mods.length} modules</div>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {mods.map((m) => (
                     <Link
+                      key={m.slug}
                       to="/app/modules/$slug"
                       params={{ slug: m.slug }}
-                      className="flex items-baseline gap-2 rounded px-1 py-1 text-[0.8rem] hover:bg-secondary"
+                      className="panel hover-lift px-5 py-4"
                     >
-                      <span className="font-mono text-[0.65rem] text-muted-foreground">{m.id}</span>
-                      <span className="flex-1">{m.name}</span>
-                      <StatusBadge status={m.status} />
+                      <div className="flex items-start gap-3">
+                        <span className="flex-1 text-[0.95rem] leading-snug">{m.name}</span>
+                        <StatusBadge status={m.status} />
+                      </div>
+                      <p className="mt-1.5 text-[0.82rem] leading-relaxed text-muted-foreground">{m.tagline}</p>
                     </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </Section>
 
+      {/* Cross-module */}
       <Section>
         <SectionHeader
+          center
           index="Cross-module"
           title="Output from one module is input to the next"
-          lead="Autarch is one platform, not 23 tools. Every generated asset can be saved to a project and reused elsewhere."
+          lead="One platform, not 23 tools. Anything generated can be saved to a project and reused anywhere else."
         />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2">
           {DEMO_WORKFLOWS.map((w) => (
-            <div key={w.name} className="panel p-5">
-              <div className="font-mono text-sm">{w.name}</div>
-              <div className="mt-3 flex flex-wrap items-center gap-1.5 font-mono text-[0.65rem] text-muted-foreground">
+            <div key={w.name} className="panel p-6">
+              <div className="text-[0.95rem]">{w.name}</div>
+              <div className="mt-4 flex flex-wrap items-center gap-2 text-[0.78rem] text-muted-foreground">
                 {w.steps.map((s, i) => (
-                  <span key={s} className="flex items-center gap-1.5">
-                    <span className="rounded border border-border px-1.5 py-0.5">{s}</span>
-                    {i < w.steps.length - 1 && <span>→</span>}
+                  <span key={s} className="flex items-center gap-2">
+                    <span className="rounded-full bg-secondary px-3 py-1">{s}</span>
+                    {i < w.steps.length - 1 && <span aria-hidden="true">→</span>}
                   </span>
                 ))}
               </div>
@@ -104,64 +117,47 @@ function Home() {
         </div>
       </Section>
 
+      {/* Industries */}
       <Section>
         <SectionHeader
+          center
           index="Industries"
           title="Fifteen working contexts"
-          lead="Each one maps to specific modules, input types and outputs."
+          lead="Each context maps to specific modules, inputs and outputs — so teams know exactly where to start."
         />
-        <div className="mt-10 divide-y divide-border">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {INDUSTRIES.map((ind) => (
-            <article key={ind.slug} className="grid gap-4 py-7 md:grid-cols-[6rem_minmax(0,1fr)]">
-              <div className="label-mono md:pt-1">{ind.id}</div>
-              <div>
-                <h3 className="text-lg">{ind.name}</h3>
-                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">{ind.can}</p>
-                <dl className="mt-4 grid gap-4 text-xs sm:grid-cols-3">
-                  <div>
-                    <dt className="label-mono mb-1.5">Inputs</dt>
-                    <dd className="text-muted-foreground">{ind.inputs.join(" · ")}</dd>
-                  </div>
-                  <div>
-                    <dt className="label-mono mb-1.5">Workflow</dt>
-                    <dd className="text-muted-foreground">{ind.workflow.join(" → ")}</dd>
-                  </div>
-                  <div>
-                    <dt className="label-mono mb-1.5">Outputs</dt>
-                    <dd className="text-muted-foreground">{ind.outputs.join(" · ")}</dd>
-                  </div>
-                </dl>
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                  {ind.modules.map((slug) => (
-                    <Link
-                      key={slug}
-                      to="/app/modules/$slug"
-                      params={{ slug }}
-                      className="rounded-full border border-border px-2.5 py-1 font-mono text-[0.65rem] hover:bg-secondary"
-                    >
-                      {slug}
-                    </Link>
-                  ))}
-                  <Button asChild size="sm" variant="outline" className="ml-auto font-mono text-xs">
-                    <Link to="/app">Open workspace</Link>
-                  </Button>
-                </div>
+            <article key={ind.slug} className="panel hover-lift p-6">
+              <h3 className="text-lg leading-snug">{ind.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{ind.can}</p>
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {ind.modules.slice(0, 3).map((slug) => (
+                  <Link
+                    key={slug}
+                    to="/app/modules/$slug"
+                    params={{ slug }}
+                    className="rounded-full border border-border px-2.5 py-1 text-[0.7rem] text-muted-foreground transition-colors hover:bg-secondary"
+                  >
+                    {slug}
+                  </Link>
+                ))}
               </div>
             </article>
           ))}
         </div>
       </Section>
 
+      {/* CTA */}
       <Section className="text-center">
-        <h2 className="text-2xl sm:text-3xl">Open the command center</h2>
-        <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
-          Phase 1 is the full product shell. Capability availability is labelled per module — no invented integrations.
+        <h2 className="text-3xl sm:text-4xl">Open the command center</h2>
+        <p className="mx-auto mt-4 max-w-md text-base text-muted-foreground">
+          Availability is labelled honestly per module — real capabilities run today, the rest are clearly marked.
         </p>
-        <div className="mt-6 flex justify-center gap-2">
-          <Button asChild className="font-mono text-xs">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Button asChild size="lg" className="rounded-full px-7">
             <Link to="/app">Enter workspace</Link>
           </Button>
-          <Button asChild variant="outline" className="font-mono text-xs">
+          <Button asChild size="lg" variant="outline" className="rounded-full px-7">
             <Link to="/pricing">See pricing</Link>
           </Button>
         </div>
