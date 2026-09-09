@@ -43,13 +43,13 @@ function ModulesPage() {
                 className="panel hover-lift flex flex-col p-4"
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[0.65rem] text-muted-foreground">{m.id}</span>
+                  <span className="text-[0.65rem] text-muted-foreground">{m.id}</span>
                   <StatusBadge status={m.status} className="ml-auto" />
                 </div>
                 <h3 className="mt-2 text-base leading-snug">{m.name}</h3>
-                <p className="mt-1.5 font-mono text-[0.7rem] text-muted-foreground">{m.tagline}</p>
+                <p className="mt-1.5 text-[0.7rem] text-muted-foreground">{m.tagline}</p>
                 <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{m.summary}</p>
-                <div className="mt-4 flex flex-wrap gap-1.5 font-mono text-[0.62rem] text-muted-foreground">
+                <div className="mt-4 flex flex-wrap gap-1.5 text-[0.62rem] text-muted-foreground">
                   {m.outputs.slice(0, 3).map((o) => (
                     <span key={o} className="rounded border border-border px-1.5 py-0.5">
                       {o}

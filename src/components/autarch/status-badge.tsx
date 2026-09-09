@@ -5,7 +5,7 @@ export function StatusBadge({ status, className }: { status: ModuleStatus; class
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2 py-0.5 font-mono text-[0.625rem] tracking-[0.14em] uppercase",
+        "inline-flex items-center rounded-full px-2 py-0.5 text-[0.625rem] tracking-[0.14em] uppercase",
         STATUS_TONE[status],
         className,
       )}
@@ -19,7 +19,7 @@ export function DemoDataBadge({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border border-dashed border-border-strong px-2 py-0.5 font-mono text-[0.625rem] tracking-[0.14em] text-muted-foreground uppercase",
+        "inline-flex items-center gap-1.5 rounded-full border border-dashed border-border-strong px-2 py-0.5 text-[0.625rem] tracking-[0.14em] text-muted-foreground uppercase",
         className,
       )}
     >

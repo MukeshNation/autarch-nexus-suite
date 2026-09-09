@@ -133,7 +133,7 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
                 We sent a confirmation link to <span className="font-mono">{email}</span>. Open it to activate your
                 Autarch workspace, then sign in.
               </p>
-              <Button asChild variant="outline" className="w-full font-mono text-xs">
+              <Button asChild variant="outline" className="w-full text-xs">
                 <Link to="/login">Go to sign in</Link>
               </Button>
             </div>
@@ -151,7 +151,7 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="mt-1.5 font-mono text-xs"
+                        className="mt-1.5 text-xs"
                         placeholder="Your name"
                       />
                     </div>
@@ -164,7 +164,7 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="mt-1.5 font-mono text-xs"
+                        className="mt-1.5 text-xs"
                         placeholder="+91 90000 00000"
                       />
                     </div>
@@ -180,7 +180,7 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="mt-1.5 font-mono text-xs"
+                    className="mt-1.5 text-xs"
                     placeholder="you@company.com"
                   />
                 </div>
@@ -195,7 +195,7 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
                     minLength={isLogin ? 6 : 8}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="mt-1.5 font-mono text-xs"
+                    className="mt-1.5 text-xs"
                     placeholder="••••••••"
                   />
                   {!isLogin && password.length > 0 && (
@@ -228,17 +228,17 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
                       minLength={8}
                       value={confirm}
                       onChange={(e) => setConfirm(e.target.value)}
-                      className="mt-1.5 font-mono text-xs"
+                      className="mt-1.5 text-xs"
                       placeholder="••••••••"
                     />
                     {confirm.length > 0 && confirm !== password && (
-                      <span className="mt-1 block font-mono text-[0.65rem] text-destructive">
+                      <span className="mt-1 block text-[0.65rem] text-destructive">
                         Passwords do not match
                       </span>
                     )}
                   </div>
                 )}
-                <Button type="submit" disabled={busy} className="w-full font-mono text-xs">
+                <Button type="submit" disabled={busy} className="w-full text-xs">
                   {busy ? "Working…" : isLogin ? "Sign in" : "Create workspace"}
                 </Button>
               </form>
@@ -248,7 +248,7 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
                 variant="outline"
                 disabled={busy}
                 onClick={onGoogle}
-                className="mt-3 w-full font-mono text-xs"
+                className="mt-3 w-full text-xs"
               >
                 Continue with Google
               </Button>
@@ -257,7 +257,7 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
                 <Link to={isLogin ? "/signup" : "/login"} className="underline underline-offset-4">
                   {isLogin ? "Create an account" : "I already have an account"}
                 </Link>
-                <Link to="/forgot-password" className="font-mono text-[0.7rem] underline underline-offset-4">
+                <Link to="/forgot-password" className="text-[0.7rem] underline underline-offset-4">
                   Forgot password?
                 </Link>
               </div>

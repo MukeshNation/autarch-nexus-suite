@@ -73,7 +73,7 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
-      <div className="mx-auto mt-10 w-full max-w-6xl border-t border-border pt-5 font-mono text-[0.68rem] text-muted-foreground">
+      <div className="mx-auto mt-10 w-full max-w-6xl border-t border-border pt-5 text-[0.68rem] text-muted-foreground">
         © 2026 Autarch AI · Phase 1 product shell. Capability availability is labelled per module; nothing here claims a
         live third-party connection.
       </div>

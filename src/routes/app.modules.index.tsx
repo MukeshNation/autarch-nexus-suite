@@ -29,11 +29,11 @@ function ModuleDirectory() {
                   className="panel hover-lift p-4"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[0.62rem] text-muted-foreground">{m.id}</span>
+                    <span className="text-[0.62rem] text-muted-foreground">{m.id}</span>
                     <StatusBadge status={m.status} className="ml-auto" />
                   </div>
                   <h2 className="mt-2 text-sm leading-snug">{m.name}</h2>
-                  <p className="mt-1 font-mono text-[0.68rem] text-muted-foreground">{m.tagline}</p>
+                  <p className="mt-1 text-[0.68rem] text-muted-foreground">{m.tagline}</p>
                 </Link>
               ))}
             </div>

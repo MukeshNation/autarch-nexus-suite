@@ -24,7 +24,7 @@ function AutomationsPage() {
             </div>
             <ol className="mt-3 space-y-1.5">
               {w.steps.map((s, i) => (
-                <li key={s} className="flex items-center gap-2 rounded border border-border px-2.5 py-1.5 font-mono text-[0.68rem]">
+                <li key={s} className="flex items-center gap-2 rounded border border-border px-2.5 py-1.5 text-[0.68rem]">
                   <span className="text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
                   <span className="flex-1">{s}</span>
                   <span className="label-mono">Gate</span>
@@ -32,17 +32,17 @@ function AutomationsPage() {
               ))}
             </ol>
             <div className="mt-3 flex gap-2">
-              <Button size="sm" variant="outline" className="font-mono text-[0.7rem]">
+              <Button size="sm" variant="outline" className="text-[0.7rem]">
                 Edit
               </Button>
-              <Button size="sm" variant="ghost" className="font-mono text-[0.7rem]">
+              <Button size="sm" variant="ghost" className="text-[0.7rem]">
                 Schedule
               </Button>
             </div>
           </article>
         ))}
       </div>
-      <p className="mt-6 font-mono text-[0.68rem] text-muted-foreground">
+      <p className="mt-6 text-[0.68rem] text-muted-foreground">
         Execution runs as a background job once the job runner is connected. Every external step requires an authorized
         integration and explicit approval.
       </p>

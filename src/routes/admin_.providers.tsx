@@ -84,7 +84,7 @@ function ProvidersPage() {
       lead="Add a provider once, test it, then activate it for a capability. Every module wired to that capability resolves it automatically — no module-by-module assignment. Keys are stored server-side and never shown again."
     >
       <section className="rounded-lg border border-border p-5">
-        <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Add provider</h2>
+        <h2 className="text-xs uppercase tracking-wider text-muted-foreground">Add provider</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
           <div>
             <Label className="label-mono">Name</Label>
@@ -144,21 +144,21 @@ function ProvidersPage() {
           </div>
         </div>
         <Button
-          className="mt-4 font-mono text-xs"
+          className="mt-4 text-xs"
           disabled={create.isPending || !form.name || !form.base_url || !form.model || form.api_key.length < 8}
           onClick={() => create.mutate()}
         >
           {create.isPending ? "Saving…" : "Save provider"}
         </Button>
         {!IMPLEMENTED_ADAPTERS.includes(form.adapter) && (
-          <p className="mt-2 font-mono text-[0.7rem] text-muted-foreground">
+          <p className="mt-2 text-[0.7rem] text-muted-foreground">
             NEW ADAPTER REQUIRED — this protocol has no implementation yet.
           </p>
         )}
       </section>
 
       <section className="rounded-lg border border-border p-5">
-        <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Configured providers</h2>
+        <h2 className="text-xs uppercase tracking-wider text-muted-foreground">Configured providers</h2>
         {isLoading ? (
           <p className="mt-4 label-mono">Loading…</p>
         ) : error ? (
@@ -168,7 +168,7 @@ function ProvidersPage() {
         ) : (
           <div className="mt-4 overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="font-mono text-[0.7rem] uppercase text-muted-foreground">
+              <thead className="text-[0.7rem] uppercase text-muted-foreground">
                 <tr>
                   <th className="py-2">Provider</th>
                   <th className="py-2">Capabilities</th>
@@ -182,16 +182,16 @@ function ProvidersPage() {
                 {providers.map((p) => (
                   <tr key={p.id} className="border-t border-border">
                     <td className="py-2 font-medium">{p.name}</td>
-                    <td className="py-2 font-mono text-[0.7rem]">{p.capabilities.join(", ")}</td>
-                    <td className="py-2 font-mono text-[0.7rem]">{p.model}</td>
-                    <td className="py-2 font-mono text-[0.7rem]">{p.secret_masked}</td>
-                    <td className="py-2 font-mono text-[0.7rem]">{p.last_test_status ?? "NOT TESTED"}</td>
+                    <td className="py-2 text-[0.7rem]">{p.capabilities.join(", ")}</td>
+                    <td className="py-2 text-[0.7rem]">{p.model}</td>
+                    <td className="py-2 text-[0.7rem]">{p.secret_masked}</td>
+                    <td className="py-2 text-[0.7rem]">{p.last_test_status ?? "NOT TESTED"}</td>
                     <td className="py-2">
                       <div className="flex justify-end gap-2">
                         <Button
                           size="sm"
                           variant="outline"
-                          className="font-mono text-[0.7rem]"
+                          className="text-[0.7rem]"
                           onClick={async () => {
                             const res = await test({ data: { id: p.id } });
                             toast[res.status === "CONNECTED" ? "success" : "error"](res.status);
@@ -203,7 +203,7 @@ function ProvidersPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="font-mono text-[0.7rem]"
+                          className="text-[0.7rem]"
                           onClick={async () => {
                             await remove({ data: { id: p.id } });
                             toast.success("Provider removed");
@@ -223,7 +223,7 @@ function ProvidersPage() {
       </section>
 
       <section className="rounded-lg border border-border p-5">
-        <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Capability routing</h2>
+        <h2 className="text-xs uppercase tracking-wider text-muted-foreground">Capability routing</h2>
         <p className="mt-1 text-xs text-muted-foreground">
           The active provider for a capability serves every module that requires it. Switching here changes new requests
           only — history, projects and usage stay intact.
@@ -235,7 +235,7 @@ function ProvidersPage() {
             return (
               <div key={c} className="grid items-center gap-3 rounded-md border border-border p-3 md:grid-cols-4">
                 <div>
-                  <p className="font-mono text-[0.7rem]">{c}</p>
+                  <p className="text-[0.7rem]">{c}</p>
                   <p className="text-[0.7rem] text-muted-foreground">{moduleCount(c)} modules wired</p>
                 </div>
                 <div className="md:col-span-1">
@@ -296,7 +296,7 @@ function ProvidersPage() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="font-mono text-[0.7rem] text-muted-foreground">
+                <div className="text-[0.7rem] text-muted-foreground">
                   {eligible.length === 0 ? "MISSING PROVIDER" : current.primary ? "ROUTED" : "NOT ACTIVATED"}
                 </div>
               </div>

@@ -128,13 +128,13 @@ function Shell({ children }: { children: React.ReactNode }) {
         <AutarchWordmark />
         <span className="label-mono">Admin</span>
         <div className="ml-auto flex flex-wrap items-center gap-2">
-          <Button asChild size="sm" variant="outline" className="h-8 font-mono text-[0.68rem]">
+          <Button asChild size="sm" variant="outline" className="h-8 text-[0.68rem]">
             <Link to="/admin/providers">AI providers</Link>
           </Button>
-          <Button asChild size="sm" variant="outline" className="h-8 font-mono text-[0.68rem]">
+          <Button asChild size="sm" variant="outline" className="h-8 text-[0.68rem]">
             <Link to="/admin/modules">Modules</Link>
           </Button>
-          <Button asChild size="sm" variant="outline" className="h-8 font-mono text-[0.68rem]">
+          <Button asChild size="sm" variant="outline" className="h-8 text-[0.68rem]">
             <Link to="/admin/payments">Payments</Link>
           </Button>
           <ThemeToggle className="size-8" />
@@ -265,7 +265,7 @@ function AdminConsole() {
       </section>
 
       <Tabs defaultValue="platform">
-        <TabsList className="font-mono text-[0.7rem]">
+        <TabsList className="text-[0.7rem]">
           <TabsTrigger value="platform">Platform</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
           <TabsTrigger value="live">Live activity</TabsTrigger>
@@ -309,8 +309,8 @@ function AdminConsole() {
                           {p.full_name ?? "—"}
                         </span>
                       </td>
-                      <td className="px-3 py-2 font-mono text-[0.68rem]">{p.email ?? "—"}</td>
-                      <td className="px-3 py-2 font-mono text-[0.68rem]">{p.phone ?? "—"}</td>
+                      <td className="px-3 py-2 text-[0.68rem]">{p.email ?? "—"}</td>
+                      <td className="px-3 py-2 text-[0.68rem]">{p.phone ?? "—"}</td>
                       <td className="px-3 py-2">
                         <Select value={p.plan} onValueChange={(v) => void setPlan(p.id, v)} disabled={busy}>
                           <SelectTrigger className="h-7 w-24 text-xs">
@@ -325,7 +325,7 @@ function AdminConsole() {
                           </SelectContent>
                         </Select>
                       </td>
-                      <td className="px-3 py-2 font-mono text-[0.68rem]">
+                      <td className="px-3 py-2 text-[0.68rem]">
                         {sub ? `${sub.status}${sub.granted_free ? " · free" : ""}` : "—"}
                       </td>
                       <td className="px-3 py-2 text-muted-foreground">{timeAgo(p.last_seen_at)}</td>
@@ -383,9 +383,9 @@ function AdminConsole() {
                 <li key={p.id} className="flex flex-wrap items-center gap-2 rounded border border-border px-2.5 py-1.5">
                   <span className="pulse-dot size-1.5 rounded-full bg-primary" />
                   <span>{p.full_name ?? "Unnamed"}</span>
-                  <span className="font-mono text-[0.68rem] text-muted-foreground">{p.email}</span>
-                  <span className="font-mono text-[0.68rem] text-muted-foreground">{p.phone ?? "no phone"}</span>
-                  <span className="ml-auto font-mono text-[0.68rem]">{timeAgo(p.last_seen_at)}</span>
+                  <span className="text-[0.68rem] text-muted-foreground">{p.email}</span>
+                  <span className="text-[0.68rem] text-muted-foreground">{p.phone ?? "no phone"}</span>
+                  <span className="ml-auto text-[0.68rem]">{timeAgo(p.last_seen_at)}</span>
                 </li>
               ))}
               {stats.live === 0 && <li className="text-muted-foreground">Nobody online right now.</li>}
@@ -393,7 +393,7 @@ function AdminConsole() {
           </section>
           <section className="panel p-4">
             <span className="label-mono">Activity stream</span>
-            <ul className="mt-3 space-y-1 font-mono text-[0.68rem] text-muted-foreground">
+            <ul className="mt-3 space-y-1 text-[0.68rem] text-muted-foreground">
               {events.map((e) => (
                 <li key={e.id} className="flex gap-2">
                   <span className="w-20 shrink-0">{timeAgo(e.created_at)}</span>
@@ -417,14 +417,14 @@ function AdminConsole() {
             <ul className="mt-3 space-y-1.5 text-xs">
               {PLANS.map((pl) => (
                 <li key={pl} className="flex items-center gap-3">
-                  <span className="w-16 font-mono text-[0.68rem] uppercase">{pl}</span>
+                  <span className="w-16 text-[0.68rem] uppercase">{pl}</span>
                   <span className="h-1.5 flex-1 overflow-hidden rounded bg-secondary">
                     <span
                       className="block h-full bg-primary"
                       style={{ width: `${stats.total ? ((stats.byPlan[pl] ?? 0) / stats.total) * 100 : 0}%` }}
                     />
                   </span>
-                  <span className="w-8 text-right font-mono text-[0.68rem]">{stats.byPlan[pl] ?? 0}</span>
+                  <span className="w-8 text-right text-[0.68rem]">{stats.byPlan[pl] ?? 0}</span>
                 </li>
               ))}
             </ul>
@@ -447,10 +447,10 @@ function PlatformPanel() {
   });
 
   if (isLoading) {
-    return <p className="panel p-4 font-mono text-[0.7rem] text-muted-foreground">Loading live platform data…</p>;
+    return <p className="panel p-4 text-[0.7rem] text-muted-foreground">Loading live platform data…</p>;
   }
   if (error || !data) {
-    return <p className="panel p-4 font-mono text-[0.7rem] text-muted-foreground">Could not load platform data.</p>;
+    return <p className="panel p-4 text-[0.7rem] text-muted-foreground">Could not load platform data.</p>;
   }
 
   const paidSubs = Object.entries(data.subscriptions.byPlan).filter(([plan]) => plan !== "free");
@@ -475,7 +475,7 @@ function PlatformPanel() {
               ? "Recurring value of active paid plans at configured prices."
               : "Contracted value of active paid plans at configured prices. No money has been collected — the payment provider is not live yet."}
           </p>
-          <ul className="mt-3 space-y-1 font-mono text-[0.68rem] text-muted-foreground">
+          <ul className="mt-3 space-y-1 text-[0.68rem] text-muted-foreground">
             {paidSubs.length === 0 && <li>No paid subscriptions yet.</li>}
             {paidSubs.map(([plan, count]) => (
               <li key={plan} className="flex justify-between">
@@ -502,7 +502,7 @@ function PlatformPanel() {
           <p className="mt-1 text-xs text-muted-foreground">
             connected and tested · {data.providers.enabled} enabled for routing
           </p>
-          <ul className="mt-3 space-y-1 font-mono text-[0.68rem] text-muted-foreground">
+          <ul className="mt-3 space-y-1 text-[0.68rem] text-muted-foreground">
             <li className="flex justify-between">
               <span>average run latency</span>
               <span>{data.ai.avgLatencyMs ? `${(data.ai.avgLatencyMs / 1000).toFixed(1)}s` : "—"}</span>
@@ -516,14 +516,14 @@ function PlatformPanel() {
               <span>{data.flags["ai_emergency_stop"] ? "ON" : "off"}</span>
             </li>
           </ul>
-          <Button asChild size="sm" variant="outline" className="mt-3 h-8 font-mono text-[0.68rem]">
+          <Button asChild size="sm" variant="outline" className="mt-3 h-8 text-[0.68rem]">
             <Link to="/admin/providers">Manage providers</Link>
           </Button>
         </section>
 
         <section className="panel p-4">
           <span className="label-mono">Modules</span>
-          <ul className="mt-3 space-y-1 font-mono text-[0.68rem] text-muted-foreground">
+          <ul className="mt-3 space-y-1 text-[0.68rem] text-muted-foreground">
             {Object.entries(data.modules).length === 0 && <li>No module states saved yet.</li>}
             {Object.entries(data.modules).map(([status, count]) => (
               <li key={status} className="flex justify-between">
@@ -532,14 +532,14 @@ function PlatformPanel() {
               </li>
             ))}
           </ul>
-          <Button asChild size="sm" variant="outline" className="mt-3 h-8 font-mono text-[0.68rem]">
+          <Button asChild size="sm" variant="outline" className="mt-3 h-8 text-[0.68rem]">
             <Link to="/admin/modules">Control modules</Link>
           </Button>
         </section>
 
         <section className="panel p-4">
           <span className="label-mono">Credits & storage</span>
-          <ul className="mt-3 space-y-1 font-mono text-[0.68rem] text-muted-foreground">
+          <ul className="mt-3 space-y-1 text-[0.68rem] text-muted-foreground">
             <li className="flex justify-between">
               <span>granted</span>
               <span>{data.credits.allocated.toLocaleString()}</span>
@@ -641,7 +641,7 @@ function OffersPanel({ offers, reload }: { offers: Offer[]; reload: () => Promis
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-medium">{o.title}</span>
                 <span className="label-mono">{o.target_plan}</span>
-                <span className="font-mono text-[0.68rem] text-muted-foreground">
+                <span className="text-[0.68rem] text-muted-foreground">
                   {o.grants_free_access ? "free access" : `${o.discount_percent}% off`}
                   {o.code ? ` · ${o.code}` : ""}
                 </span>

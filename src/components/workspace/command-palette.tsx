@@ -55,7 +55,7 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
                 navigate({ to: "/app/modules/$slug", params: { slug: m.slug } });
               }}
             >
-              <span className="font-mono text-[0.65rem] text-muted-foreground">{m.id}</span>
+              <span className="text-[0.65rem] text-muted-foreground">{m.id}</span>
               {m.name}
             </CommandItem>
           ))}

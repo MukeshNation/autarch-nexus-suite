@@ -62,7 +62,7 @@ function ForgotPasswordPage() {
               If an account exists for <span className="font-mono">{email}</span>, a reset link is on its way. The link
               opens the reset page where you choose a new password.
             </p>
-            <Button asChild variant="outline" className="w-full font-mono text-xs">
+            <Button asChild variant="outline" className="w-full text-xs">
               <Link to="/login">Back to sign in</Link>
             </Button>
           </div>
@@ -78,11 +78,11 @@ function ForgotPasswordPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1.5 font-mono text-xs"
+                className="mt-1.5 text-xs"
                 placeholder="you@company.com"
               />
             </div>
-            <Button type="submit" disabled={busy} className="w-full font-mono text-xs">
+            <Button type="submit" disabled={busy} className="w-full text-xs">
               {busy ? "Sending…" : "Send reset link"}
             </Button>
             <Link to="/login" className="block text-xs underline underline-offset-4">

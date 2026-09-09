@@ -37,12 +37,12 @@ export function ModuleRunner({
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
         placeholder="Describe the task…"
-        className="min-h-24 font-mono text-xs"
+        className="min-h-24 text-xs"
       />
       <div className="mt-2 flex flex-wrap items-center gap-2">
         <Button
           size="sm"
-          className="gap-1.5 font-mono text-xs"
+          className="gap-1.5 text-xs"
           disabled={mutation.isPending || prompt.trim().length === 0}
           onClick={() => mutation.mutate(prompt.trim())}
         >
@@ -54,7 +54,7 @@ export function ModuleRunner({
             <Button
               size="sm"
               variant="outline"
-              className="gap-1.5 font-mono text-xs"
+              className="gap-1.5 text-xs"
               onClick={() => {
                 void navigator.clipboard.writeText(result.text);
                 toast.success("Copied");

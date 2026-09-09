@@ -90,7 +90,7 @@ function ResetPasswordPage() {
               disabled={!ready}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1.5 font-mono text-xs"
+              className="mt-1.5 text-xs"
               placeholder="••••••••"
             />
           </div>
@@ -106,11 +106,11 @@ function ResetPasswordPage() {
               disabled={!ready}
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
-              className="mt-1.5 font-mono text-xs"
+              className="mt-1.5 text-xs"
               placeholder="••••••••"
             />
           </div>
-          <Button type="submit" disabled={busy || !ready} className="w-full font-mono text-xs">
+          <Button type="submit" disabled={busy || !ready} className="w-full text-xs">
             {busy ? "Updating…" : "Update password"}
           </Button>
           <Link to="/forgot-password" className="block text-xs underline underline-offset-4">

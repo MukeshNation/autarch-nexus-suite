@@ -86,10 +86,10 @@ function TasksPage() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="New task…"
-          className="h-8 min-w-48 flex-1 font-mono text-xs"
+          className="h-8 min-w-48 flex-1 text-xs"
         />
         <Select value={projectId} onValueChange={setProjectId}>
-          <SelectTrigger className="h-8 w-40 font-mono text-xs">
+          <SelectTrigger className="h-8 w-40 text-xs">
             <SelectValue placeholder="Project" />
           </SelectTrigger>
           <SelectContent>
@@ -102,7 +102,7 @@ function TasksPage() {
           </SelectContent>
         </Select>
         <Select value={priority} onValueChange={setPriority}>
-          <SelectTrigger className="h-8 w-32 font-mono text-xs">
+          <SelectTrigger className="h-8 w-32 text-xs">
             <SelectValue placeholder="Priority" />
           </SelectTrigger>
           <SelectContent>
@@ -113,14 +113,14 @@ function TasksPage() {
             ))}
           </SelectContent>
         </Select>
-        <Button type="submit" size="sm" disabled={createTask.isPending} className="h-8 font-mono text-xs">
+        <Button type="submit" size="sm" disabled={createTask.isPending} className="h-8 text-xs">
           Add task
         </Button>
       </form>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <Select value={filterProject} onValueChange={setFilterProject}>
-          <SelectTrigger className="h-8 w-44 font-mono text-xs">
+          <SelectTrigger className="h-8 w-44 text-xs">
             <SelectValue placeholder="Filter project" />
           </SelectTrigger>
           <SelectContent>
@@ -134,7 +134,7 @@ function TasksPage() {
           </SelectContent>
         </Select>
         <Select value={sort} onValueChange={(v) => setSort(v as typeof sort)}>
-          <SelectTrigger className="h-8 w-40 font-mono text-xs">
+          <SelectTrigger className="h-8 w-40 text-xs">
             <SelectValue placeholder="Sort" />
           </SelectTrigger>
           <SelectContent>
@@ -149,7 +149,7 @@ function TasksPage() {
       {tasks.error && <p className="panel p-4 text-xs text-destructive">Could not load your tasks.</p>}
 
       <Tabs defaultValue="board">
-        <TabsList className="font-mono text-xs">
+        <TabsList className="text-xs">
           <TabsTrigger value="board">Board</TabsTrigger>
           <TabsTrigger value="list">List</TabsTrigger>
         </TabsList>
@@ -187,7 +187,7 @@ function TasksPage() {
                       </li>
                     ))}
                     {items.length === 0 && (
-                      <li className="rounded-md border border-dashed border-border px-3 py-6 text-center font-mono text-[0.65rem] text-muted-foreground">
+                      <li className="rounded-md border border-dashed border-border px-3 py-6 text-center text-[0.65rem] text-muted-foreground">
                         Empty
                       </li>
                     )}
@@ -196,7 +196,7 @@ function TasksPage() {
               );
             })}
           </div>
-          <p className="mt-2 font-mono text-[0.62rem] text-muted-foreground">Drag a card between columns to change its status.</p>
+          <p className="mt-2 text-[0.62rem] text-muted-foreground">Drag a card between columns to change its status.</p>
         </TabsContent>
 
         <TabsContent value="list" className="pt-4">
@@ -221,7 +221,7 @@ function TasksPage() {
                         value={t.status}
                         onValueChange={(v) => updateTask.mutate({ id: t.id, patch: { status: v } })}
                       >
-                        <SelectTrigger className="h-7 w-32 font-mono text-[0.68rem]">
+                        <SelectTrigger className="h-7 w-32 text-[0.68rem]">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -233,7 +233,7 @@ function TasksPage() {
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="px-3 py-2 font-mono text-[0.68rem]">{t.priority}</td>
+                    <td className="px-3 py-2 text-[0.68rem]">{t.priority}</td>
                     <td className="px-3 py-2">
                       <Button
                         size="icon"
@@ -249,7 +249,7 @@ function TasksPage() {
                 ))}
                 {visible.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="px-3 py-8 text-center font-mono text-[0.7rem] text-muted-foreground">
+                    <td colSpan={5} className="px-3 py-8 text-center text-[0.7rem] text-muted-foreground">
                       No tasks yet.
                     </td>
                   </tr>

@@ -38,5 +38,5 @@ export function Typewriter({
 
   const text = (phrases[index] ?? "").slice(0, len);
 
-  return <span className={cn("caret-blink font-mono", className)}>{text}</span>;
+  return <span className={cn("caret-blink", className)}>{text}</span>;
 }

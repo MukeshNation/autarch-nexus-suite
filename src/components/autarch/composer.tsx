@@ -70,7 +70,7 @@ export function Composer({
           }}
           rows={size === "lg" ? 3 : 2}
           placeholder="What do you want Autarch to do?"
-          className="w-full resize-none bg-transparent font-mono text-[0.95rem] leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/70"
+          className="w-full resize-none bg-transparent text-[0.95rem] leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/70"
         />
         {!value && (
           <div aria-hidden="true" className="mt-1 text-xs text-muted-foreground">
@@ -82,7 +82,7 @@ export function Composer({
       {attachments.length > 0 && (
         <div className="flex flex-wrap gap-2 px-4 pt-3">
           {attachments.map((a) => (
-            <span key={a} className="rounded-md border border-border bg-secondary px-2 py-1 font-mono text-[0.7rem]">
+            <span key={a} className="rounded-md border border-border bg-secondary px-2 py-1 text-[0.7rem]">
               {a}
             </span>
           ))}
@@ -94,14 +94,14 @@ export function Composer({
           type="button"
           variant="outline"
           size="sm"
-          className="gap-1.5 font-mono text-xs"
+          className="gap-1.5 text-xs"
           onClick={() => setAttachments((a) => [...a, `reference-${a.length + 1}.pdf`])}
         >
           <Paperclip className="size-3.5" /> Attach file
         </Button>
 
         <Select value={capability} onValueChange={setCapability}>
-          <SelectTrigger className="w-[13.5rem] font-mono text-xs">
+          <SelectTrigger className="w-[13.5rem] text-xs">
             <SelectValue placeholder="Capability" />
           </SelectTrigger>
           <SelectContent className="max-h-72">
@@ -116,7 +116,7 @@ export function Composer({
 
         {showProject && (
           <Select value={project} onValueChange={setProject}>
-            <SelectTrigger className="w-[11.5rem] font-mono text-xs">
+            <SelectTrigger className="w-[11.5rem] text-xs">
               <FolderOpen className="size-3.5" />
               <SelectValue placeholder="Project" />
             </SelectTrigger>
@@ -130,7 +130,7 @@ export function Composer({
           </Select>
         )}
 
-        <Button type="button" size="sm" className="ml-auto gap-1.5 font-mono text-xs" onClick={submit}>
+        <Button type="button" size="sm" className="ml-auto gap-1.5 text-xs" onClick={submit}>
           Submit <ArrowUp className="size-3.5" />
         </Button>
       </div>
@@ -139,11 +139,11 @@ export function Composer({
         <div className="flex flex-wrap items-center gap-2 border-t border-border bg-secondary/50 px-4 py-2.5">
           <Sparkles className="size-3.5 text-muted-foreground" />
           <span className="label-mono">Recommended</span>
-          <span className="font-mono text-xs">
+          <span className="text-xs">
             {targetModule.id} · {targetModule.name}
           </span>
           <StatusBadge status={targetModule.status} />
-          <span className="ml-auto font-mono text-[0.7rem] text-muted-foreground">Confirm to open workspace</span>
+          <span className="ml-auto text-[0.7rem] text-muted-foreground">Confirm to open workspace</span>
         </div>
       )}
 
@@ -153,12 +153,12 @@ export function Composer({
             key={p}
             type="button"
             onClick={() => setValue(p)}
-            className="rounded-full border border-border px-2.5 py-1 font-mono text-[0.7rem] text-muted-foreground transition-colors hover:border-border-strong hover:bg-secondary hover:text-foreground"
+            className="rounded-full border border-border px-2.5 py-1 text-[0.7rem] text-muted-foreground transition-colors hover:border-border-strong hover:bg-secondary hover:text-foreground"
           >
             {p}
           </button>
         ))}
-        <span className="ml-auto hidden items-center gap-1 self-center font-mono text-[0.7rem] text-muted-foreground sm:flex">
+        <span className="ml-auto hidden items-center gap-1 self-center text-[0.7rem] text-muted-foreground sm:flex">
           ⌘↵ to submit <ChevronDown className="size-3" />
         </span>
       </div>

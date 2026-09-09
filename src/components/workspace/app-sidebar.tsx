@@ -57,7 +57,7 @@ export function AppSidebarNav({
         type="button"
         onClick={onSearch}
         className={cn(
-          "mb-2 flex w-full items-center gap-2.5 rounded-md border border-border px-2.5 py-2 text-left font-mono text-xs text-muted-foreground transition-colors hover:bg-secondary",
+          "mb-2 flex w-full items-center gap-2.5 rounded-md border border-border px-2.5 py-2 text-left text-xs text-muted-foreground transition-colors hover:bg-secondary",
           collapsed && "justify-center px-0",
         )}
       >
@@ -78,7 +78,7 @@ export function AppSidebarNav({
               activeOptions={{ exact: item.to === "/app" }}
               activeProps={{ className: "bg-secondary text-foreground" }}
               className={cn(
-                "flex items-center gap-2.5 rounded-md px-2.5 py-2 font-mono text-xs text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground",
+                "flex items-center gap-2.5 rounded-md px-2.5 py-2 text-xs text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground",
                 collapsed && "justify-center px-0",
               )}
               title={item.label}
@@ -112,7 +112,7 @@ export function DesktopSidebar({
       <div className={cn("flex h-14 items-center gap-2 border-b border-border px-3", collapsed && "justify-center px-0")}>
         <Link to="/app" className="flex items-center gap-2">
           <AutarchMark className="size-5" />
-          {!collapsed && <span className="font-mono text-[0.7rem] tracking-[0.2em] uppercase">Autarch</span>}
+          {!collapsed && <span className="text-[0.7rem] tracking-[0.2em] uppercase">Autarch</span>}
         </Link>
       </div>
       <AppSidebarNav collapsed={collapsed} onSearch={onSearch} />
@@ -121,7 +121,7 @@ export function DesktopSidebar({
           type="button"
           onClick={() => setCollapsed(!collapsed)}
           className={cn(
-            "flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 font-mono text-[0.7rem] text-muted-foreground hover:bg-secondary",
+            "flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-[0.7rem] text-muted-foreground hover:bg-secondary",
             collapsed && "justify-center px-0",
           )}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}

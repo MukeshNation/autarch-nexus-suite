@@ -74,7 +74,7 @@ function ProductPage() {
           ))}
         </div>
         <div className="mt-10">
-          <Button asChild className="font-mono text-xs">
+          <Button asChild className="text-xs">
             <Link to="/app">Open the command center</Link>
           </Button>
         </div>

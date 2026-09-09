@@ -26,7 +26,7 @@ function Dashboard() {
         <section className="panel p-4 lg:col-span-2">
           <div className="flex items-center gap-2">
             <span className="label-mono">Recent projects</span>
-            <Link to="/app/projects" className="ml-auto font-mono text-[0.68rem] underline underline-offset-4">
+            <Link to="/app/projects" className="ml-auto text-[0.68rem] underline underline-offset-4">
               All projects
             </Link>
           </div>
@@ -40,7 +40,7 @@ function Dashboard() {
                 <p className="mt-1 text-xs text-muted-foreground">{p.description}</p>
                 <div className="mt-2 flex items-center gap-3">
                   <Progress value={p.progress} className="h-1 flex-1" />
-                  <span className="font-mono text-[0.65rem] text-muted-foreground">{p.progress}%</span>
+                  <span className="text-[0.65rem] text-muted-foreground">{p.progress}%</span>
                 </div>
               </li>
             ))}
@@ -87,7 +87,7 @@ function Dashboard() {
         <section className="panel p-4">
           <div className="flex items-center gap-2">
             <span className="label-mono">Favorite modules</span>
-            <Link to="/app/modules" className="ml-auto font-mono text-[0.68rem] underline underline-offset-4">
+            <Link to="/app/modules" className="ml-auto text-[0.68rem] underline underline-offset-4">
               All 23
             </Link>
           </div>
@@ -101,7 +101,7 @@ function Dashboard() {
                     params={{ slug }}
                     className="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs hover:bg-secondary"
                   >
-                    <span className="font-mono text-[0.62rem] text-muted-foreground">{m.id}</span>
+                    <span className="text-[0.62rem] text-muted-foreground">{m.id}</span>
                     <span className="flex-1 truncate">{m.name}</span>
                     <StatusBadge status={m.status} />
                   </Link>
@@ -117,7 +117,7 @@ function Dashboard() {
             {DEMO_WORKFLOWS.map((w) => (
               <li key={w.name} className="rounded-md border border-border px-3 py-2">
                 <span className="block text-xs">{w.name}</span>
-                <div className="mt-1.5 flex flex-wrap items-center gap-1 font-mono text-[0.6rem] text-muted-foreground">
+                <div className="mt-1.5 flex flex-wrap items-center gap-1 text-[0.6rem] text-muted-foreground">
                   {w.steps.map((s, i) => (
                     <span key={s} className="flex items-center gap-1">
                       {s}
