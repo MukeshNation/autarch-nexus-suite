@@ -852,6 +852,202 @@ export type Database = {
         }
         Relationships: []
       }
+      support_email_outbox: {
+        Row: {
+          body: string
+          created_at: string
+          error: string | null
+          id: string
+          kind: string
+          sent_at: string | null
+          status: string
+          subject: string
+          ticket_id: string | null
+          to_email: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind: string
+          sent_at?: string | null
+          status?: string
+          subject: string
+          ticket_id?: string | null
+          to_email: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          sent_at?: string | null
+          status?: string
+          subject?: string
+          ticket_id?: string | null
+          to_email?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_email_outbox_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_messages: {
+        Row: {
+          author_id: string | null
+          author_name: string | null
+          author_role: string
+          body: string
+          created_at: string
+          id: string
+          internal: boolean
+          ticket_id: string
+        }
+        Insert: {
+          author_id?: string | null
+          author_name?: string | null
+          author_role?: string
+          body: string
+          created_at?: string
+          id?: string
+          internal?: boolean
+          ticket_id: string
+        }
+        Update: {
+          author_id?: string | null
+          author_name?: string | null
+          author_role?: string
+          body?: string
+          created_at?: string
+          id?: string
+          internal?: boolean
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_messages_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_team_members: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+          invited_by: string | null
+          status: string
+          team_role: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id?: string
+          invited_by?: string | null
+          status?: string
+          team_role?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          invited_by?: string | null
+          status?: string
+          team_role?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      support_tickets: {
+        Row: {
+          assigned_to: string | null
+          attachment_name: string | null
+          attachment_path: string | null
+          closed_at: string | null
+          created_at: string
+          email: string
+          first_response_at: string | null
+          full_name: string
+          id: string
+          issue_type: string
+          last_reply_at: string | null
+          message: string
+          phone: string | null
+          priority: string
+          resolved_at: string | null
+          source: string
+          status: string
+          subject: string
+          ticket_code: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          assigned_to?: string | null
+          attachment_name?: string | null
+          attachment_path?: string | null
+          closed_at?: string | null
+          created_at?: string
+          email: string
+          first_response_at?: string | null
+          full_name: string
+          id?: string
+          issue_type?: string
+          last_reply_at?: string | null
+          message: string
+          phone?: string | null
+          priority?: string
+          resolved_at?: string | null
+          source?: string
+          status?: string
+          subject: string
+          ticket_code: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          assigned_to?: string | null
+          attachment_name?: string | null
+          attachment_path?: string | null
+          closed_at?: string | null
+          created_at?: string
+          email?: string
+          first_response_at?: string | null
+          full_name?: string
+          id?: string
+          issue_type?: string
+          last_reply_at?: string | null
+          message?: string
+          phone?: string | null
+          priority?: string
+          resolved_at?: string | null
+          source?: string
+          status?: string
+          subject?: string
+          ticket_code?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       tasks: {
         Row: {
           created_at: string
@@ -1019,6 +1215,7 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      is_support_staff: { Args: { _user_id: string }; Returns: boolean }
       is_workspace_member: {
         Args: { _user_id: string; _workspace_id: string }
         Returns: boolean
@@ -1031,6 +1228,7 @@ export type Database = {
         Args: { _amount: number; _reference: string }
         Returns: number
       }
+      support_team_role: { Args: { _user_id: string }; Returns: string }
     }
     Enums: {
       app_role: "admin" | "user" | "director"
