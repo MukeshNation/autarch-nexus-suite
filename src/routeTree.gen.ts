@@ -27,6 +27,8 @@ import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as AdminModulesRouteImport } from './routes/admin_.modules'
 import { Route as AdminPaymentsRouteImport } from './routes/admin_.payments'
 import { Route as AdminProvidersRouteImport } from './routes/admin_.providers'
+import { Route as AdminSupportRouteImport } from './routes/admin_.support'
+import { Route as AdminTeamRouteImport } from './routes/admin_.team'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAutomationsRouteImport } from './routes/app.automations'
 import { Route as AppBillingRouteImport } from './routes/app.billing'
@@ -132,6 +134,16 @@ const AdminProvidersRoute = AdminProvidersRouteImport.update({
   path: '/admin/providers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSupportRoute = AdminSupportRouteImport.update({
+  id: '/admin_/support',
+  path: '/admin/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTeamRoute = AdminTeamRouteImport.update({
+  id: '/admin_/team',
+  path: '/admin/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -222,6 +234,8 @@ export interface FileRoutesByFullPath {
   '/admin/modules': typeof AdminModulesRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/providers': typeof AdminProvidersRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/team': typeof AdminTeamRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
@@ -255,6 +269,8 @@ export interface FileRoutesByTo {
   '/admin/modules': typeof AdminModulesRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/providers': typeof AdminProvidersRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/team': typeof AdminTeamRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
@@ -290,6 +306,8 @@ export interface FileRoutesById {
   '/admin_/modules': typeof AdminModulesRoute
   '/admin_/payments': typeof AdminPaymentsRoute
   '/admin_/providers': typeof AdminProvidersRoute
+  '/admin_/support': typeof AdminSupportRoute
+  '/admin_/team': typeof AdminTeamRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/billing': typeof AppBillingRoute
   '/app/files': typeof AppFilesRoute
@@ -326,6 +344,8 @@ export interface FileRouteTypes {
     | '/admin/modules'
     | '/admin/payments'
     | '/admin/providers'
+    | '/admin/support'
+    | '/admin/team'
     | '/app/automations'
     | '/app/billing'
     | '/app/files'
@@ -359,6 +379,8 @@ export interface FileRouteTypes {
     | '/admin/modules'
     | '/admin/payments'
     | '/admin/providers'
+    | '/admin/support'
+    | '/admin/team'
     | '/app/automations'
     | '/app/billing'
     | '/app/files'
@@ -393,6 +415,8 @@ export interface FileRouteTypes {
     | '/admin_/modules'
     | '/admin_/payments'
     | '/admin_/providers'
+    | '/admin_/support'
+    | '/admin_/team'
     | '/app/automations'
     | '/app/billing'
     | '/app/files'
@@ -428,6 +452,8 @@ export interface RootRouteChildren {
   AdminModulesRoute: typeof AdminModulesRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminProvidersRoute: typeof AdminProvidersRoute
+  AdminSupportRoute: typeof AdminSupportRoute
+  AdminTeamRoute: typeof AdminTeamRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -556,6 +582,20 @@ declare module '@tanstack/react-router' {
       path: '/admin/providers'
       fullPath: '/admin/providers'
       preLoaderRoute: typeof AdminProvidersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin_/support': {
+      id: '/admin_/support'
+      path: '/admin/support'
+      fullPath: '/admin/support'
+      preLoaderRoute: typeof AdminSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin_/team': {
+      id: '/admin_/team'
+      path: '/admin/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AdminTeamRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -714,6 +754,8 @@ const rootRouteChildren: RootRouteChildren = {
   AdminModulesRoute: AdminModulesRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminProvidersRoute: AdminProvidersRoute,
+  AdminSupportRoute: AdminSupportRoute,
+  AdminTeamRoute: AdminTeamRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
