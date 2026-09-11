@@ -36,6 +36,7 @@ import { Route as AppIntegrationsRouteImport } from './routes/app.integrations'
 import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
 import { Route as AppProjectsRouteImport } from './routes/app.projects'
 import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppSupportRouteImport } from './routes/app.support'
 import { Route as AppTasksRouteImport } from './routes/app.tasks'
 import { Route as AppUsageRouteImport } from './routes/app.usage'
 import { Route as AppModulesIndexRouteImport } from './routes/app.modules.index'
@@ -176,6 +177,11 @@ const AppSettingsRoute = AppSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSupportRoute = AppSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppTasksRoute = AppTasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
@@ -224,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/app/notifications': typeof AppNotificationsRoute
   '/app/projects': typeof AppProjectsRoute
   '/app/settings': typeof AppSettingsRoute
+  '/app/support': typeof AppSupportRoute
   '/app/tasks': typeof AppTasksRoute
   '/app/usage': typeof AppUsageRoute
   '/app/': typeof AppIndexRoute
@@ -256,6 +263,7 @@ export interface FileRoutesByTo {
   '/app/notifications': typeof AppNotificationsRoute
   '/app/projects': typeof AppProjectsRoute
   '/app/settings': typeof AppSettingsRoute
+  '/app/support': typeof AppSupportRoute
   '/app/tasks': typeof AppTasksRoute
   '/app/usage': typeof AppUsageRoute
   '/app': typeof AppIndexRoute
@@ -290,6 +298,7 @@ export interface FileRoutesById {
   '/app/notifications': typeof AppNotificationsRoute
   '/app/projects': typeof AppProjectsRoute
   '/app/settings': typeof AppSettingsRoute
+  '/app/support': typeof AppSupportRoute
   '/app/tasks': typeof AppTasksRoute
   '/app/usage': typeof AppUsageRoute
   '/app/': typeof AppIndexRoute
@@ -325,6 +334,7 @@ export interface FileRouteTypes {
     | '/app/notifications'
     | '/app/projects'
     | '/app/settings'
+    | '/app/support'
     | '/app/tasks'
     | '/app/usage'
     | '/app/'
@@ -357,6 +367,7 @@ export interface FileRouteTypes {
     | '/app/notifications'
     | '/app/projects'
     | '/app/settings'
+    | '/app/support'
     | '/app/tasks'
     | '/app/usage'
     | '/app'
@@ -390,6 +401,7 @@ export interface FileRouteTypes {
     | '/app/notifications'
     | '/app/projects'
     | '/app/settings'
+    | '/app/support'
     | '/app/tasks'
     | '/app/usage'
     | '/app/'
@@ -609,6 +621,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/support': {
+      id: '/app/support'
+      path: '/support'
+      fullPath: '/app/support'
+      preLoaderRoute: typeof AppSupportRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/tasks': {
       id: '/app/tasks'
       path: '/tasks'
@@ -649,6 +668,7 @@ interface AppRouteChildren {
   AppNotificationsRoute: typeof AppNotificationsRoute
   AppProjectsRoute: typeof AppProjectsRoute
   AppSettingsRoute: typeof AppSettingsRoute
+  AppSupportRoute: typeof AppSupportRoute
   AppTasksRoute: typeof AppTasksRoute
   AppUsageRoute: typeof AppUsageRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -665,6 +685,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppNotificationsRoute: AppNotificationsRoute,
   AppProjectsRoute: AppProjectsRoute,
   AppSettingsRoute: AppSettingsRoute,
+  AppSupportRoute: AppSupportRoute,
   AppTasksRoute: AppTasksRoute,
   AppUsageRoute: AppUsageRoute,
   AppIndexRoute: AppIndexRoute,
