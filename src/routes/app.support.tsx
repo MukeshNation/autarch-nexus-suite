@@ -21,6 +21,7 @@ import {
   statusTone,
 } from "@/lib/support";
 import { cn } from "@/lib/utils";
+import { ALLOWED_ATTACHMENT_TYPES, MAX_ATTACHMENT_BYTES } from "@/lib/support";
 
 export const Route = createFileRoute("/app/support")({
   ssr: false,
@@ -46,11 +47,15 @@ function SupportPage() {
   const [issueType, setIssueType] = useState("technical");
   const [priority, setPriority] = useState("normal");
   const [replyBody, setReplyBody] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
   const tickets = useQuery({ queryKey: ["my-tickets"], queryFn: () => list({} as never) });
   const detail = useQuery({
     queryKey: ["my-ticket", openTicket],
-    queryFn: () => thread({ data: { ticketId: openTicket! } }),
+    queryFn: () => {
+      if (!openTicket) throw new Error("Select a ticket first.");
+      return thread({ data: { ticketId: openTicket } });
+    },
     enabled: Boolean(openTicket),
   });
 
@@ -65,7 +70,10 @@ function SupportPage() {
   });
 
   const replyMutation = useMutation({
-    mutationFn: (body: string) => reply({ data: { ticketId: openTicket!, body } }),
+    mutationFn: (body: string) => {
+      if (!openTicket) throw new Error("Select a ticket first.");
+      return reply({ data: { ticketId: openTicket, body } });
+    },
     onSuccess: () => {
       setReplyBody("");
       void qc.invalidateQueries({ queryKey: ["my-ticket", openTicket] });
@@ -87,16 +95,28 @@ function SupportPage() {
       {composing && (
         <form
           className="panel mb-6 p-5"
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
             const form = new FormData(e.currentTarget);
+            let attachment: { name: string; type: string; dataBase64: string } | null = null;
+            if (file) {
+              if (file.size > MAX_ATTACHMENT_BYTES) return toast.error("Attachment is larger than 5 MB.");
+              if (!ALLOWED_ATTACHMENT_TYPES.includes(file.type)) return toast.error("Use a PNG, JPG, WEBP, GIF, PDF or TXT file.");
+              const dataBase64 = await new Promise<string>((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(String(reader.result));
+                reader.onerror = () => reject(new Error("Could not read that file."));
+                reader.readAsDataURL(file);
+              });
+              attachment = { name: file.name, type: file.type, dataBase64 };
+            }
             createMutation.mutate({
               phone: String(form.get("phone") ?? ""),
               issue_type: issueType,
               priority,
               subject: String(form.get("subject") ?? ""),
               message: String(form.get("message") ?? ""),
-              attachment: null,
+              attachment,
             });
           }}
         >
@@ -141,6 +161,17 @@ function SupportPage() {
             <Input id="subject" name="subject" required minLength={4} className="mt-1.5 text-xs" />
           </div>
           <div className="mt-4">
+            <Label htmlFor="support-attachment">Screenshot or file (optional)</Label>
+            <Input
+              id="support-attachment"
+              type="file"
+              accept={ALLOWED_ATTACHMENT_TYPES.join(",")}
+              className="mt-1.5 text-xs"
+              onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+            />
+            <p className="mt-1.5 text-[0.65rem] text-muted-foreground">PNG, JPG, WEBP, GIF, PDF or TXT up to 5 MB.</p>
+          </div>
+          <div className="mt-4">
             <Label htmlFor="message">Details</Label>
             <Textarea id="message" name="message" rows={5} required minLength={20} className="mt-1.5 text-xs" />
           </div>
@@ -182,6 +213,16 @@ function SupportPage() {
                     {ISSUE_LABEL[t.issue_type] ?? t.issue_type}
                     {t.attachment_name ? ` · attachment: ${t.attachment_name}` : ""}
                   </div>
+                  {detail.data?.attachmentUrl && (
+                    <a
+                      href={detail.data.attachmentUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-3 inline-block text-xs underline underline-offset-4"
+                    >
+                      Open attachment ({t.attachment_name})
+                    </a>
+                  )}
                   <div className="mt-3 space-y-3">
                     {detail.isLoading ? (
                       <p className="text-xs text-muted-foreground">Loading conversation…</p>

@@ -61,7 +61,7 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link to="/contact" className="hover:underline">
-                  Contact
+                  Contact & Support
                 </Link>
               </li>
               <li>

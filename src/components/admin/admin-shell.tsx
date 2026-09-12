@@ -9,6 +9,8 @@ const TABS = [
   { to: "/admin/providers", label: "AI providers" },
   { to: "/admin/modules", label: "Modules" },
   { to: "/admin/payments", label: "Payments" },
+  { to: "/admin/support", label: "Support" },
+  { to: "/admin/team", label: "Team" },
 ] as const;
 
 export function AdminShell({

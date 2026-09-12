@@ -137,6 +137,12 @@ function Shell({ children }: { children: React.ReactNode }) {
           <Button asChild size="sm" variant="outline" className="h-8 text-[0.68rem]">
             <Link to="/admin/payments">Payments</Link>
           </Button>
+          <Button asChild size="sm" variant="outline" className="h-8 text-[0.68rem]">
+            <Link to="/admin/support">Support</Link>
+          </Button>
+          <Button asChild size="sm" variant="outline" className="h-8 text-[0.68rem]">
+            <Link to="/admin/team">Team</Link>
+          </Button>
           <ThemeToggle className="size-8" />
           <Link to="/app" className="label-mono hover:text-foreground">
             Workspace

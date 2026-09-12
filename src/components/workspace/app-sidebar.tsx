@@ -15,6 +15,7 @@ import {
   Bell,
   Settings,
   ShieldCheck,
+  LifeBuoy,
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react";
@@ -35,6 +36,7 @@ export const SIDEBAR_ITEMS = [
   { label: "Usage", to: "/app/usage" as const, icon: Gauge },
   { label: "Billing", to: "/app/billing" as const, icon: CreditCard },
   { label: "Notifications", to: "/app/notifications" as const, icon: Bell },
+  { label: "Support", to: "/app/support" as const, icon: LifeBuoy },
   { label: "Settings", to: "/app/settings" as const, icon: Settings },
 ];
 
