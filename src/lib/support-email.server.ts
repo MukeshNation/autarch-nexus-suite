@@ -1,12 +1,11 @@
 /**
  * AUTARCH AI — support email composition and dispatch (server only).
  *
- * Every message is recorded in support_email_outbox first, so nothing is lost.
- * Dispatch happens through the managed email service when a verified sender
- * domain is configured; until then rows stay queued and remain visible to the
- * owner. No credential is ever returned to the browser.
+ * Delivery goes directly through Lovable's managed email service. Delivery,
+ * retries, suppression and rate limiting are handled by the service.
  */
 import { SUPPORT_EMAIL, ISSUE_LABEL, PRIORITY_LABEL, STATUS_LABEL } from "./support";
+import { EmailAPIError, sendLovableEmail } from "@lovable.dev/email-js";
 
 type Ticket = {
   id: string;
@@ -123,49 +122,45 @@ export function teamInvite(email: string, roleLabel: string) {
 type Outgoing = { to: string; kind: string; subject: string; body: string };
 
 /**
- * Queue and attempt delivery. Never throws — a mail failure must not lose a ticket.
+ * Attempt delivery after the ticket is safely stored. Never throws because a
+ * mail failure must not roll back or hide a valid support ticket.
  */
-export async function queueEmails(
-  db: { from: (t: string) => any },
+export async function sendSupportEmails(
   ticketId: string | null,
   messages: Outgoing[],
-) {
+): Promise<boolean> {
+  let allSent = true;
   for (const m of messages) {
-    const { data } = await db
-      .from("support_email_outbox")
-      .insert({ ticket_id: ticketId, to_email: m.to, kind: m.kind, subject: m.subject, body: m.body } as never)
-      .select("id")
-      .maybeSingle();
-    const id = data?.id as string | undefined;
-    const result = await deliver(m);
-    if (!id) continue;
-    await db
-      .from("support_email_outbox")
-      .update(
-        result.sent
-          ? { status: "sent", sent_at: new Date().toISOString(), error: null }
-          : { status: result.pending ? "queued" : "failed", error: result.error ?? null },
-      )
-      .eq("id", id);
+    const sent = await deliver(m, ticketId);
+    allSent = allSent && sent;
   }
+  return allSent;
 }
 
-async function deliver(m: Outgoing): Promise<{ sent: boolean; pending?: boolean; error?: string }> {
-  const endpoint = process.env["LOVABLE_EMAIL_ENDPOINT"];
+async function deliver(m: Outgoing, ticketId: string | null): Promise<boolean> {
   const apiKey = process.env["LOVABLE_API_KEY"];
   const from = process.env["SUPPORT_EMAIL_FROM"];
-  if (!endpoint || !apiKey || !from) {
-    return { sent: false, pending: true, error: "Sender domain not verified yet — message queued." };
-  }
+  if (!apiKey || !from) return false;
   try {
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: { "content-type": "application/json", authorization: `Bearer ${apiKey}` },
-      body: JSON.stringify({ from, to: [m.to], subject: m.subject, html: m.body }),
-    });
-    if (!res.ok) return { sent: false, error: `Mail service responded ${res.status}` };
-    return { sent: true };
+    const id = ticketId ?? crypto.randomUUID();
+    await sendLovableEmail(
+      {
+        to: m.to,
+        from,
+        subject: m.subject,
+        html: m.body,
+        text: m.body.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(),
+        purpose: "transactional",
+        reply_to: SUPPORT_EMAIL,
+        idempotency_key: `support-${m.kind}-${id}`,
+        label: m.kind,
+      },
+      { apiKey },
+    );
+    return true;
   } catch (err) {
-    return { sent: false, error: err instanceof Error ? err.message : "Unknown mail error" };
+    if (err instanceof EmailAPIError && err.code === "recipient_suppressed") return false;
+    console.error("Support email delivery failed", err instanceof Error ? err.message : "Unknown email error");
+    return false;
   }
 }

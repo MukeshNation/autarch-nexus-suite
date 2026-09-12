@@ -19,7 +19,10 @@ import {
   TICKET_STATUSES,
   type SupportRole,
 } from "./support";
-import { ownerNotification, queueEmails, staffReplyNotice, teamInvite, userConfirmation } from "./support-email.server";
+
+async function mailer() {
+  return import("./support-email.server");
+}
 
 async function admin() {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -103,7 +106,7 @@ function ticketCode() {
 
 export const createSupportTicket = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => TicketInput.parse(input))
-  .handler(async ({ data }): Promise<{ ticket_code: string; emailQueued: boolean }> => {
+  .handler(async ({ data }): Promise<{ ticket_code: string; emailSent: boolean }> => {
     const db = await admin();
     const email = data.email.toLowerCase();
 
@@ -168,15 +171,11 @@ export const createSupportTicket = createServerFn({ method: "POST" })
       body: data.message,
     } as never);
 
-    await queueEmails(db, ticket.id, [ownerNotification(ticket), userConfirmation(ticket)]);
-    const { count: pending } = await db
-      .from("support_email_outbox")
-      .select("id", { count: "exact", head: true })
-      .eq("ticket_id", ticket.id)
-      .eq("status", "queued");
+    const { ownerNotification, sendSupportEmails, userConfirmation } = await mailer();
+    const emailSent = await sendSupportEmails(ticket.id, [ownerNotification(ticket), userConfirmation(ticket)]);
 
     await audit(null, "support.ticket_created", ticket.id, { ticket_code: ticket.ticket_code, issue_type: data.issue_type });
-    return { ticket_code: ticket.ticket_code as string, emailQueued: (pending ?? 0) > 0 };
+    return { ticket_code: ticket.ticket_code as string, emailSent };
   });
 
 /* -------------------------------------------------------------- user surface */
@@ -217,6 +216,14 @@ export const createMyTicket = createServerFn({ method: "POST" })
       .gte("created_at", hourAgo);
     if ((count ?? 0) >= 5) throw new Error("You have opened several tickets in the last hour. Reply on an existing ticket instead.");
 
+    let attachmentPath: string | null = null;
+    let attachmentName: string | null = null;
+    if (data.attachment) {
+      const uploaded = await uploadAttachment(db, data.attachment);
+      attachmentPath = uploaded.path;
+      attachmentName = uploaded.name;
+    }
+
     let ticket: any = null;
     for (let attempt = 0; attempt < 4 && !ticket; attempt += 1) {
       const { data: created } = await db
@@ -231,6 +238,8 @@ export const createMyTicket = createServerFn({ method: "POST" })
           priority: data.priority,
           subject: data.subject,
           message: data.message,
+          attachment_path: attachmentPath,
+          attachment_name: attachmentName,
           source: "workspace",
         } as never)
         .select("*")
@@ -246,7 +255,8 @@ export const createMyTicket = createServerFn({ method: "POST" })
       author_role: "user",
       body: data.message,
     } as never);
-    await queueEmails(db, ticket.id, [ownerNotification(ticket), userConfirmation(ticket)]);
+    const { ownerNotification, sendSupportEmails, userConfirmation } = await mailer();
+    await sendSupportEmails(ticket.id, [ownerNotification(ticket), userConfirmation(ticket)]);
     await audit(context.userId, "support.ticket_created", ticket.id, { ticket_code: ticket.ticket_code });
     return { ticket_code: ticket.ticket_code as string };
   });
@@ -254,7 +264,7 @@ export const createMyTicket = createServerFn({ method: "POST" })
 export const getMyTicketThread = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((i: unknown) => z.object({ ticketId: z.string().uuid() }).parse(i))
-  .handler(async ({ data, context }): Promise<{ ticket: SupportTicket; messages: SupportMessage[] }> => {
+  .handler(async ({ data, context }): Promise<{ ticket: SupportTicket; messages: SupportMessage[]; attachmentUrl: string | null }> => {
     const db = await admin();
     const ticket = await ownedTicket(db, context, data.ticketId);
     const { data: messages } = await db
@@ -263,7 +273,12 @@ export const getMyTicketThread = createServerFn({ method: "POST" })
       .eq("ticket_id", ticket.id)
       .eq("internal", false)
       .order("created_at", { ascending: true });
-    return { ticket: shapeTicket(ticket), messages: (messages ?? []) as SupportMessage[] };
+    let attachmentUrl: string | null = null;
+    if (ticket.attachment_path) {
+      const { data: signed } = await db.storage.from("support-attachments").createSignedUrl(ticket.attachment_path, 600);
+      attachmentUrl = signed?.signedUrl ?? null;
+    }
+    return { ticket: shapeTicket(ticket), messages: (messages ?? []) as SupportMessage[], attachmentUrl };
   });
 
 export const replyToMyTicket = createServerFn({ method: "POST" })
@@ -304,6 +319,25 @@ async function requireSupportRole(context: { supabase: any; userId: string }): P
   const role = (data as string | null) ?? null;
   if (!role) throw new Error("Forbidden");
   return role as SupportRole;
+}
+
+async function uploadAttachment(db: any, attachment: z.infer<typeof AttachmentInput> & {}) {
+  if (!ALLOWED_ATTACHMENT_TYPES.includes(attachment.type)) {
+    throw new Error("That file type is not accepted. Use PNG, JPG, WEBP, GIF, PDF or TXT.");
+  }
+  const raw = attachment.dataBase64.includes(",")
+    ? attachment.dataBase64.slice(attachment.dataBase64.indexOf(",") + 1)
+    : attachment.dataBase64;
+  const bytes = Uint8Array.from(atob(raw), (c) => c.charCodeAt(0));
+  if (bytes.byteLength > MAX_ATTACHMENT_BYTES) throw new Error("Attachment is larger than 5 MB.");
+  const name = attachment.name.replace(/[^A-Za-z0-9._-]/g, "_").slice(-80);
+  const path = `${new Date().getUTCFullYear()}/${crypto.randomUUID()}-${name}`;
+  const { error } = await db.storage.from("support-attachments").upload(path, bytes, {
+    contentType: attachment.type,
+    upsert: false,
+  });
+  if (error) throw new Error("Could not store the attachment. Try again without the file.");
+  return { path, name };
 }
 
 export const getSupportRole = createServerFn({ method: "POST" })
@@ -468,7 +502,8 @@ export const staffReply = createServerFn({ method: "POST" })
       if (!ticket.first_response_at) patch["first_response_at"] = new Date().toISOString();
       if (ticket.status === "open") patch["status"] = "in_progress";
       await db.from("support_tickets").update(patch as never).eq("id", ticket.id);
-      await queueEmails(db, ticket.id, [staffReplyNotice(ticket, data.body)]);
+      const { sendSupportEmails, staffReplyNotice } = await mailer();
+      await sendSupportEmails(ticket.id, [staffReplyNotice(ticket, data.body)]);
     }
     await audit(context.userId, data.internal ? "support.internal_note" : "support.reply_sent", ticket.id, {
       ticket_code: ticket.ticket_code,
@@ -583,7 +618,8 @@ export const inviteSupportMember = createServerFn({ method: "POST" })
       { onConflict: "email" },
     );
     if (error) throw new Error("Could not add that team member.");
-    await queueEmails(db, null, [teamInvite(email, TEAM_ROLE_LABEL[data.team_role] ?? data.team_role)]);
+    const { sendSupportEmails, teamInvite } = await mailer();
+    await sendSupportEmails(null, [teamInvite(email, TEAM_ROLE_LABEL[data.team_role] ?? data.team_role)]);
     await audit(context.userId, "support.team_invited", null, { email, team_role: data.team_role });
     return { ok: true, linked: Boolean(profile?.id) };
   });

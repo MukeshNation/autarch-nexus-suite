@@ -15,6 +15,7 @@ const NAV = [
   { label: "Resources", to: "/resources" },
   { label: "Company", to: "/company" },
   { label: "Security", to: "/security" },
+  { label: "Support", to: "/contact" },
 ] as const;
 
 function MegaMenu() {
@@ -112,7 +113,7 @@ export function SiteNav() {
               </div>
               <nav className="px-5 py-4">
                 <ul className="space-y-1">
-                  {[{ label: "AI Modules", to: "/modules" }, ...NAV, { label: "Contact", to: "/contact" }].map(
+                  {[{ label: "AI Modules", to: "/modules" }, ...NAV].map(
                     (item) => (
                       <li key={item.to}>
                         <Link

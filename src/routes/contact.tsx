@@ -48,7 +48,7 @@ function readFile(file: File) {
 function ContactPage() {
   const submit = useServerFn(createSupportTicket);
   const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState<{ code: string; queued: boolean } | null>(null);
+  const [done, setDone] = useState<{ code: string; emailSent: boolean } | null>(null);
   const [issueType, setIssueType] = useState("technical");
   const [priority, setPriority] = useState("normal");
   const [file, setFile] = useState<File | null>(null);
@@ -76,7 +76,7 @@ function ContactPage() {
           attachment,
         },
       });
-      setDone({ code: res.ticket_code, queued: res.emailQueued });
+      setDone({ code: res.ticket_code, emailSent: res.emailSent });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Could not send your request.");
     } finally {
@@ -98,9 +98,9 @@ function ContactPage() {
               <div className="mt-1 text-2xl tracking-wide">{done.code}</div>
             </div>
             <p className="mt-4 text-xs text-muted-foreground">
-              {done.queued
-                ? "Notifications are recorded and will be delivered as soon as the sending address for autarchai.in is verified."
-                : "A confirmation has been recorded against your ticket."}{" "}
+              {done.emailSent
+                ? "A confirmation was sent to your email address."
+                : "Your ticket is saved. Email delivery will begin after the Autarch sender domain is verified."}{" "}
               You can also reach us at {SUPPORT_EMAIL}.
             </p>
             <div className="mt-6 flex justify-center gap-2">
