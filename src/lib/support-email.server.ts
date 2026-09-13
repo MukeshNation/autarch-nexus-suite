@@ -139,14 +139,14 @@ export async function sendSupportEmails(
 
 async function deliver(m: Outgoing, ticketId: string | null): Promise<boolean> {
   const apiKey = process.env["LOVABLE_API_KEY"];
-  const from = process.env["SUPPORT_EMAIL_FROM"];
-  if (!apiKey || !from) return false;
+  if (!apiKey) return false;
   try {
     const id = ticketId ?? crypto.randomUUID();
     await sendLovableEmail(
       {
         to: m.to,
-        from,
+        from: "Autarch AI Support <hello@notify.autarchai.in>",
+        sender_domain: "notify.autarchai.in",
         subject: m.subject,
         html: m.body,
         text: m.body.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(),
