@@ -445,7 +445,7 @@ export const listSupportTickets = createServerFn({ method: "POST" })
         : null,
       workload: team
         .filter((m) => m.user_id)
-        .map((m) => ({ name: m.full_name || m.email, email: m.email, role: m.team_role, open: workloadMap.get(m.user_id!) ?? 0 })),
+        .map((m) => ({ name: m.full_name || m.email, email: m.email, role: m.team_role, open: workloadMap.get(m.user_id ?? "") ?? 0 })),
     };
 
     return { role, tickets, metrics, team };
