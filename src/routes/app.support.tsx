@@ -30,6 +30,10 @@ export const Route = createFileRoute("/app/support")({
       { title: "Support · Autarch AI" },
       { name: "robots", content: "noindex" },
       { name: "description", content: "Open support tickets, read replies and track resolution inside your Autarch AI workspace." },
+      { property: "og:title", content: "Support · Autarch AI" },
+      { property: "og:description", content: "Open support tickets, read replies and track resolution inside your Autarch AI workspace." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: SupportPage,
@@ -100,8 +104,14 @@ function SupportPage() {
             const form = new FormData(e.currentTarget);
             let attachment: { name: string; type: string; dataBase64: string } | null = null;
             if (file) {
-              if (file.size > MAX_ATTACHMENT_BYTES) return toast.error("Attachment is larger than 5 MB.");
-              if (!ALLOWED_ATTACHMENT_TYPES.includes(file.type)) return toast.error("Use a PNG, JPG, WEBP, GIF, PDF or TXT file.");
+              if (file.size > MAX_ATTACHMENT_BYTES) {
+                toast.error("Attachment is larger than 5 MB.");
+                return;
+              }
+              if (!ALLOWED_ATTACHMENT_TYPES.includes(file.type)) {
+                toast.error("Use a PNG, JPG, WEBP, GIF, PDF or TXT file.");
+                return;
+              }
               const dataBase64 = await new Promise<string>((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = () => resolve(String(reader.result));
