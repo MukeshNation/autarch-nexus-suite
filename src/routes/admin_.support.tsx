@@ -58,12 +58,18 @@ function SupportInboxPage() {
 
   const thread = useQuery({
     queryKey: ["admin-support-thread", openId],
-    queryFn: () => loadThread({ data: { ticketId: openId! } }),
+    queryFn: () => {
+      if (!openId) throw new Error("Select a ticket first.");
+      return loadThread({ data: { ticketId: openId } });
+    },
     enabled: Boolean(openId),
   });
 
   const replyMutation = useMutation({
-    mutationFn: () => reply({ data: { ticketId: openId!, body: body.trim(), internal } }),
+    mutationFn: () => {
+      if (!openId) throw new Error("Select a ticket first.");
+      return reply({ data: { ticketId: openId, body: body.trim(), internal } });
+    },
     onSuccess: () => {
       setBody("");
       void qc.invalidateQueries({ queryKey: ["admin-support-thread", openId] });
@@ -73,7 +79,10 @@ function SupportInboxPage() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: (input: Record<string, unknown>) => update({ data: { ticketId: openId!, ...input } as never }),
+    mutationFn: (input: Record<string, unknown>) => {
+      if (!openId) throw new Error("Select a ticket first.");
+      return update({ data: { ticketId: openId, ...input } as never });
+    },
     onSuccess: () => {
       toast.success("Ticket updated");
       void qc.invalidateQueries({ queryKey: ["admin-support"] });
@@ -185,13 +194,16 @@ function SupportInboxPage() {
                   <SelectItem value="all" className="text-xs">
                     Anyone
                   </SelectItem>
+                   <SelectItem value="mine" className="text-xs">
+                     My tickets
+                   </SelectItem>
                   <SelectItem value="unassigned" className="text-xs">
                     Unassigned
                   </SelectItem>
                   {team
                     .filter((m) => m.user_id)
                     .map((m) => (
-                      <SelectItem key={m.id} value={m.user_id!} className="text-xs">
+                      <SelectItem key={m.id} value={m.user_id ?? ""} className="text-xs">
                         {m.full_name || m.email}
                       </SelectItem>
                     ))}
@@ -290,7 +302,7 @@ function SupportInboxPage() {
                               {team
                                 .filter((m) => m.user_id && m.status === "active")
                                 .map((m) => (
-                                  <SelectItem key={m.id} value={m.user_id!} className="text-xs">
+                                  <SelectItem key={m.id} value={m.user_id ?? ""} className="text-xs">
                                     {m.full_name || m.email}
                                   </SelectItem>
                                 ))}

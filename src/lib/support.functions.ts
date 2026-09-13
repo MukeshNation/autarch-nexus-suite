@@ -402,7 +402,8 @@ export const listSupportTickets = createServerFn({ method: "POST" })
     if (data.status && data.status !== "all") query = query.eq("status", data.status);
     if (data.priority && data.priority !== "all") query = query.eq("priority", data.priority);
     if (data.issue_type && data.issue_type !== "all") query = query.eq("issue_type", data.issue_type);
-    if (data.assigned === "unassigned") query = query.is("assigned_to", null);
+    if (data.assigned === "mine") query = query.eq("assigned_to", context.userId);
+    else if (data.assigned === "unassigned") query = query.is("assigned_to", null);
     else if (data.assigned && data.assigned !== "all") query = query.eq("assigned_to", data.assigned);
     if (data.search) {
       const s = data.search.replace(/[%,()]/g, "");
