@@ -9,7 +9,8 @@ export function SiteFooter() {
         <div className="max-w-xs">
           <AutarchWordmark />
           <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-            One enterprise AI workspace. Twenty-three capabilities, one project system, one audit trail.
+            One enterprise AI workspace. Twenty-three capabilities, one project system, one audit
+            trail.
           </p>
         </div>
         <div className="grid gap-8 sm:grid-cols-3">
@@ -74,8 +75,8 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="mx-auto mt-10 w-full max-w-6xl border-t border-border pt-5 text-[0.68rem] text-muted-foreground">
-        © 2026 Autarch AI · Phase 1 product shell. Capability availability is labelled per module; nothing here claims a
-        live third-party connection.
+        © 2026 Autarch AI · Created by Mukesh Kumar. Capability availability and provider
+        requirements are labelled on every module.
       </div>
     </footer>
   );

@@ -79,14 +79,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Autarch AI — One workspace for 23 AI capabilities" },
+      {
+        name: "description",
+        content:
+          "Build software, research, design, analyze documents and run business workflows across 23 clearly labelled AI capabilities in one secure workspace.",
+      },
+      { name: "author", content: "Autarch AI" },
+      { property: "og:title", content: "Autarch AI — One workspace for 23 AI capabilities" },
+      {
+        property: "og:description",
+        content:
+          "One secure workspace for software, research, design, media and business automation. Live, API-required and coming-soon capabilities are labelled clearly.",
+      },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://autarchai.in" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Autarch AI — 23 AI capabilities, one workspace" },
+      {
+        name: "twitter:description",
+        content: "Build, research, design and automate from one project-centered AI workspace.",
+      },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
     ],
     links: [
       {
