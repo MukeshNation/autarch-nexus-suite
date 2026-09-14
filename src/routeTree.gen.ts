@@ -41,6 +41,7 @@ import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppSupportRouteImport } from './routes/app.support'
 import { Route as AppTasksRouteImport } from './routes/app.tasks'
 import { Route as AppUsageRouteImport } from './routes/app.usage'
+import { Route as ApiPaymentsRazorpayWebhookRouteImport } from './routes/api.payments.razorpay-webhook'
 import { Route as AppModulesIndexRouteImport } from './routes/app.modules.index'
 import { Route as AppModulesSlugRouteImport } from './routes/app.modules.$slug'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
@@ -207,6 +208,12 @@ const AppUsageRoute = AppUsageRouteImport.update({
   path: '/usage',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPaymentsRazorpayWebhookRoute =
+  ApiPaymentsRazorpayWebhookRouteImport.update({
+    id: '/api/payments/razorpay-webhook',
+    path: '/api/payments/razorpay-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AppModulesIndexRoute = AppModulesIndexRouteImport.update({
   id: '/modules/',
   path: '/modules/',
@@ -267,6 +274,7 @@ export interface FileRoutesByFullPath {
   '/app/tasks': typeof AppTasksRoute
   '/app/usage': typeof AppUsageRoute
   '/app/': typeof AppIndexRoute
+  '/api/payments/razorpay-webhook': typeof ApiPaymentsRazorpayWebhookRoute
   '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules/': typeof AppModulesIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -305,6 +313,7 @@ export interface FileRoutesByTo {
   '/app/tasks': typeof AppTasksRoute
   '/app/usage': typeof AppUsageRoute
   '/app': typeof AppIndexRoute
+  '/api/payments/razorpay-webhook': typeof ApiPaymentsRazorpayWebhookRoute
   '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules': typeof AppModulesIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -345,6 +354,7 @@ export interface FileRoutesById {
   '/app/tasks': typeof AppTasksRoute
   '/app/usage': typeof AppUsageRoute
   '/app/': typeof AppIndexRoute
+  '/api/payments/razorpay-webhook': typeof ApiPaymentsRazorpayWebhookRoute
   '/app/modules/$slug': typeof AppModulesSlugRoute
   '/app/modules/': typeof AppModulesIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -386,6 +396,7 @@ export interface FileRouteTypes {
     | '/app/tasks'
     | '/app/usage'
     | '/app/'
+    | '/api/payments/razorpay-webhook'
     | '/app/modules/$slug'
     | '/app/modules/'
     | '/lovable/email/auth/preview'
@@ -424,6 +435,7 @@ export interface FileRouteTypes {
     | '/app/tasks'
     | '/app/usage'
     | '/app'
+    | '/api/payments/razorpay-webhook'
     | '/app/modules/$slug'
     | '/app/modules'
     | '/lovable/email/auth/preview'
@@ -463,6 +475,7 @@ export interface FileRouteTypes {
     | '/app/tasks'
     | '/app/usage'
     | '/app/'
+    | '/api/payments/razorpay-webhook'
     | '/app/modules/$slug'
     | '/app/modules/'
     | '/lovable/email/auth/preview'
@@ -491,6 +504,7 @@ export interface RootRouteChildren {
   AdminProvidersRoute: typeof AdminProvidersRoute
   AdminSupportRoute: typeof AdminSupportRoute
   AdminTeamRoute: typeof AdminTeamRoute
+  ApiPaymentsRazorpayWebhookRoute: typeof ApiPaymentsRazorpayWebhookRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -722,6 +736,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppUsageRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/payments/razorpay-webhook': {
+      id: '/api/payments/razorpay-webhook'
+      path: '/api/payments/razorpay-webhook'
+      fullPath: '/api/payments/razorpay-webhook'
+      preLoaderRoute: typeof ApiPaymentsRazorpayWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app/modules/': {
       id: '/app/modules/'
       path: '/modules'
@@ -817,6 +838,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminProvidersRoute: AdminProvidersRoute,
   AdminSupportRoute: AdminSupportRoute,
   AdminTeamRoute: AdminTeamRoute,
+  ApiPaymentsRazorpayWebhookRoute: ApiPaymentsRazorpayWebhookRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,

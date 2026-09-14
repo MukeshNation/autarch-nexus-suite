@@ -9,7 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Copy } from "lucide-react";
 
 export const Route = createFileRoute("/admin_/payments")({
   ssr: false,
@@ -17,7 +24,10 @@ export const Route = createFileRoute("/admin_/payments")({
     meta: [
       { title: "Payments & safety · Autarch AI admin" },
       { name: "robots", content: "noindex" },
-      { name: "description", content: "Configure the Autarch AI payment provider and platform safety switches." },
+      {
+        name: "description",
+        content: "Configure the Autarch AI payment provider and platform safety switches.",
+      },
     ],
   }),
   component: PaymentsPage,
@@ -38,7 +48,10 @@ function PaymentsPage() {
   const flag = useServerFn(setPlatformFlag);
   const overviewFn = useServerFn(getAdminOverview);
 
-  const { data: overview } = useQuery({ queryKey: ["admin-overview"], queryFn: () => overviewFn({} as never) });
+  const { data: overview } = useQuery({
+    queryKey: ["admin-overview"],
+    queryFn: () => overviewFn({} as never),
+  });
 
   const [form, setForm] = useState({
     environment: "sandbox",
@@ -68,13 +81,17 @@ function PaymentsPage() {
     onError: (e) => toast.error(e instanceof Error ? e.message : "Could not save configuration"),
   });
 
-  const setFlag = async (key: "ai_emergency_stop" | "payments_disable_checkout" | "payments_maintenance", enabled: boolean) => {
+  const setFlag = async (
+    key: "ai_emergency_stop" | "payments_disable_checkout" | "payments_maintenance",
+    enabled: boolean,
+  ) => {
     await flag({ data: { key, enabled, confirm: "CONFIRM" } });
     toast.success(`${key.replace(/_/g, " ")} ${enabled ? "enabled" : "disabled"}`);
     void qc.invalidateQueries({ queryKey: ["admin-overview"] });
   };
 
   const flags = overview?.flags ?? {};
+  const webhookUrl = "https://autarchai.in/api/payments/razorpay-webhook";
 
   return (
     <AdminShell
@@ -95,7 +112,10 @@ function PaymentsPage() {
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           <div>
             <Label className="label-mono">Environment</Label>
-            <Select value={form.environment} onValueChange={(v) => setForm({ ...form, environment: v })}>
+            <Select
+              value={form.environment}
+              onValueChange={(v) => setForm({ ...form, environment: v })}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -107,7 +127,10 @@ function PaymentsPage() {
           </div>
           <div>
             <Label className="label-mono">Key ID</Label>
-            <Input value={form.key_id} onChange={(e) => setForm({ ...form, key_id: e.target.value })} />
+            <Input
+              value={form.key_id}
+              onChange={(e) => setForm({ ...form, key_id: e.target.value })}
+            />
           </div>
           <div>
             <Label className="label-mono">Key secret</Label>
@@ -130,8 +153,13 @@ function PaymentsPage() {
         </div>
 
         <div className="mt-4 flex items-center gap-3">
-          <Switch checked={form.enabled} onCheckedChange={(v) => setForm({ ...form, enabled: v })} />
-          <span className="text-xs text-muted-foreground">Enable this provider for checkout creation</span>
+          <Switch
+            checked={form.enabled}
+            onCheckedChange={(v) => setForm({ ...form, enabled: v })}
+          />
+          <span className="text-xs text-muted-foreground">
+            Enable this provider for checkout creation
+          </span>
         </div>
 
         <Button
@@ -142,20 +170,52 @@ function PaymentsPage() {
           {submit.isPending ? "Saving…" : "Save configuration"}
         </Button>
 
-        <p className="mt-3 text-xs text-muted-foreground">
-          Checkout, server-side verification and webhook processing are not yet wired to a live account, so no payment
-          can be taken. Nothing here charges a card.
-        </p>
+        <div className="mt-4 rounded-md border border-border bg-secondary/40 p-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="min-w-0 flex-1">
+              <p className="label-mono">Razorpay webhook URL</p>
+              <code className="mt-1 block truncate text-xs">{webhookUrl}</code>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                void navigator.clipboard.writeText(webhookUrl);
+                toast.success("Webhook URL copied");
+              }}
+            >
+              <Copy className="size-3.5" /> Copy
+            </Button>
+          </div>
+          <p className="mt-2 text-xs text-muted-foreground">
+            Add this URL in Razorpay and enable payment.captured and payment.failed. Plans activate
+            only after a signature-verified webhook; saving keys alone never charges a card.
+          </p>
+        </div>
       </section>
 
       <section className="rounded-lg border border-border p-5">
-        <h2 className="text-xs uppercase tracking-wider text-muted-foreground">Emergency controls</h2>
+        <h2 className="text-xs uppercase tracking-wider text-muted-foreground">
+          Emergency controls
+        </h2>
         <div className="mt-4 space-y-4">
           {(
             [
-              ["ai_emergency_stop", "Emergency stop all AI requests", "Blocks every new provider call. Data, history and configuration are preserved."],
-              ["payments_disable_checkout", "Disable new checkouts", "Stops new purchases without touching AI or existing subscriptions."],
-              ["payments_maintenance", "Payments maintenance", "Shows a temporary message instead of the purchase flow."],
+              [
+                "ai_emergency_stop",
+                "Emergency stop all AI requests",
+                "Blocks every new provider call. Data, history and configuration are preserved.",
+              ],
+              [
+                "payments_disable_checkout",
+                "Disable new checkouts",
+                "Stops new purchases without touching AI or existing subscriptions.",
+              ],
+              [
+                "payments_maintenance",
+                "Payments maintenance",
+                "Shows a temporary message instead of the purchase flow.",
+              ],
             ] as const
           ).map(([key, label, note]) => (
             <div key={key} className="flex items-start gap-3">

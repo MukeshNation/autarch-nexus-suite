@@ -300,6 +300,14 @@ export const savePaymentProvider = createServerFn({ method: "POST" })
     if (data.environment === "live" && data.confirm_live !== "CONFIRM") {
       throw new Error("Live mode requires explicit confirmation.");
     }
+    const expectedPrefix = data.environment === "live" ? "rzp_live_" : "rzp_test_";
+    if (!data.key_id.startsWith(expectedPrefix)) {
+      throw new Error(
+        data.environment === "live"
+          ? "Live mode requires a rzp_live_ key."
+          : "Test mode requires a rzp_test_ key.",
+      );
+    }
     const db = await admin();
     if (data.api_secret || data.webhook_secret) {
       const patch: Record<string, unknown> = { provider: "razorpay", updated_at: new Date().toISOString() };
