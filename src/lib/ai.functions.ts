@@ -86,13 +86,16 @@ export const runModule = createServerFn({ method: "POST" })
     const credits = settings?.credits_per_run ?? manifest.creditsPerRun;
 
     // 6. Reserve credits atomically so concurrent runs cannot overspend.
+    // Unique per-run reference: the refund path can only return credits for
+    // this exact reservation, so self-refund abuse is impossible.
     const rpc = supabase.rpc as unknown as (
       fn: string,
       args: Record<string, unknown>,
     ) => Promise<{ data: number | null; error: { message: string } | null }>;
+    const reservationRef = crypto.randomUUID();
     const { data: reservedBalance, error: reserveError } = await rpc("spend_credits", {
       _amount: credits,
-      _reference: data.slug,
+      _reference: reservationRef,
     });
     if (reserveError) {
       if (/insufficient credits/i.test(reserveError.message)) {
