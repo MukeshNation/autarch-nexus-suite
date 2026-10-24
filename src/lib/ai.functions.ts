@@ -161,7 +161,7 @@ export const runModule = createServerFn({ method: "POST" })
       };
     } catch (error) {
       // Failed run: give the reserved credits back. Never fabricate output.
-      await rpc("refund_credits", { _amount: credits, _reference: data.slug });
+      await rpc("refund_credits", { _amount: credits, _reference: reservationRef });
       const message =
         error instanceof GatewayError
           ? error.code === "MISSING PROVIDER"
