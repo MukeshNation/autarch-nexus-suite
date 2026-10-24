@@ -590,6 +590,51 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_orders: {
+        Row: {
+          amount_minor: number
+          created_at: string
+          currency: string
+          id: string
+          paid_at: string | null
+          plan: string
+          provider: string
+          provider_order_id: string | null
+          provider_payment_id: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount_minor: number
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          plan: string
+          provider?: string
+          provider_order_id?: string | null
+          provider_payment_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount_minor?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          plan?: string
+          provider?: string
+          provider_order_id?: string | null
+          provider_payment_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       payment_provider_config: {
         Row: {
           enabled: boolean
@@ -644,6 +689,30 @@ export type Database = {
           provider?: string
           updated_at?: string
           webhook_secret?: string | null
+        }
+        Relationships: []
+      }
+      payment_webhook_events: {
+        Row: {
+          error: string | null
+          event_type: string
+          id: string
+          processed_at: string | null
+          received_at: string
+        }
+        Insert: {
+          error?: string | null
+          event_type: string
+          id: string
+          processed_at?: string | null
+          received_at?: string
+        }
+        Update: {
+          error?: string | null
+          event_type?: string
+          id?: string
+          processed_at?: string | null
+          received_at?: string
         }
         Relationships: []
       }
@@ -1207,6 +1276,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      activate_paid_plan: {
+        Args: {
+          _credits: number
+          _payment_id: string
+          _plan: string
+          _user_id: string
+        }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
