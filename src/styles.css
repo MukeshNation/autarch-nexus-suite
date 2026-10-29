@@ -184,9 +184,24 @@
 
   body {
     background-color: var(--color-background);
+    /* A soft built-in ambience so every glass surface refracts something,
+       even on pages without the dedicated aurora layer. */
+    background-image:
+      radial-gradient(52% 46% at 12% -6%, var(--mist) 0%, transparent 60%),
+      radial-gradient(46% 40% at 92% 4%, var(--lilac) 0%, transparent 62%),
+      radial-gradient(44% 42% at 55% 108%, var(--blush) 0%, transparent 60%);
+    background-attachment: fixed;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* Frosted glass on every surface token (cards, popovers, sidebar). */
+  .bg-card,
+  .bg-popover,
+  .bg-sidebar {
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
   }
 
   h1,
@@ -230,7 +245,7 @@
   background-size: 48px 48px;
 }
 
-/* Soft animated blue-violet ambience. */
+/* Soft animated blue-violet aurora behind the glass. */
 @utility ambient-mist {
   background:
     radial-gradient(46% 42% at 18% 8%, var(--mist) 0%, transparent 65%),
@@ -238,8 +253,8 @@
     radial-gradient(50% 44% at 58% 96%, var(--blush) 0%, transparent 64%),
     radial-gradient(38% 34% at 34% 76%, var(--sand) 0%, transparent 62%);
   background-size: 180% 180%;
-  opacity: 0.55;
-  filter: blur(18px);
+  opacity: 0.8;
+  filter: blur(28px);
   animation: autarch-aurora 26s ease-in-out infinite alternate;
 }
 
@@ -271,6 +286,12 @@
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
+  backdrop-filter: blur(26px) saturate(160%);
+  -webkit-backdrop-filter: blur(26px) saturate(160%);
+  /* Liquid-glass specular: bright top-edge sheen + soft depth shadow. */
+  box-shadow:
+    inset 0 1px 0 0 var(--glass-highlight),
+    var(--shadow-studio);
 }
 
 @utility hover-lift {
