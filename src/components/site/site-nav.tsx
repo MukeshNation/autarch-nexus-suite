@@ -65,7 +65,7 @@ export function SiteNav() {
           <AutarchWordmark />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-1 whitespace-nowrap lg:flex">
           <Link
             to="/product"
             className="rounded-full px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
