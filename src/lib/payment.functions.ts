@@ -32,9 +32,10 @@ export const createRazorpayCheckout = createServerFn({ method: "POST" })
     ]);
 
     const flagMap = Object.fromEntries((flags ?? []).map((flag) => [flag.key, flag.enabled]));
-    if (flagMap.payments_maintenance)
+    if (flagMap["payments_maintenance"])
       throw new Error("Payments are temporarily under maintenance.");
-    if (flagMap.payments_disable_checkout) throw new Error("New checkouts are currently disabled.");
+    if (flagMap["payments_disable_checkout"])
+      throw new Error("New checkouts are currently disabled.");
     if (!config?.enabled || !config.key_id || !secrets?.api_secret) {
       throw new Error("Razorpay checkout is not configured yet.");
     }
