@@ -82,7 +82,7 @@
   --foreground: oklch(0.18 0.01 270);
   --card: oklch(0.998 0.003 285 / 0.68);
   --card-foreground: oklch(0.18 0.01 270);
-  --popover: oklch(0.998 0.003 285 / 0.78);
+  --popover: oklch(0.998 0.003 285 / 0.88);
   --popover-foreground: oklch(0.18 0.01 270);
   --primary: oklch(0.18 0.01 270);
   --primary-foreground: oklch(0.99 0 0);
@@ -134,7 +134,7 @@
   --foreground: oklch(0.97 0.002 270);
   --card: oklch(0.965 0.012 280 / 0.085);
   --card-foreground: oklch(0.97 0.002 270);
-  --popover: oklch(0.965 0.012 280 / 0.13);
+  --popover: oklch(0.965 0.012 280 / 0.24);
   --popover-foreground: oklch(0.97 0.002 270);
   --primary: oklch(0.97 0.002 270);
   --primary-foreground: oklch(0.18 0.01 270);
@@ -196,12 +196,17 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Frosted glass on every surface token (cards, popovers, sidebar). */
+  /* Frosted glass on every surface token (cards, popovers, sidebar).
+     Popovers float over live content, so they get a heavier frost. */
   .bg-card,
-  .bg-popover,
   .bg-sidebar {
     backdrop-filter: blur(22px) saturate(160%);
     -webkit-backdrop-filter: blur(22px) saturate(160%);
+  }
+
+  .bg-popover {
+    backdrop-filter: blur(36px) saturate(180%);
+    -webkit-backdrop-filter: blur(36px) saturate(180%);
   }
 
   h1,
